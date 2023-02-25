@@ -1,0 +1,42 @@
+.HomePage {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav ul li {
+    margin: 0 1rem;
+  }
+  
+  nav ul li a {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  nav ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  .ButtonGroup {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+  }
+  
+  .ButtonGroup button {
+    margin: 0 1rem;
+    padding: 0.5rem 1
+  }
