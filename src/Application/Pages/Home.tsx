@@ -1,11 +1,13 @@
 import React from 'react';
 import Dashboard from '../Components/Dashboard';
 import '../Styles/HomePage.css';
+import Button from '@mui/material/Button'
 
 const Home: React.FC = () => {
   return (
     <div className="Home">
       <header>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
         <h1>Perfection, right at your fingertips.</h1>
       </header>
       <main>
@@ -16,6 +18,7 @@ const Home: React.FC = () => {
         and accompanying stylish designs so you can look good and feel good about the pieces in your wardrobe. 
         Choose freedom and join us in our mission to make fashion for everyone.
         </p>
+        
       </main>
     </div>
   );
