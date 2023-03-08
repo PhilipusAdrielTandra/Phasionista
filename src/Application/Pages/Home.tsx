@@ -6,32 +6,15 @@ const Home: React.FC = () => {
   return (
     <div className="Home">
       <header>
-        <h1>My Website</h1>
-        <nav>
-          <ul>
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">About</a>
-            </li>
-            <li>
-              <a href="#">Contact</a>
-            </li>
-          </ul>
-        </nav>
+        <h1>Perfection, right at your fingertips.</h1>
       </header>
       <main>
-        <Dashboard title="Welcome!" subtitle="This is your dashboard." />
-        <div className="ButtonGroup">
-          <button>Button 1</button>
-          <button>Button 2</button>
-          <button>Button 3</button>
-        </div>
+        <Dashboard/>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus
-          gravida quam, sed rutrum nibh consequat vitae. Suspendisse potenti.
-          Donec at vestibulum lacus. Morbi sed quam et sem facilisis suscipit.
+        Shop smarter and more sustainably with State of Matter Apparel. 
+        Our clothing was made for those who seek perfection, done in ethical manufacturing practices,
+        and accompanying stylish designs so you can look good and feel good about the pieces in your wardrobe. 
+        Choose freedom and join us in our mission to make fashion for everyone.
         </p>
       </main>
     </div>

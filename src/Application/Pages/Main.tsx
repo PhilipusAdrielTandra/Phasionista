@@ -13,16 +13,18 @@ const Home: React.FC = () => {
               <a href="#">Home</a>
             </li>
             <li>
-              <a href="#">About</a>
+              <a href="#">Orders</a>
             </li>
             <li>
-              <a href="#">Contact</a>
+              <a href="#">Wishlist</a>
+            </li>
+            <li>
+              <a href="#">About</a>
             </li>
           </ul>
         </nav>
       </header>
       <main>
-        <Dashboard title="Welcome!" subtitle="This is your dashboard." />
         <div className="ButtonGroup">
           <button>Button 1</button>
           <button>Button 2</button>

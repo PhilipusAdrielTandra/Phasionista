@@ -1,0 +1,99 @@
+.container {
+    display: flex;
+    height: 100%;
+}
+
+.left, .right {
+    display: inline-block;
+    width: 40%;
+    height: 200px;
+}
+
+.right {
+    width: 60%;
+    height: 100vh;
+    background-color: white;
+}
+
+.start-picture {
+    width: 40%;
+    height: 100vh;
+}
+
+.logo {
+    position: absolute;
+    top: 15vh;
+    right: 80vh;
+    width: 10%;
+    height: 12%;
+}
+
+.splext {
+    font-family: 'Roboto';
+    font-style: normal;
+    position: absolute;
+    line-height: 33px;
+    font-size: 32px;
+    font-weight: 300;
+    color: cornflowerblue;
+    width: 45vh;
+    top: 5vh;
+    left: 10vh;
+}
+
+.flext {
+    font-family: 'Roboto';
+    font-style: normal;
+    position: absolute;
+    line-height: 33px;
+    font-size: 12px;
+    font-weight: 300;
+    color: #D00505;
+    width: 45vh;
+    top: 19vh;
+    right: 32vh;
+}
+
+.form-email, .form-password {
+    position:absolute;
+    width: 70vh;
+    height: 6vh;
+    border: 1px solid #000;
+    border-radius: 4px;
+    padding-left: 10px;
+}
+
+.form-email {
+    top: 35vh;
+    right: 28vh;
+}
+
+.form-password {
+    top: 47vh;
+    right: 28vh;
+}
+
+.email-toptext {
+    position: absolute;
+    top: 32vh;
+    right: 94vh;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: bold; 
+    font-size: 12px;
+    line-height: 14px;
+    color: #000000;
+}
+
+.password-toptext {
+    position: absolute;
+    top: 44vh;
+    right: 91vh;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 14px;
+    color: #000000;
+}
+

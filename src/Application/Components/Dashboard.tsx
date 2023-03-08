@@ -1,17 +1,19 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import '../Styles/Dashboard.css';
 
-interface DashboardProps {
-  title: string;
-  subtitle: string;
-}
-
-const Dashboard: React.FC<DashboardProps> = ({ title, subtitle }) => {
+const Dashboard = () => {
   return (
-    <div className="Dashboard">
-      <h2>{title}</h2>
-      <p>{subtitle}</p>
+    <div className="dashboard">
+      <ul className="dashboard-list">
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/orders">Orders</Link></li>
+        <li><Link to="/wishlist">Wishlist</Link></li>
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/profile"><img src="profile-icon.png" alt="Profile" /></Link></li>
+      </ul>
     </div>
   );
-}
+};
 
 export default Dashboard;

@@ -22,7 +22,6 @@ const Home: React.FC = () => {
         </nav>
       </header>
       <main>
-        <Dashboard title="Welcome!" subtitle="This is your dashboard." />
         <div className="ButtonGroup">
           <button>Button 1</button>
           <button>Button 2</button>

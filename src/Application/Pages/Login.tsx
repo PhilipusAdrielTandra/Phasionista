@@ -1,41 +1,38 @@
 import React from 'react';
-import Dashboard from '../Components/Dashboard';
-import './HomePage.css';
+import { useState } from 'react';
+import logo from '../Assets/branding.png'
+import '../Styles/tailwind.css';
+import '../Styles/Login.css';
 
-const Home: React.FC = () => {
+const Login: React.FC = () => {
+  const [email, setEmail] = useState('Enter email here');
+  const [password, setPassword] = useState('Enter your password');
+  const [error, setError] = useState('');
+
   return (
-    <div className="Home">
-      <header>
-        <h1>My Website</h1>
-        <nav>
-          <ul>
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">About</a>
-            </li>
-            <li>
-              <a href="#">Contact</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <main>
-        <Dashboard title="Welcome!" subtitle="This is your dashboard." />
-        <div className="ButtonGroup">
-          <button>Button 1</button>
-          <button>Button 2</button>
-          <button>Button 3</button>
+    <div className="flex h-screen">
+      <img className="inline-block w-2/5 h-full object-cover" src='https://c0.wallpaperflare.com/preview/117/634/419/pheasant-royal-pheasant-syrmaticus-reevesi-bird.jpg' />
+      <div className="w-full bg-white p-10 flex flex-col justify-center items-center">
+        <img className="logo" src={logo}/>
+        <p className="flext">"Wear Your Values On Your Sleeve With Our Clothing"</p>
+        <div className="max-w-md text-center">
+          <p className="splext">"Make sure the fear of missing out doesn't get to you first"</p>
         </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus
-          gravida quam, sed rutrum nibh consequat vitae. Suspendisse potenti.
-          Donec at vestibulum lacus. Morbi sed quam et sem facilisis suscipit.
-        </p>
-      </main>
+        <div className="w-full max-w-xs mt-8">
+          <form>
+            <div className="mb-4">
+              <label className="email-toptext">Email</label>
+              <input type="email" className="form-email" placeholder={'Enter email here'} onChange={(i : any) => setEmail(i)}/>
+
+              <label className="password-toptext">Password</label>
+              <input type="password" className="form-password" placeholder={'Enter password here'} onChange={(i : any) => setPassword(i)}/>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
 
-export default Home;
+export default Login;
+
