@@ -1,40 +1,98 @@
-import React from 'react';
-import Dashboard from '../Components/Dashboard';
-import './HomePage.css';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button, TextField } from '@mui/material';
+import { Divider } from '@material-ui/core';
+import ImageSlider from '../Components/ImageSlider';
+import { FaGoogle, FaLinkedin } from 'react-icons/fa';
+import logo from '../Assets/branding.png';
+import '../Styles/tailwind.css';
+import '../Styles/Login.css';
 
-const Home: React.FC = () => {
+const Login: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [error, setError] = useState('');
+
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // handle login logic
+  };
+
+  const handleGoogleLogin = () => {
+    // handle Google login logic
+  };
+
+  const handleLinkedinLogin = () => {
+    // handle LinkedIn login logic
+  };
+
   return (
-    <div className="Home">
-      <header>
-        <h1>My Website</h1>
-        <nav>
-          <ul>
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">About</a>
-            </li>
-            <li>
-              <a href="#">Contact</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <main>
-        <div className="ButtonGroup">
-          <button>Button 1</button>
-          <button>Button 2</button>
-          <button>Button 3</button>
+    <div className="container">
+      <ImageSlider />
+      <div className="right">
+        <img className="logo" src={logo} alt="branding" />
+        <p className="flext">"Wear Your Values On Your Sleeve With Our Clothing"</p>
+        <div className="max-w-md text-center text">
+          <p className="splext">"Make sure the fear of missing out doesn't get to you first"</p>
         </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus
-          gravida quam, sed rutrum nibh consequat vitae. Suspendisse potenti.
-          Donec at vestibulum lacus. Morbi sed quam et sem facilisis suscipit.
+        <form onSubmit={handleLogin}>
+          <div className="input-container">
+            <TextField
+              className="form-input"
+              label="Email"
+              variant="outlined"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="input-container">
+            <TextField
+              className="form-input"
+              label="Password"
+              type="password"
+              variant="outlined"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="input-container">
+            <TextField
+              className="form-input"
+              label="Phone Number"
+              variant="outlined"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+          </div>
+          <div className="button-container">
+            <Button type="submit" variant="contained" className="start-button">
+              Get Started
+            </Button>
+          </div>
+          <div className="divider">
+            <div className="divider-line"></div>
+            <div className="divider-text">or sign up with</div>
+            <div className="divider-line"></div>
+          </div>
+          <div className="glink">
+            <Button onClick={handleGoogleLogin} className="google-button">
+              <FaGoogle />
+              <span>Sign in with Google</span>
+            </Button>
+            <Button onClick={handleLinkedinLogin} className="linkedin-button">
+              <FaLinkedin />
+              <span>Sign in with LinkedIn</span>
+            </Button>
+          </div>
+          <p className="acc">
+          Already have an account?{' '}
+          <Link to="/login" className="signup-button">Log in here</Link>
         </p>
-      </main>
+        </form>
+      </div>
     </div>
   );
-}
+};
 
-export default Home;
+export default Login;

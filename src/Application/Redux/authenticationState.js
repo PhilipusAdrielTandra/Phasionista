@@ -1,26 +1,27 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 
 const initialState = {
     authenticated: false,
   };
-  
-const authReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case 'validate':
-            return {
-                ...state,
-                authenticated: true,
-            }
 
-        case 'invalidate':
-            return {
-                ...state,
-                authenticated: false,
-            }
+  //reducer function  for the authentication of user
+  const authReducer = (state = initialState, action) => {
+    switch(action.type){
+      case "login": {
+        return Object.assign({}, state, {authenticated: true});
+      }
+      case "signup": {
+        return Object.assign({}, state, {authenticated: true});
+      }
+      case "logout": {
+        return Object.assign({}, state, {authenticated: false});
+      }
+      default: {
+        return state;
+      }
     }
-}
-    
-  
-const authentiStore = configureStore(authReducer);
+  }
+  export default authReducer;
 
-export default authentiStore;
+export const authStore = configureStore({reducer:{authen: authReducer}});
+export const authSelector = state => state.authen.authentication;

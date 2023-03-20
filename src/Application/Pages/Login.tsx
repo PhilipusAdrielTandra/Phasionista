@@ -1,38 +1,89 @@
-import React from 'react';
-import { useState } from 'react';
-import logo from '../Assets/branding.png'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button, TextField } from '@mui/material';
+import { Divider } from '@material-ui/core';
+import ImageSlider from '../Components/ImageSlider';
+import { FaGoogle, FaLinkedin } from 'react-icons/fa';
+import logo from '../Assets/branding.png';
 import '../Styles/tailwind.css';
 import '../Styles/Login.css';
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('Enter email here');
-  const [password, setPassword] = useState('Enter your password');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState('');
 
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // handle login logic
+  };
+
+  const handleGoogleLogin = () => {
+    // handle Google login logic
+  };
+
+  const handleLinkedinLogin = () => {
+    // handle LinkedIn login logic
+  };
+
   return (
-    <div className="flex h-screen">
-      <img className="inline-block w-2/5 h-full object-cover" src='https://c0.wallpaperflare.com/preview/117/634/419/pheasant-royal-pheasant-syrmaticus-reevesi-bird.jpg' />
-      <div className="w-full bg-white p-10 flex flex-col justify-center items-center">
-        <img className="logo" src={logo}/>
+    <div className="container">
+      <ImageSlider />
+      <div className="right">
+        <img className="logo" src={logo} alt="branding" />
         <p className="flext">"Wear Your Values On Your Sleeve With Our Clothing"</p>
-        <div className="max-w-md text-center">
+        <div className="max-w-md text-center text">
           <p className="splext">"Make sure the fear of missing out doesn't get to you first"</p>
         </div>
-        <div className="w-full max-w-xs mt-8">
-          <form>
-            <div className="mb-4">
-              <label className="email-toptext">Email</label>
-              <input type="email" className="form-email" placeholder={'Enter email here'} onChange={(i : any) => setEmail(i)}/>
-
-              <label className="password-toptext">Password</label>
-              <input type="password" className="form-password" placeholder={'Enter password here'} onChange={(i : any) => setPassword(i)}/>
-            </div>
-          </form>
-        </div>
+        <form onSubmit={handleLogin}>
+          <div className="input-container">
+            <TextField
+              className="form-input"
+              label="Email"
+              variant="outlined"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="input-container">
+            <TextField
+              className="form-input"
+              label="Password"
+              type="password"
+              variant="outlined"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="button-container">
+            <Button type="submit" variant="contained" className="start-button">
+              LOGIN
+            </Button>
+          </div>
+          <div className="divider">
+            <div className="divider-line"></div>
+            <div className="divider-text">or log in with</div>
+            <div className="divider-line"></div>
+          </div>
+          <div className="glink">
+            <Button onClick={handleGoogleLogin} className="google-button">
+              <FaGoogle />
+              <span>Sign in with Google</span>
+            </Button>
+            <Button onClick={handleLinkedinLogin} className="linkedin-button">
+              <FaLinkedin />
+              <span>Sign in with LinkedIn</span>
+            </Button>
+          </div>
+          <p className="acc">
+          Don't have an account?{' '}
+          <Link to="/register" className="signup-button">Sign up here</Link>
+        </p>
+        </form>
       </div>
     </div>
   );
-}
+};
 
 export default Login;
-

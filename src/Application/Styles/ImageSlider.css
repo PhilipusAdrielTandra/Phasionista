@@ -1,0 +1,17 @@
+.slider {
+    display: flex;
+    position: relative;
+  }
+  
+  .slider img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  
+  .slider img.active {
+    opacity: 1;
+  }
+  

@@ -2,6 +2,7 @@ import React from 'react';
 import Dashboard from '../Components/Dashboard';
 import '../Styles/HomePage.css';
 import Button from '@mui/material/Button'
+import { Divider } from '@mui/material';
 
 const Home: React.FC = () => {
   return (
