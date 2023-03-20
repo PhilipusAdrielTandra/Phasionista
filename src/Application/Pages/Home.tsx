@@ -3,6 +3,8 @@ import Dashboard from '../Components/Dashboard';
 import '../Styles/HomePage.css';
 import Button from '@mui/material/Button'
 import { Divider } from '@mui/material';
+import hero from "../Assets/images/hero.jpg"
+import Carousel from '../Components/Carousel';
 
 const Home: React.FC = () => {
   return (
@@ -22,6 +24,11 @@ const Home: React.FC = () => {
         
       </main>
     </div>
+
+    // <div className="flex justify-center">
+    //   <Carousel />
+    // </div>
+
   );
 }
 
