@@ -1,0 +1,57 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Space Mono', monospace;
+      font-weight: bold;
+}
+
+.nav a{
+    text-decoration: none;
+    color:inherit;
+    height: 100%;
+    display:flex;
+    align-items: center;
+    padding:0.25rem;
+    
+}
+
+body{
+    margin: 0;
+    padding:0;
+}
+
+.site-title{
+    font-size:2rem;
+    text-align: center;
+    margin:0;
+    padding:0.4rem 1rem;
+}
+
+.nav{
+    margin:0;
+    background: rgba(200, 54, 54, 0.8);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    
+}
+
+.nav ul {
+    list-style: none;
+    display:flex;
+}
+
+.nav li{
+    padding-left: 1em;
+    padding-right: 1em;
+}
+.nav li.active{
+    background-color: #d00505;
+}
+
+.nav li:hover{
+    background-color: #d00505;
+}
+
+
+
