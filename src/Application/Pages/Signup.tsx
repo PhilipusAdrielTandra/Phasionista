@@ -4,7 +4,7 @@ import { Button, TextField } from '@mui/material';
 import { Divider } from '@material-ui/core';
 import ImageSlider from '../Components/ImageSlider';
 import { FaGoogle, FaLinkedin } from 'react-icons/fa';
-import logo from '../Assets/branding.png';
+import logo from '../Assets/branding/branding.png';
 import '../Styles/tailwind.css';
 import '../Styles/Login.css';
 
