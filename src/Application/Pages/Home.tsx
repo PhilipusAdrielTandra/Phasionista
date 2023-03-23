@@ -5,16 +5,24 @@ import Button from '@mui/material/Button'
 import { Divider } from '@mui/material';
 import hero from "../Assets/images/hero.jpg"
 import Carousel from '../Components/Carousel';
+import Navbar from '../Components/Navbar';
 
 const Home: React.FC = () => {
   return (
     <div className="Home">
+      
+      <div className='navbar-wrapper'>
+        <Navbar/>
+      </div>
+      <div className="flex-justify-center">
+        <Carousel/>
+      </div>
+
       <header>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <h1>Perfection, right at your fingertips.</h1>
       </header>
       <main>
-        <Dashboard/>
         <p>
         Shop smarter and more sustainably with State of Matter Apparel. 
         Our clothing was made for those who seek perfection, done in ethical manufacturing practices,
@@ -25,9 +33,7 @@ const Home: React.FC = () => {
       </main>
     </div>
 
-    // <div className="flex justify-center">
-    //   <Carousel />
-    // </div>
+
 
   );
 }

@@ -1,22 +1,22 @@
 export const CarouselData = [
     {
       image:
-        "./Assets/images/hero.jpg",
+      "https://drive.google.com/uc?export=view&id=1mORBH9Nb_iHyf60tcaskpjKAgjn0_lZI",
     },
     {
       image:
-      "./Assets/images/hero2.jpg",
+      "https://drive.google.com/uc?export=view&id=1feuGmodqQPoFVUl0Hx67xN8i7yBw-N3q",
     },
     {
       image:
-      "./Assets/images/hero3.jpg",
+      "https://drive.google.com/uc?export=view&id=1-rkFlvOyz04XDqWCoJbtLz-iNo1vgg2q",
     },
     {
       image:
-      "./Assets/images/hero4.jpg",
+      "https://drive.google.com/uc?export=view&id=1ujpHJNoCUvi_qkAGSkSa-YiJ39WPeuZ2",
     },
     {
       image:
-      "./Assets/images/hero5.jpg",
+      "https://drive.google.com/uc?export=view&id=12AVrk-Wu0f1mbUYftNppLKZSXm1nGnGn",
     },
   ];
