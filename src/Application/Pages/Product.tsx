@@ -6,6 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { FaShoppingCart } from "react-icons/fa";
 import { Button as MaterialButton } from "@material-ui/core";
 import { Button as ChakraButton } from "@chakra-ui/react";
+import Header from "../Components/header"
+import Heck from "../Components/heck"
+import Deck from "../Components/deck"
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../Styles/product.css";
@@ -42,6 +45,8 @@ const ProductPage = () => {
 
   return (
     <Box className={classes.root}>
+      <Deck/>
+      <Header/>
       <Grid className="product-grid">
         <GridItem>
           <Box className="image-gallery">
