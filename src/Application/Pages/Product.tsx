@@ -7,7 +7,6 @@ import { FaShoppingCart } from "react-icons/fa";
 import { Button as MaterialButton } from "@material-ui/core";
 import { Button as ChakraButton } from "@chakra-ui/react";
 import Header from "../Components/header"
-import Heck from "../Components/heck"
 import Deck from "../Components/deck"
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";

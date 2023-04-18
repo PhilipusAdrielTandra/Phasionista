@@ -1,6 +1,6 @@
 import React from 'react';
 import Dashboard from '../Components/Dashboard';
-import './HomePage.css';
+import '../Styles/HomePage.css';
 
 const Home: React.FC = () => {
   return (

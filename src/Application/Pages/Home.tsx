@@ -4,16 +4,15 @@ import '../Styles/HomePage.css';
 import Button from '@mui/material/Button'
 import { Divider } from '@mui/material';
 import hero from "../Assets/images/hero.jpg"
+import Header from "../Components/header"
 import Carousel from '../Components/Carousel';
 import Navbar from '../Components/Navbar';
 
 const Home: React.FC = () => {
   return (
     <div className="Home">
-      
-      <div className='navbar-wrapper'>
-        <Navbar/>
-      </div>
+      <Header/>
+
       <div className="flex-justify-center">
         <Carousel/>
       </div>
