@@ -69,6 +69,9 @@ const Product = ({ name, images, description, price, sizes, stock }: ProductProp
             <Heading mb={4} size="2xl" className="product-name">
               {name}
             </Heading>
+            <Text fontSize="lg" className="product-stock" mt={6}>
+              {stock} in stock
+            </Text>
             <Text fontSize="lg" className="product-price" mb={6}>
               {price}
             </Text>
@@ -79,33 +82,23 @@ const Product = ({ name, images, description, price, sizes, stock }: ProductProp
               ))}
             </select>
             <Box mt={6}>
-            <ChakraButton
-                disabled={!size}
-                colorScheme="whiteAlpha"
-                mr={2}
-                className="add-to-cart-button custom-button"
-              >
-                <FaShoppingCart /> Add to Cart
-              </ChakraButton>
-              <MaterialButton
+            <MaterialButton
                 variant="outlined"
                 color="default"
                 className="buy-now-button custom-button"
               >
-                Buy Now
+                Add to Cart
               </MaterialButton>
             </Box>
-            <Text fontSize="lg" className="product-stock" mt={6}>
-              {stock} in stock
-            </Text>
           </Box>
         </GridItem>
       </Grid>
+      <div className="centerify">
       <Tabs mt={12} variant="unstyled">
-       <TabList className="tab-list">
-      <Tab _selected={{ borderBottom: "2px solid #3182CE" }}>Additional Info</Tab>
-      <Tab _selected={{ borderBottom: "2px solid #3182CE" }}>Description</Tab>
-      <Tab _selected={{ borderBottom: "2px solid #3182CE" }}>Reviews</Tab>
+      <TabList className="tab-list">
+        <Tab _selected={{ borderBottom: "2px solid #000000" }}>Additional Info</Tab>
+        <Tab _selected={{ borderBottom: "2px solid #000000" }}>Description</Tab>
+        <Tab _selected={{ borderBottom: "2px solid #000000" }}>Reviews</Tab>
       </TabList>
           <TabPanels>
        <TabPanel>
@@ -129,14 +122,12 @@ const Product = ({ name, images, description, price, sizes, stock }: ProductProp
          Reviews of the product.
       </Text>
       <Text fontSize="md">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum faucibus dui eget semper ultrices.
-      Quisque at ex eget nibh faucibus euismod. Donec vitae leo vel purus suscipit aliquet. Integer placerat
-      gravida orci, at pharetra justo congue non. Suspendisse potenti. Vestibulum ante ipsum primis in faucibus
-      orci luctus et ultrices posuere cubilia curae; Fusce vel sodales sem, vel imperdiet lacus.
+      Lorem ipsum 
       </Text>
            </TabPanel>
          </TabPanels>
        </Tabs>
+       </div>
       <Footer/>
       <Deck/>
 </Box>

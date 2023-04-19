@@ -5,6 +5,8 @@ import Button from '@mui/material/Button'
 import { Divider } from '@mui/material';
 import hero from "../Assets/images/hero.jpg"
 import Header from "../Components/header"
+import Footer from '../Components/footer';
+import Deck from '../Components/deck'
 import Carousel from '../Components/Carousel';
 import Navbar from '../Components/Navbar';
 
@@ -30,10 +32,9 @@ const Home: React.FC = () => {
         </p>
         
       </main>
+      <Footer/>
+      <Deck/>
     </div>
-
-
-
   );
 }
 

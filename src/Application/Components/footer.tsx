@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     section: {
       display: 'flex',
+      fontSize: '1rem',
       flexDirection: 'column',
       alignItems: 'flex-start',
       margin: theme.spacing(2),
@@ -32,9 +33,9 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     sectionTitle: {
-      fontWeight: 'bold',
+      fontWeight: 300,
       marginBottom: theme.spacing(2),
-      fontSize: '1.5rem',
+      fontSize: '1.4rem',
     },
     sectionButton: {
       margin: theme.spacing(0.5),
@@ -52,9 +53,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(2),
     },
     followUsTitle: {
-      fontWeight: 'bold',
+      fontWeight: 300,
       marginRight: theme.spacing(2),
-      fontSize: '1.5rem',
+      fontSize: '1.4rem',
     },
     socialButton: {
       margin: theme.spacing(0.5),
