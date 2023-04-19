@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './Application/Pages/Home';
-import Login from './Application/Pages/Login';
-import Signup from './Application/Pages/Signup';
-import Product from './Application/Pages/Product';
-import Cart from './Application/Pages/Cart';
-import Wishlist from './Application/Pages/Wishlist';
-import Profile from './Application/Pages/Profile';
-import Library from './Application/Pages/Library';
-import Chat from './Application/Pages/Chat';
+import Home from './Application/pages/Home';
+import Login from './Application/pages/Login';
+import Signup from './Application/pages/Signup';
+import Product from './Application/pages/Product';
+import Cart from './Application/pages/Cart';
+import Wishlist from './Application/pages/Wishlist';
+import Profile from './Application/pages/Profile';
+import Library from './Application/pages/Library';
+import Chat from './Application/pages/Chat';
 import { authStore } from './Application/Redux/authenticationState';
 import './App.css';
 

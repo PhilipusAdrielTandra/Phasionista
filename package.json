@@ -21,6 +21,7 @@
     "antd": "^5.3.0",
     "emotion-theming": "^11.0.0",
     "framer-motion": "^10.2.3",
+    "next": "^13.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-easy-swipe": "^0.0.23",
@@ -37,6 +38,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "next": "next",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

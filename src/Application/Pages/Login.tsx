@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import { Divider } from '@material-ui/core';
-import ImageSlider from '../Components/ImageSlider';
+import ImageSlider from '../components/ImageSlider';
 import { FaGoogle, FaLinkedin } from 'react-icons/fa';
 import logo from '../Assets/branding/branding.png';
 import '../Styles/tailwind.css';
