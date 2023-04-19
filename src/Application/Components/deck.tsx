@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
     appBar: {
       backgroundColor: theme.palette.common.white,
       color: theme.palette.text.primary,
-      position: 'absolute',
+      position: 'relative',
       top: 0,
       left: 0,
       right: 0,
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const TopHeader: React.FC = () => {
+const Deck: React.FC = () => {
   const classes = useStyles();
   const [languageAnchorEl, setLanguageAnchorEl] = React.useState<null | HTMLElement>(null);
   const [currencyAnchorEl, setCurrencyAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -57,8 +57,7 @@ const TopHeader: React.FC = () => {
   };
 
   return (
-    <AppBar position="static" className={classes.appBar}>
-      <Toolbar className={classes.toolBar}>
+      <Toolbar className={classes.toolBar} style={{ width: '100%' }}>
         <Typography variant="body2" className={classes.callNowText}>
           Call Now 087780976170
         </Typography>
@@ -107,8 +106,8 @@ const TopHeader: React.FC = () => {
           </Menu>
         </div>
       </Toolbar>
-    </AppBar>
   );
 };
 
-export default TopHeader;
+
+export default Deck;
