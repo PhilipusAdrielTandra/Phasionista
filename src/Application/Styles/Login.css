@@ -63,6 +63,7 @@
     font-size: clamp(1.5rem, 3vw, 3rem);
     font-weight: 300;
     color: cornflowerblue;
+    padding-top: 4rem;
     margin-bottom: 1em;
   }
   
@@ -71,7 +72,7 @@
     font-size: clamp(0.8rem, 2vw, 1.2rem);
     font-weight: 300;
     color: #D00505;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
   }
   
   .form-email, .form-password {

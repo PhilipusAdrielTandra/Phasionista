@@ -5,6 +5,9 @@ import { Divider } from '@material-ui/core';
 import ImageSlider from '../components/ImageSlider';
 import { FaGoogle, FaLinkedin } from 'react-icons/fa';
 import logo from '../Assets/branding/branding.png';
+import Header from "../components/header"
+import Deck from "../components/deck"
+import Footer from "../components/footer";
 import '../Styles/tailwind.css';
 import '../Styles/Login.css';
 
@@ -28,6 +31,8 @@ const Login: React.FC = () => {
   };
 
   return (
+    <div>
+    <Header/>
     <div className="container">
       <ImageSlider />
       <div className="right">
@@ -82,6 +87,9 @@ const Login: React.FC = () => {
         </p>
         </form>
       </div>
+      </div>
+    <Footer/>
+    <Deck/>
     </div>
   );
 };
