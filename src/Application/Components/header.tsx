@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { AppBar, Toolbar, IconButton, InputBase } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, InputBase, Menu, MenuItem, Popper, Paper, PopperPlacementType, Fade, MenuList } from '@material-ui/core';
 import { createStyles, fade, makeStyles, Theme } from '@material-ui/core/styles';
-import { HomeOutlined, StoreOutlined, PagesOutlined, MailOutline, Search, AccountCircle, Favorite, ShoppingCart } from '@material-ui/icons';
+import { HomeOutlined, StoreOutlined, PagesOutlined, MailOutline, Search, AccountCircle, Favorite, ShoppingCart, ExpandMore } from '@material-ui/icons';
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -93,6 +94,9 @@ const useStyles = makeStyles((theme: Theme) =>
 const TopHeader: React.FC = () => {
   const classes = useStyles();
   const [isHidden, setIsHidden] = React.useState(false);
+  const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [menuPlacement, setMenuPlacement] = React.useState<PopperPlacementType>('bottom-start');
+
   const handleScroll = React.useCallback(() => {
     if (window.pageYOffset > 0) {
       setIsHidden(true);
@@ -107,6 +111,11 @@ const TopHeader: React.FC = () => {
     };
   }, [handleScroll]);
 
+  const handleCloseMenu = () => {
+    setMenuAnchorEl((prev) => (prev ? null : prev));
+    setMenuPlacement('bottom');
+  };
+  
   return (
     <div className={classes.grow}>
       <AppBar position="fixed" className={`${classes.appBar} ${isHidden ? classes.hideOnScroll + ' hidden' : ''}`}>
@@ -123,10 +132,62 @@ const TopHeader: React.FC = () => {
         <StoreOutlined />
     <span className={classes.menuItemText}>Shop</span>
     </IconButton>
-    <IconButton className={classes.menuButton} color="inherit" aria-label="pages">
-        <PagesOutlined />
-    <span className={classes.menuItemText}>Pages</span>
+        <Popper
+      open={Boolean(menuAnchorEl)}
+      anchorEl={menuAnchorEl}
+      placement={menuPlacement}
+      transition
+    >
+      {({ TransitionProps }) => (
+        <Fade {...TransitionProps} timeout={350}>
+          <Paper>
+            <MenuList>
+              <Link to="/">
+                <MenuItem onClick={handleCloseMenu} >Home</MenuItem>
+              </Link>
+              <Link to="/">
+                <MenuItem onClick={handleCloseMenu} >Library</MenuItem>
+              </Link>
+              <Link to="/product">
+                <MenuItem onClick={handleCloseMenu} >Product</MenuItem>
+              </Link>
+              <Link to="/">
+                <MenuItem onClick={handleCloseMenu} >Cart</MenuItem>
+              </Link>
+              <Link to="/">
+                <MenuItem onClick={handleCloseMenu} >Wishlist</MenuItem>
+              </Link>
+              <Link to="/login">
+                <MenuItem onClick={handleCloseMenu} >Login</MenuItem>
+              </Link>
+              <Link to="/register">
+                <MenuItem onClick={handleCloseMenu} >Register</MenuItem>
+              </Link>
+            </MenuList>
+          </Paper>
+        </Fade>
+      )}
+    </Popper>
+
+    <IconButton
+      className={classes.menuButton}
+      color="inherit"
+      aria-label="pages"
+      onClick={(e) => {
+        if (menuAnchorEl === e.currentTarget) {
+          handleCloseMenu();
+        } else {
+          setMenuAnchorEl(e.currentTarget);
+          setMenuPlacement('bottom');
+        }
+      }}
+    >
+      <PagesOutlined />
+      <span className={classes.menuItemText}>Pages</span>
+      <ExpandMore />
     </IconButton>
+
+
     <IconButton className={classes.menuButton} color="inherit" aria-label="contact us">
         <MailOutline />
     <span className={classes.menuItemText}>Contact Us</span>
