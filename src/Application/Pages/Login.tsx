@@ -5,13 +5,22 @@ import { Divider } from '@material-ui/core';
 import ImageSlider from '../components/ImageSlider';
 import { FaGoogle, FaLinkedin } from 'react-icons/fa';
 import logo from '../Assets/branding/branding.png';
+import { makeStyles } from '@material-ui/core/styles';
 import Header from "../components/header"
 import Deck from "../components/deck"
 import Footer from "../components/footer";
 import '../Styles/tailwind.css';
 import '../Styles/Login.css';
 
+const useStyles = makeStyles((theme) => ({
+  textField: {
+    height: 60, // Set the desired height here
+    margin: theme.spacing(1),
+  },
+}));
+
 const Login: React.FC = () => {
+  const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
