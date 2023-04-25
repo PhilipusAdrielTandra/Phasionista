@@ -107,7 +107,7 @@
 
     .product-name {
     font-size: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-weight: 300;
     text-align: left;
     padding-bottom: 0.2rem;
@@ -116,6 +116,11 @@
     .product-stock {
     font-size: 1.3rem;
     font-weight: 300;
+    }
+
+    .product-id {
+      font-size: 0.8rem;
+      font-weight: 300;
     }
 
     .product-price {

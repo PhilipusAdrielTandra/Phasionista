@@ -8,6 +8,7 @@ import Header from "../Components/header"
 import Deck from "../Components/deck"
 import Footer from "../Components/footer";
 import { Carousel } from "react-responsive-carousel";
+import { useParams } from 'react-router-dom';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../Styles/product.css";
 
@@ -31,7 +32,18 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Product = ({ name, images, description, price, sizes, stock }: ProductProps) => {
+const Product = () => {
+  const { id }  = useParams();
+  const name = "Sample Product";
+  const images = [
+    { src: "https://picsum.photos/600/800", alt: "Product Image 1" },
+    { src: "https://picsum.photos/600/800?random=2", alt: "Product Image 2" },
+    { src: "https://picsum.photos/600/800?random=3", alt: "Product Image 3" }
+  ];
+  const description = "This is a sample product description.";
+  const price = "$49.99";
+  const sizes = ["Small", "Medium", "Large"];
+  const stock = 10;
   const classes = useStyles();
   const [size, setSize] = useState("");
   const [activeImage, setActiveImage] = useState(0);
@@ -69,6 +81,9 @@ const Product = ({ name, images, description, price, sizes, stock }: ProductProp
             <Heading mb={4} size="2xl" className="product-name">
               {name}
             </Heading>
+            <Text className="product-id" mt={6}>
+              ID: {id}
+            </Text>
             <Text fontSize="lg" className="product-stock" mt={6}>
               {stock} in stock
             </Text>
