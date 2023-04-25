@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import { Divider } from '@material-ui/core';
-import ImageSlider from '../components/ImageSlider';
+import ImageSlider from '../Components/ImageSlider';
 import { FaGoogle, FaLinkedin } from 'react-icons/fa';
 import logo from '../Assets/branding/branding.png';
-import Header from "../components/header"
-import Deck from "../components/deck"
-import Footer from "../components/footer";
+import Header from "../Components/header"
+import Deck from "../Components/deck"
+import Footer from "../Components/footer";
 import '../Styles/tailwind.css';
 import '../Styles/Login.css';
 

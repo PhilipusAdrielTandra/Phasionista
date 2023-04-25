@@ -4,9 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { FaShoppingCart } from "react-icons/fa";
 import { Button as MaterialButton } from "@material-ui/core";
 import { Button as ChakraButton } from "@chakra-ui/react";
-import Header from "../components/header"
-import Deck from "../components/deck"
-import Footer from "../components/footer";
+import Header from "../Components/header"
+import Deck from "../Components/deck"
+import Footer from "../Components/footer";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../Styles/product.css";
