@@ -124,10 +124,12 @@ const TopHeader: React.FC = () => {
     Phasionista
     </Typography>
     <div className={classes.menuItem}>
-    <IconButton className={classes.menuButton} color="inherit" aria-label="home">
-        <HomeOutlined />
-    <span className={classes.menuItemText}>Home</span>
-    </IconButton>
+    <Link to={"/home"}>
+      <IconButton className={classes.menuButton} color="inherit" aria-label="home">
+          <HomeOutlined />
+      <span className={classes.menuItemText}>Home</span>
+      </IconButton>
+    </Link>
     <IconButton className={classes.menuButton} color="inherit" aria-label="shop">
         <StoreOutlined />
     <span className={classes.menuItemText}>Shop</span>
@@ -145,16 +147,16 @@ const TopHeader: React.FC = () => {
               <Link to="/">
                 <MenuItem onClick={handleCloseMenu} >Home</MenuItem>
               </Link>
-              <Link to="/">
+              <Link to="/404">
                 <MenuItem onClick={handleCloseMenu} >Library</MenuItem>
               </Link>
-              <Link to="/product">
+              <Link to="/product/sample-product">
                 <MenuItem onClick={handleCloseMenu} >Product</MenuItem>
               </Link>
-              <Link to="/">
+              <Link to="/404">
                 <MenuItem onClick={handleCloseMenu} >Cart</MenuItem>
               </Link>
-              <Link to="/">
+              <Link to="/404">
                 <MenuItem onClick={handleCloseMenu} >Wishlist</MenuItem>
               </Link>
               <Link to="/login">
