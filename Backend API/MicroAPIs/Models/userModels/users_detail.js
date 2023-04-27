@@ -45,11 +45,11 @@ module.exports = function(sequelize, DataTypes) {
     points: {
       type: DataTypes.INTEGER,
       allowNull: false
-    }
+    },
   }, {
     sequelize,
     tableName: 'users_detail',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

@@ -1,65 +1,32 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { Sequelize, Model, DataTypes } = require('sequelize');
+const Sequelize = require('sequelize');
+const routes = require('./userRoutes');
 
+// Create an Express.js app
 const app = express();
+
+// Parse request bodies as JSON
 app.use(bodyParser.json());
 
-const sequelize = new Sequelize('your_database', 'root', 'your_password', {
+// Connect to the MySQL database using Sequelize
+const sequelize = new Sequelize('pha_users', 'root', '', {
   host: 'localhost',
-  dialect: 'mysql'
+  dialect: 'mysql',
 });
 
-class User extends Model {}
-User.init(
-  {
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    }
-  },
-  {
-    sequelize,
-    modelName: 'User',
-    tableName: 'users',
-    timestamps: false
-  }
-);
+// Test the database connection
+sequelize.authenticate()
+  .then(() => console.log('Database connection successful'))
+  .catch((err) => console.error('Database connection error:', err));
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connected to the database.');
-  })
-  .catch((err) => {
-    console.error('Error connecting to the database:', err);
-  });
+// Define the port for the app to listen on
+const port = process.env.PORT || 3001;
 
-app.post('/api/users', async (req, res) => {
-  const { username, email, password } = req.body;
+// Mount the routes on the /api path
+app.use('/api', routes);
 
-  if (!username || !email || !password) {
-    return res.status(400).json({ error: 'Missing required fields.' });
-  }
-
-  try {
-    const user = await User.create({ username, email, password });
-    res.status(201).json({ id: user.id, username: user.username, email: user.email });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Error adding user to the database.' });
-  }
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+// Start the server listening on the specified port
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
