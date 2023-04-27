@@ -30,10 +30,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(20),
       allowNull: false
     },
-    last_login: {
-      type: DataTypes.DATEONLY,
-      allowNull: false
-    },
     region: {
       type: DataTypes.STRING(100),
       allowNull: false
@@ -49,7 +45,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'users_detail',
-    timestamps: false,
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
     indexes: [
       {
         name: "PRIMARY",

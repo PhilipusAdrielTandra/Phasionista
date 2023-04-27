@@ -4,7 +4,7 @@ const sequelize = new Sequelize('pha_users', 'root', '', {
     dialect: 'mysql',
   });
 
-const initModels = require('../Models/userModels/init-models')(sequelize); // Import the user model
+const initModels = require('./userModels/init-models')(sequelize); // Import the user model
 const { users_detail } = initModels;
 
 // Controller function for getting all users

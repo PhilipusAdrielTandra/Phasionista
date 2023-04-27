@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Grid, GridItem, Heading, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { makeStyles } from "@material-ui/core/styles";
 import { FaShoppingCart } from "react-icons/fa";
@@ -12,20 +12,6 @@ import { useParams } from 'react-router-dom';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../Styles/product.css";
 
-type Image = {
-  src: string;
-  alt: string;
-};
-
-type ProductProps = {
-  name: string;
-  images: Image[];
-  description: string;
-  price: string;
-  sizes: string[];
-  stock: number;
-};
-
 const useStyles = makeStyles(() => ({
   root: {
     paddingTop: "80px",
@@ -34,21 +20,38 @@ const useStyles = makeStyles(() => ({
 
 const Product = () => {
   const { id }  = useParams();
-  const name = "Sample Product";
+  const [name, setName] = useState("Sample Product");
   const images = [
     { src: "https://picsum.photos/600/800", alt: "Product Image 1" },
     { src: "https://picsum.photos/600/800?random=2", alt: "Product Image 2" },
     { src: "https://picsum.photos/600/800?random=3", alt: "Product Image 3" }
   ];
-  const description = "This is a sample product description.";
-  const price = "$49.99";
+  const [description, setDescription] = useState("This is a sample product description.");
+  const [price, setPrice] = useState("49.99");
   const sizes = ["Small", "Medium", "Large"];
-  const stock = 10;
+  const [stock, setStock] = useState(10);
   const classes = useStyles();
   const [size, setSize] = useState("");
   const [activeImage, setActiveImage] = useState(0);
   const handleSizeChange = (event : React.ChangeEvent<HTMLSelectElement>) => setSize(event.target.value);
   const handleImageClick = (index : number) => setActiveImage(index);
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/products/${id}`)
+    .then(response => response.json())
+    .then(data => {
+      const { id, name, stock, sales, description, price, ge_product_category_id, created_at, updated_at } = data;
+      console.log(id, name, stock, sales, description, price, ge_product_category_id, created_at, updated_at);
+
+      if(data.message != "Product not found"){
+        setName(name);
+        setDescription(description);
+        setPrice(price);
+        setStock(stock);
+      }
+    })
+    .catch(error => console.error(error));
+  }, []); 
 
   return (
     <Box className={classes.root}>
@@ -88,7 +91,7 @@ const Product = () => {
               {stock} in stock
             </Text>
             <Text fontSize="lg" className="product-price" mb={6}>
-              {price}
+              ${price}
             </Text>
             <select className="product-size-select" value={size} onChange={handleSizeChange}>
               <option value="">Select a size</option>
