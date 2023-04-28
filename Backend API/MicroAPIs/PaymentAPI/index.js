@@ -2,13 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { Sequelize } = require('sequelize');
-const sellerRoutes = require('./sellerRoutes');
+const paymentRoutes = require('./paymentRoutes');
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors())
 
-const sequelize = new Sequelize('pha_seller', 'root', '', {
+const sequelize = new Sequelize('pha_payment', 'root', '', {
   dialect: 'mysql',
   host: 'localhost'
 });
@@ -22,7 +22,7 @@ const sequelize = new Sequelize('pha_seller', 'root', '', {
   }
 })();
 
-app.use('/api', sellerRoutes);
+app.use('/api', paymentRoutes);
 
 app.listen(3000, () => {
   console.log('Server started on port 3000');

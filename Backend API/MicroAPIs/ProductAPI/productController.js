@@ -4,11 +4,10 @@ const sequelize = new Sequelize('pha_product', 'root', '', {
     dialect: 'mysql',
   });
 
-const initModels = require('./productModels/init-models')(sequelize); // Import the user model
+const initModels = require('./productModels/init-models')(sequelize); 
 const { product_details } = initModels;
 const Product = product_details;
 
-// CREATE a new product
 exports.createProduct = async (req, res) => {
   try {
     const product = await Product.create(req.body);
@@ -18,7 +17,6 @@ exports.createProduct = async (req, res) => {
   }
 };
 
-// READ all products
 exports.getProducts = async (req, res) => {
   try {
     const products = await Product.findAll();
@@ -28,7 +26,6 @@ exports.getProducts = async (req, res) => {
   }
 };
 
-// READ a specific product by ID
 exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findByPk(req.params.id);
@@ -43,7 +40,6 @@ exports.getProductById = async (req, res) => {
   }
 };
 
-// UPDATE a product by ID
 exports.updateProduct = async (req, res) => {
   try {
     const [updatedCount, updatedRows] = await Product.update(req.body, {
@@ -59,7 +55,6 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
-// DELETE a product by ID
 exports.deleteProduct = async (req, res) => {
   try {
     const deletedCount = await Product.destroy({

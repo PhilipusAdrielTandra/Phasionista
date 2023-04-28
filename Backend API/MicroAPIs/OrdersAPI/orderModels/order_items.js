@@ -30,6 +30,8 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'order_items',
     timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
     indexes: [
       {
         name: "PRIMARY",

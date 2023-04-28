@@ -25,6 +25,8 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'payment_methods',
-    timestamps: true
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
   });
 };
