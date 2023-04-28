@@ -8,13 +8,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors())
 
-// Initialize Sequelize
 const sequelize = new Sequelize('pha_product', 'root', '', {
   dialect: 'mysql',
   host: 'localhost'
 });
 
-// Test the database connection
 (async () => {
   try {
     await sequelize.authenticate();
@@ -24,10 +22,8 @@ const sequelize = new Sequelize('pha_product', 'root', '', {
   }
 })();
 
-// Mount the product routes
 app.use('/products', productRoutes);
 
-// Start the server
 app.listen(3000, () => {
   console.log('Server started on port 3000');
 });

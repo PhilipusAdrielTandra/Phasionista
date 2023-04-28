@@ -30,10 +30,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    images: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     location_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -46,6 +42,8 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'retailer_details',
     timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
     indexes: [
       {
         name: "PRIMARY",

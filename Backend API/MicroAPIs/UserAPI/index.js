@@ -21,7 +21,7 @@ sequelize.authenticate()
   .catch((err) => console.error('Database connection error:', err));
 
 // Define the port for the app to listen on
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 // Mount the routes on the /api path
 app.use('/api', routes);
