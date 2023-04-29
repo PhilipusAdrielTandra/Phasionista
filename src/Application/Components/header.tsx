@@ -147,7 +147,7 @@ const TopHeader: React.FC = () => {
               <Link to="/">
                 <MenuItem onClick={handleCloseMenu} >Home</MenuItem>
               </Link>
-              <Link to="/404">
+              <Link to="/library">
                 <MenuItem onClick={handleCloseMenu} >Library</MenuItem>
               </Link>
               <Link to="/product/sample-product">

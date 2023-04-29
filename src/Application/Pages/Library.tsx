@@ -1,40 +1,115 @@
-import React from 'react';
-import Dashboard from '../Components/Dashboard';
-import '../Styles/HomePage.css';
+import React, { useState } from 'react';
+import '../Styles/Library.css';
+import { Checkbox, FormControlLabel } from '@material-ui/core';
+import Header from "../Components/header"
+import Deck from "../Components/deck"
+import Footer from "../Components/footer";
+import LibraryData from '../Data/LibraryData.json'
 
-const Home: React.FC = () => {
+type Props = {
+  productsPerPage?: number;
+};
+
+function Library({ productsPerPage = 15 }: Props) {
+  const [products, setProducts] = useState(LibraryData);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [displayMode, setDisplayMode] = useState<'grid' | 'list'>('grid');
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  const handleAddToCart = (productId: number) => {
+    // implement add to cart functionality
+  };
+
+  const handleAddToWishlist = (productId: number) => {
+    // implement add to wishlist functionality
+  };
+
+  const handleCategoryFilter = (category: string) => {
+    setSelectedCategory(category);
+  };
+
+  const handleDisplayModeChange = (mode: 'grid' | 'list') => {
+    setDisplayMode(mode);
+  };
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const filteredProducts = selectedCategory
+    ? products.filter(product => product.category === selectedCategory)
+    : products;
+
   return (
-    <div className="Home">
-      <header>
-        <h1>My Website</h1>
-        <nav>
-          <ul>
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">About</a>
-            </li>
-            <li>
-              <a href="#">Contact</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <main>
-        <div className="ButtonGroup">
-          <button>Button 1</button>
-          <button>Button 2</button>
-          <button>Button 3</button>
+    <div>
+      <Header />
+      <div className="product-list-container">
+        <div className="product-list-filters">
+          <h2>Categories</h2>
+          <button
+            className={selectedCategory === '' ? 'active' : ''}
+            onClick={() => handleCategoryFilter('')}
+          >
+            <Checkbox checked={selectedCategory === ''} />
+            All
+          </button>
+          <button
+            className={selectedCategory === 'men-clothing' ? 'active' : ''}
+            onClick={() => handleCategoryFilter('men-clothing')}
+          >
+            <Checkbox checked={selectedCategory === 'men-clothing'} />
+            Men's Clothing
+          </button>
+          <button
+            className={selectedCategory === 'women-clothing' ? 'active' : ''}
+            onClick={() => handleCategoryFilter('women-clothing')}
+          >
+            <Checkbox checked={selectedCategory === 'women-clothing'} />
+            Women's Clothing
+          </button>
+          <h2>Display mode</h2>
+          <button onClick={() => handleDisplayModeChange('grid')}>
+            <Checkbox checked={displayMode === 'grid'} />
+            Grid
+          </button>
+          <button onClick={() => handleDisplayModeChange('list')}>
+            <Checkbox checked={displayMode === 'list'} />
+            List
+          </button>
         </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus
-          gravida quam, sed rutrum nibh consequat vitae. Suspendisse potenti.
-          Donec at vestibulum lacus. Morbi sed quam et sem facilisis suscipit.
-        </p>
-      </main>
+        <div className={`product-list ${displayMode}`}>
+          {filteredProducts
+            .slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage)
+            .map(product => (
+              <div key={product.id} className="product">
+                <img src={product.image} alt={product.name} />
+                <h2>{product.name}</h2>
+                <div className="product-rating">
+                  {[...Array(Math.round(product.rating)).keys()].map((_, index) => (
+                    <span key={index} className="star">
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <div className="product-price">${product.price}</div>
+                <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
+                <button onClick={() => handleAddToWishlist(product.id)}>Add to Wishlist</button>
+                </div>
+        ))}
     </div>
-  );
+  </div>
+  <div className="product-list-pagination">
+      {[...Array(Math.ceil(filteredProducts.length / productsPerPage)).keys()].map(pageNumber => (
+        <button key={pageNumber} className={currentPage === pageNumber + 1 ? 'active' : ''} onClick={() => handlePageChange(pageNumber + 1)}>
+          {pageNumber + 1}
+        </button>
+      ))}
+    </div>
+  <Footer />
+  <Deck />
+</div>
+
+);
 }
 
-export default Home;
+export default Library;
