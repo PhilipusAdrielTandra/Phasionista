@@ -37,7 +37,7 @@ const Product = () => {
   const handleImageClick = (index : number) => setActiveImage(index);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/products/${id}`)
+    fetch(`http://localhost:3001/products/${id}`)
     .then(response => response.json())
     .then(data => {
       const { id, name, stock, sales, description, price, ge_product_category_id, created_at, updated_at } = data;
