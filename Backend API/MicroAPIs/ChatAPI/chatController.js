@@ -1,10 +1,17 @@
-const { user_chat } = require('./models');
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('pha_chat', 'root', '', {
+    host: 'localhost',
+    dialect: 'mysql',
+  });
+
+const initModels = require('./chatModels/init-models')(sequelize); 
+const { user_chat } = initModels;
 
 async function getChats(req, res) {
   try {
-    const openchat_uuid = req.query.uuid;
+    const openchat_uuid = req.params.id;
     const chats = await user_chat.findAll({
-      where: { openchat_uuid },
+      where: { openchat_uuid: openchat_uuid}, 
     });
     res.json(chats);
   } catch (error) {
