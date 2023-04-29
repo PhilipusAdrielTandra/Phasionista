@@ -17,11 +17,9 @@ function Library({ productsPerPage = 15 }: Props) {
   const [selectedCategory, setSelectedCategory] = useState('');
 
   const handleAddToCart = (productId: number) => {
-    // implement add to cart functionality
   };
 
   const handleAddToWishlist = (productId: number) => {
-    // implement add to wishlist functionality
   };
 
   const handleCategoryFilter = (category: string) => {
@@ -81,7 +79,7 @@ function Library({ productsPerPage = 15 }: Props) {
           {filteredProducts
             .slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage)
             .map(product => (
-              <div key={product.id} className="product">
+              <div key={product.id} className={`product ${displayMode}`}>
                 <img src={product.image} alt={product.name} />
                 <h2>{product.name}</h2>
                 <div className="product-rating">
@@ -95,10 +93,10 @@ function Library({ productsPerPage = 15 }: Props) {
                 <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
                 <button onClick={() => handleAddToWishlist(product.id)}>Add to Wishlist</button>
                 </div>
-        ))}
-    </div>
-  </div>
-  <div className="product-list-pagination">
+              ))}
+          </div>
+        </div>
+        <div className="product-list-pagination">
       {[...Array(Math.ceil(filteredProducts.length / productsPerPage)).keys()].map(pageNumber => (
         <button key={pageNumber} className={currentPage === pageNumber + 1 ? 'active' : ''} onClick={() => handlePageChange(pageNumber + 1)}>
           {pageNumber + 1}

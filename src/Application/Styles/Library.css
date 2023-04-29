@@ -60,7 +60,8 @@
     align-items: stretch;
     width: 100%;
   }
-  .product {
+
+  .product.grid {
     width: 30%;
     margin-bottom: 2rem;
     margin-right: 1rem;
@@ -72,6 +73,19 @@
     transition: box-shadow 0.2s ease-in-out;
   }
   
+  .product.list {
+    height: 40rem;
+    width: 90%;
+    margin-bottom: 2rem;
+    margin-right: 1rem;
+    text-align: center;
+    background-color: #fff;
+    border: 5px solid #ccc;
+    border-radius: 0.25rem;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.2s ease-in-out;
+  }
+
   .product:hover {
     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
   }
