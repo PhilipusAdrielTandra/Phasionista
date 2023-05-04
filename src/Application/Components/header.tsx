@@ -153,10 +153,10 @@ const TopHeader: React.FC = () => {
               <Link to="/product/sample-product">
                 <MenuItem onClick={handleCloseMenu} >Product</MenuItem>
               </Link>
-              <Link to="/404">
+              <Link to="/cart">
                 <MenuItem onClick={handleCloseMenu} >Cart</MenuItem>
               </Link>
-              <Link to="/404">
+              <Link to="/wishlist">
                 <MenuItem onClick={handleCloseMenu} >Wishlist</MenuItem>
               </Link>
               <Link to="/login">

@@ -80,7 +80,7 @@ function Library({ productsPerPage = 15 }: Props) {
             .slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage)
             .map(product => (
               <div key={product.id} className={`product ${displayMode}`}>
-                <img src={product.image} alt={product.name} />
+                <img className={`product img ${displayMode}`} src={product.image} alt={product.name} />
                 <h2>{product.name}</h2>
                 <div className="product-rating">
                   {[...Array(Math.round(product.rating)).keys()].map((_, index) => (

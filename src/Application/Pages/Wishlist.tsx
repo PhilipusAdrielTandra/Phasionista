@@ -1,40 +1,53 @@
-import React from 'react';
-import Dashboard from '../Components/Dashboard';
-import '../Styles/HomePage.css';
+import React, { useState, useEffect } from "react";
+import { Button } from "@chakra-ui/react"
+import Header from "../Components/header"
+import Deck from "../Components/deck"
+import Footer from "../Components/footer";
+import "../Styles/Cart.css";
 
-const Home: React.FC = () => {
+function Wishlist() {
+  const [products, setProducts] = useState([{
+    id: 1,
+    name: "Sample Product",
+    image: "https://picsum.photos/600/800",
+    price: 49.99, 
+    amount: 1
+  },
+  {
+    id: 1,
+    name: "Sample Product",
+    image: "https://picsum.photos/600/800",
+    price: 49.99, 
+    amount: 1
+  }]);
+
+  useEffect(() => {
+  }, []);
+
+  const totalPrice = products.reduce(
+    (acc, product) => acc + product.price * product.amount,
+    0
+  );
+
   return (
-    <div className="Home">
-      <header>
-        <h1>My Website</h1>
-        <nav>
-          <ul>
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">About</a>
-            </li>
-            <li>
-              <a href="#">Contact</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <main>
-        <div className="ButtonGroup">
-          <button>Button 1</button>
-          <button>Button 2</button>
-          <button>Button 3</button>
-        </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus
-          gravida quam, sed rutrum nibh consequat vitae. Suspendisse potenti.
-          Donec at vestibulum lacus. Morbi sed quam et sem facilisis suscipit.
-        </p>
-      </main>
+    <div>
+      <Header/>
+      <div className="cart-container">
+        <h1>Wishlist</h1>
+        {products.map((product) => (
+          <div className="product-item" key={product.id}>
+            <img src={product.image} alt={product.name} />
+            <div>
+              <h2>{product.name}</h2>
+              <p>Price: ${product.price}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <Footer/>
+      <Deck/>
     </div>
   );
 }
 
-export default Home;
+export default Wishlist;

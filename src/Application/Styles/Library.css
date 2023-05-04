@@ -90,8 +90,14 @@
     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
   }
   
-  .product img {
-    width: 25rem;
+  .product img.grid {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+
+  .product img.list {
+    width: 30%;
     height: auto;
     margin-bottom: 1rem;
   }
