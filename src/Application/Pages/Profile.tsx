@@ -1,40 +1,57 @@
-import React from 'react';
-import Dashboard from '../Components/Dashboard';
-import '../Styles/HomePage.css';
+import React, { useState } from 'react';
+import Header from "../Components/header"
+import Deck from "../Components/deck"
+import Footer from "../Components/footer";
+import '../Styles/Profile.css'; // import the stylesheet
 
-const Home: React.FC = () => {
+function Profile(props : any) {
+  // initialize the state for the password visibility
+  const [showPassword, setShowPassword] = useState(false);
+
+  // handle the password visibility toggle
+  function togglePasswordVisibility() {
+    setShowPassword(!showPassword);
+  }
+
   return (
-    <div className="Home">
-      <header>
-        <h1>My Website</h1>
-        <nav>
-          <ul>
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">About</a>
-            </li>
-            <li>
-              <a href="#">Contact</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <main>
-        <div className="ButtonGroup">
-          <button>Button 1</button>
-          <button>Button 2</button>
-          <button>Button 3</button>
+    <div>
+      <Header/>
+      <div className="profile-page">
+        <div className="profile-picture-container">
+          <img src={props.pictureUrl} alt="Profile Picture" />
         </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus
-          gravida quam, sed rutrum nibh consequat vitae. Suspendisse potenti.
-          Donec at vestibulum lacus. Morbi sed quam et sem facilisis suscipit.
-        </p>
-      </main>
+        <div className="profile-details">
+          <div className="name">
+            {props.firstName} {props.lastName}
+          </div>
+          <div className="club-level">
+            Club Level
+            <div className="slider-container">
+              <input type="range" min="0" max="100" value={props.clubLevel} readOnly />
+              <div className="badge">{props.clubLevel}%</div>
+            </div>
+          </div>
+          <div className="username">
+            Username: {props.username}
+          </div>
+          <div className="password">
+            Password: {showPassword ? props.password : "●●●●●●●●"}
+            <button onClick={togglePasswordVisibility}>
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
+          <div className="phone-number">
+            Phone: {props.phoneNumber}
+          </div>
+          <div className="email">
+            Email: {props.email}
+          </div>
+        </div>
+      </div>
+      <Footer/>
+      <Deck/>
     </div>
   );
 }
 
-export default Home;
+export default Profile;

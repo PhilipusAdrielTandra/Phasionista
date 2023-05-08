@@ -7,6 +7,10 @@ const sequelize = new Sequelize('pha_users', 'root', '', {
 const initModels = require('./userModels/init-models')(sequelize); 
 const { users_detail } = initModels;
 
+const { v4: uuidv4 } = require('uuid');
+const argon = require('argon2');
+const jwt = require('jsonwebtoken')
+
 exports.getAllUsers = async (req, res) => {
   try {
     console.log(users_detail);
@@ -32,27 +36,66 @@ exports.getUserById = async (req, res) => {
   }
 };
 
-exports.createUser = async (req, res) => {
-  const { firstName, lastName, email, password, about, clubLevel, region, city, points } = req.body;
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const user = await User.create({
+    const user = await users_detail.findOne({ where: { email: email } });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    const validPassword = await argon.verify(user.hash, password);
+    if (!validPassword) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+    const access_token = jwt.sign({ id: user.id }, 'mariahcarey', { expiresIn: '1h' });
+    res.json({ access_token });
+  }
+
+  catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+exports.createUser = async (req, res) => {
+  const userData = req.body[0];
+  const { firstName, lastName, email, hash, about, club_level, region, city, points } = userData; 
+
+  let id = uuidv4(); 
+  let userExists = true;
+  while (userExists) {
+    const existingUser = await users_detail.findOne({ where: { id } });
+    if (!existingUser) {
+      userExists = false;
+    } else {
+      id = uuidv4();
+    }
+  }
+
+  try {
+    const user = await users_detail.create({
+      id,
       firstName,
       lastName,
       email,
-      hash: password, // hash the password, will do later!
+      hash: await argon.hash(hash),
       about,
-      club_level: clubLevel,
-      last_login: new Date(),
+      club_level,
       region,
       city,
       points,
     });
-    res.status(201).json(user);
+
+    const access_token = jwt.sign({ id: id }, 'mariahcarey', { expiresIn: '1h' });
+    res.json({ access_token });
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 exports.updateUser = async (req, res) => {
   const userId = req.params.id;
