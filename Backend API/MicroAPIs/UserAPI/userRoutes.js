@@ -16,11 +16,19 @@ function authenticateToken(req, res, next) {
     });
   }
 
-router.get('/users', userController.getAllUsers);
-router.get('/users/:id', authenticateToken, userController.getUserById);
-router.post('/users/login', userController.login);
+router.get('/getall', userController.getAllUsers);
+router.get('/getid', authenticateToken, userController.getUserById);
+router.post('/login', userController.login);
 router.post('/createuser', userController.createUser);
-router.put('/updateuser/:id', userController.updateUser);
-router.delete('/deleteuser/:id', userController.deleteUser);
+router.put('/updateuser', authenticateToken, userController.updateUser);
+router.delete('/deleteuser', authenticateToken, userController.deleteUser);
+router.get('/user-wishlist', authenticateToken, userController.getUsersWishlist);
+router.post('/user-wishlist', authenticateToken, userController.addUserWishlist);
+router.delete('/user-wishlist', authenticateToken, userController.deleteUserWishlist);
+router.get('/user-reviews/:id', userController.getReviewsById);
+router.delete('/user-reviews', authenticateToken, userController.deleteUserReviews);
+router.post('/user-reviews', authenticateToken, userController.addUserReviews);
+router.get('/user-transactions', authenticateToken, userController.getUserTransactions);
+router.post('/user-transactions', authenticateToken, userController.addUserTransactions);
 
 module.exports = router;

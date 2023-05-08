@@ -24,7 +24,7 @@ sequelize.authenticate()
 const port = process.env.PORT || 3000;
 
 // Mount the routes on the /api path
-app.use('/api', routes);
+app.use('/user', routes);
 
 // Start the server listening on the specified port
 app.listen(port, () => {

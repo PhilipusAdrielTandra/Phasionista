@@ -5,7 +5,7 @@ const sequelize = new Sequelize('pha_users', 'root', '', {
   });
 
 const initModels = require('./userModels/init-models')(sequelize); 
-const { users_detail } = initModels;
+const { users_detail, user_address, user_wishlist, user_reviews, user_transactions } = initModels;
 
 const { v4: uuidv4 } = require('uuid');
 const argon = require('argon2');
@@ -23,9 +23,20 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.getUserById = async (req, res) => {
-  const userId = req.params.id;
+  const token = req.headers['authorization'];
+  const decoded = jwt.decode(token);
+  const userId = decoded.id;
+
   try {
-    const user = await users_detail.findByPk(userId); 
+    const user = await users_detail.findByPk(userId,
+      { 
+        include: [
+          {
+        model: user_address,
+        as: 'user_addresses'
+          }
+      ]
+    }); 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -60,7 +71,8 @@ exports.login = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   const userData = req.body;
-  const { firstName, lastName, email, hash, about, club_level, region, city, points } = userData; 
+  const { firstName, lastName, email, hash, about, club_level, points, userAddress } = userData; 
+  const { address, city, state, zip_code, country } = userAddress;
 
   const exisitingEmail = await users_detail.findOne({ where: { email }});
   if (exisitingEmail) {
@@ -87,40 +99,59 @@ exports.createUser = async (req, res) => {
       hash: await argon.hash(hash),
       about,
       club_level,
-      region,
-      city,
-      points,
+      points
     });
 
-    const access_token = jwt.sign({ id: id }, 'mariahcarey', { expiresIn: '1h' });
-    res.json({ access_token });
 
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
+
+  try {
+    const addr = await user_address.create({
+      id: uuidv4(),
+      user_id: id,
+      address,
+      city,
+      state,
+      zip_code,
+      country
+    });
+  }
+
+  catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+
+  const access_token = jwt.sign({ id: id }, 'mariahcarey', { expiresIn: '1h' });  
+  res.json({ access_token });
 };
 
 
 exports.updateUser = async (req, res) => {
-  const userId = req.params.id;
+  const token = req.headers['authorization'];
+  const decoded = jwt.decode(token);
+  const userId = decoded.id;
+
   const { firstName, lastName, email, password, about, clubLevel, region, city, points } = req.body;
   try {
-    const user = await User.findByPk(userId);
+    const user = await users_detail.findByPk(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
    
-    user.firstName = firstName;
-    user.lastName = lastName;
-    user.email = email;
-    user.hash = password ? password : user.hash; // Only update the password if a new one was provided
-    user.about = about;
-    user.club_level = clubLevel;
-    user.region = region;
-    user.city = city;
-    user.points = points;
-    await user.save();
+    user.firstName = firstName ? firstName : user.firstName;
+    user.lastName = lastName ? lastName : user.lastName;
+    user.email = email ? email : user.email;
+    user.hash = password ? await argon.hash(password) : user.hash;
+    user.about = about ? about : user.about;
+    user.club_level = clubLevel ? clubLevel : user.club_level;
+    user.region = region ? region : user.region;
+    user.city = city ? city : user.city;
+    user.points = points ? points : user.points;
+    await user.save();;
     res.json(user);
   } catch (err) {
     console.error(err);
@@ -129,17 +160,234 @@ exports.updateUser = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
-  const userId = req.params.id;
+  const token = req.headers['authorization'];
+  const decoded = jwt.decode(token);
+  const userId = decoded.id;
+
   try {
-    const user = await User.findByPk(userId);
+    const user = await users_detail.findByPk(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
     await user.destroy(); 
-    res.status(204).send(); 
+    return res.status(204).send({ message: 'User deleted'}); 
 
     } catch (err) {
 console.error(err);
 res.status(500).json({ message: 'Server error' });
 }
 };
+
+exports.getUsersWishlist = async (req, res) => {
+  const token = req.headers['authorization'];
+  const decoded = jwt.decode(token);
+  const userId = decoded.id;
+
+  try {
+    const wishlist = await user_wishlist.findAll({
+      where: {
+        user_id: userId
+      }
+    });
+    if (!wishlist) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(wishlist);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
+exports.addUserWishlist = async (req, res) => {
+  const token = req.headers['authorization'];
+  const decoded = jwt.decode(token);
+  const userId = decoded.id;
+
+  const { product_id } = req.body;
+
+  let id = uuidv4(); 
+  let idExists = true;
+  while (idExists) {
+    const existingId = await user_wishlist.findOne({ where: { id } });
+    if (!existingId) {
+      idExists = false;
+    } else {
+      id = uuidv4();
+    }
+  }
+
+  const existingProduct = await user_wishlist.findOne({ where: { product_id }});
+  if (existingProduct) {
+    return res.status(409).json({ message: 'Product already in wishlist' });
+  }
+
+  try {
+    const wishlist = await user_wishlist.create({
+      id,
+      user_id: userId,
+      product_id
+    });
+    res.json(wishlist);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
+exports.deleteUserWishlist = async (req, res) => {
+  const token = req.headers['authorization'];
+  const decoded = jwt.decode(token);
+  const userId = decoded.id;
+  const { product_id } = req.body;
+
+  try { 
+    const wishlist = await user_wishlist.findOne({
+      where: {
+        user_id: userId,
+        product_id
+      }
+    });
+    if (!wishlist) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    await wishlist.destroy(); 
+    return res.status(204).send({ message: 'Product deleted from wishlist'}); 
+
+    } catch (err){
+      console.error(err);
+    }
+
+}
+
+exports.getReviewsById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const reviews = await user_reviews.findAll({
+      where: {
+        user_id: id
+      }
+    });
+    if (!reviews) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(reviews);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
+exports.addUserReviews = async (req, res) => {
+  const token = req.headers['authorization'];
+  const decoded = jwt.decode(token);
+  const userId = decoded.id;
+
+  const { product_id, rating, review } = req.body;
+
+  let id = uuidv4(); 
+  let idExists = true;
+  while (idExists) {
+    const existingId = await user_reviews.findOne({ where: { id } });
+    if (!existingId) {
+      idExists = false;
+    } else {
+      id = uuidv4();
+    }
+  }
+
+  try {
+    const reviews = await user_reviews.create({
+      id,
+      user_id: userId,
+      product_id,
+      rating,
+      review
+    });
+    res.json(reviews);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
+exports.deleteUserReviews = async (req, res) => {
+  const token = req.headers['authorization'];
+  const decoded = jwt.decode(token);
+  const userId = decoded.id;
+  const { product_id } = req.body;
+
+  try { 
+    const reviews = await user_reviews.findOne({
+      where: {
+        user_id: userId,
+        product_id
+      }
+    });
+    if (!reviews) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    await reviews.destroy(); 
+    return res.status(204).send({ message: 'Review deleted'}); 
+
+    } catch (err){
+      console.error(err);
+    }
+
+}
+
+exports.getUserTransactions = async (req, res) => {
+  const token = req.headers['authorization'];
+  const decoded = jwt.decode(token);
+  const userId = decoded.id;
+
+  try {
+    const transactions = await user_transactions.findAll({
+      where: {
+        user_id: userId
+      }
+    });
+    if (!transactions) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(transactions);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
+exports.addUserTransactions = async (req, res) => {
+  const token = req.headers['authorization'];
+  const decoded = jwt.decode(token);
+  const userId = decoded.id;
+
+  const { product_id } = req.body;
+
+  let id = uuidv4(); 
+  let idExists = true;
+  while (idExists) {
+    const existingId = await user_transactions.findOne({ where: { id } });
+    if (!existingId) {
+      idExists = false;
+    } else {
+      id = uuidv4();
+    }
+  }
+
+  try {
+    const reviews = await user_transactions.create({
+      id,
+      user_id: userId,
+      product_id
+    });
+    res.json(reviews);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
