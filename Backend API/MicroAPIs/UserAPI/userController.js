@@ -25,7 +25,7 @@ exports.getAllUsers = async (req, res) => {
 exports.getUserById = async (req, res) => {
   const userId = req.params.id;
   try {
-    const user = await User.findByPk(userId); 
+    const user = await users_detail.findByPk(userId); 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -59,8 +59,13 @@ exports.login = async (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
-  const userData = req.body[0];
+  const userData = req.body;
   const { firstName, lastName, email, hash, about, club_level, region, city, points } = userData; 
+
+  const exisitingEmail = await users_detail.findOne({ where: { email }});
+  if (exisitingEmail) {
+    return res.status(409).json({ message: 'Email already in use' });
+  }
 
   let id = uuidv4(); 
   let userExists = true;
