@@ -3,15 +3,19 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('user_cart', {
     id: {
       autoIncrement: true,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true
     },
     user_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false
     },
     product_id: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
+    quantity: {
       type: DataTypes.INTEGER,
       allowNull: false
     }

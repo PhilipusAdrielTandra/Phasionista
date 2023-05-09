@@ -7,21 +7,39 @@ const sequelize = new Sequelize('pha_cart', 'root', '', {
 const initModels = require('./cartModels/init-models')(sequelize);
 const { user_cart } = initModels;
 
+const { v4: uuidv4 } = require('uuid');
+const argon = require('argon2');
+const jwt = require('jsonwebtoken')
+
 exports.addToCart = async (req, res) => {
+  const token = req.headers['authorization'];
+  const decoded = jwt.decode(token);
+  const userId = decoded.id;
+
+  let id = uuidv4(); 
+  let idExists = true;
+  while (idExists) {
+    const existingId = await user_cart.findOne({ where: { id } });
+    if (!existingId) {
+      idExists = false;
+    } else {
+      id = uuidv4();
+    }
+  }
+
   try {
-    const { productId } = req.body;
+    const { productId, amount } = req.body;
 
     const existingCartItem = await user_cart.findOne({
-      where: { product_id: productId }
+      where: { product_id: productId, user_id: userId }
     });
 
     if (existingCartItem) {
-      existingCartItem.quantity += 1;
-      await existingCartItem.save();
+      const updatedQuantity = existingCartItem.quantity + Number(amount);
+      await existingCartItem.update({ quantity: updatedQuantity });
       res.status(200).send({ message: 'Cart item quantity updated successfully.' });
     } else {
-      // If the product doesn't exist in the cart yet, create a new cart item
-      await user_cart.create({ product_id: productId, quantity: 1 });
+      await user_cart.create({ id, user_id: userId, product_id: productId, quantity: Number(amount) });
       res.status(200).send({ message: 'Product added to cart successfully.' });
     }
   } catch (error) {
@@ -31,8 +49,12 @@ exports.addToCart = async (req, res) => {
 };
 
 exports.getCart = async (req, res) => {
+  const token = req.headers['authorization'];
+  const decoded = jwt.decode(token);
+  const userId = decoded.id;
+
   try {
-    const cartItems = await user_cart.findAll();
+    const cartItems = await user_cart.findAll({ where: { user_id: userId }});
     res.status(200).send(cartItems);
   } catch (error) {
     console.error(error);
@@ -41,9 +63,12 @@ exports.getCart = async (req, res) => {
 };
 
 exports.updateCartItem = async (req, res) => {
+  const token = req.headers['authorization'];
+  const decoded = jwt.decode(token);
+  const userId = decoded.id;
+
   try {
-    const { id } = req.params;
-    const { quantity } = req.body;
+    const { productId, quantity } = req.body;
 
     const cartItem = await user_cart.findByPk(id);
 
@@ -61,6 +86,10 @@ exports.updateCartItem = async (req, res) => {
 };
 
 exports.deleteCartItem = async (req, res) => {
+  const token = req.headers['authorization'];
+  const decoded = jwt.decode(token);
+  const userId = decoded.id;
+
   try {
     const { id } = req.params;
 

@@ -383,7 +383,7 @@ exports.addUserTransactions = async (req, res) => {
     const reviews = await user_transactions.create({
       id,
       user_id: userId,
-      product_id
+      orders_id
     });
     res.json(reviews);
   } catch (err) {
