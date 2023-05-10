@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const session = require('express-session');
 
 const userController = require('./userController');
 
@@ -15,6 +16,17 @@ function authenticateToken(req, res, next) {
       next();
     });
   }
+
+router.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: true,
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
 
 router.get('/getall', userController.getAllUsers);
 router.get('/getid', authenticateToken, userController.getUserById);
