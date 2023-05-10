@@ -24,6 +24,6 @@ const sequelize = new Sequelize('pha_chat', 'root', '', {
 
 app.use('/api', chatRoutes);
 
-app.listen(3002, () => {
-  console.log('Server started on port 3000');
+app.listen(3011, () => {
+  console.log('Server started on port 3011');
 });

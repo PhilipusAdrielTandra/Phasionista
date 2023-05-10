@@ -2,16 +2,12 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('user_wishlist', {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true
     },
-    date_added: {
-      type: DataTypes.DATEONLY,
-      allowNull: false
-    },
     user_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: 'users_detail',
@@ -19,13 +15,15 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     product_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false
     }
   }, {
     sequelize,
     tableName: 'user_wishlist',
     timestamps: false,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
     indexes: [
       {
         name: "PRIMARY",

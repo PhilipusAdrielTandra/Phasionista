@@ -156,6 +156,9 @@ const TopHeader: React.FC = () => {
               <Link to="/cart">
                 <MenuItem onClick={handleCloseMenu} >Cart</MenuItem>
               </Link>
+              <Link to="/chat">
+                <MenuItem onClick={handleCloseMenu} >Chat</MenuItem>
+              </Link>
               <Link to="/wishlist">
                 <MenuItem onClick={handleCloseMenu} >Wishlist</MenuItem>
               </Link>
@@ -210,7 +213,9 @@ const TopHeader: React.FC = () => {
     />
     </div>
     <IconButton edge="end" color="inherit" aria-label="profile">
+      <Link to="/profile">
         <AccountCircle />
+      </Link>
     </IconButton>
     <IconButton edge="end" color="inherit" aria-label="wishlist">
         <Favorite />

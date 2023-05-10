@@ -1,8 +1,10 @@
 const Sequelize = require('sequelize');
+const { v4: uuidv4 } = require('uuid');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('users_detail', {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.uuidv4,
       allowNull: false,
       primaryKey: true
     },
@@ -28,14 +30,6 @@ module.exports = function(sequelize, DataTypes) {
     },
     club_level: {
       type: DataTypes.STRING(20),
-      allowNull: false
-    },
-    region: {
-      type: DataTypes.STRING(100),
-      allowNull: false
-    },
-    city: {
-      type: DataTypes.STRING(100),
       allowNull: false
     },
     points: {
