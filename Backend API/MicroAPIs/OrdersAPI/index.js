@@ -24,6 +24,6 @@ const sequelize = new Sequelize('pha_orders', 'root', '', {
 
 app.use('/api', ordersRoutes);
 
-app.listen(3000, () => {
-  console.log('Server started on port 3000');
+app.listen(3012, () => {
+  console.log('Server started on port 3012');
 });

@@ -8,6 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors())
 
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const RedisStore = require('connect-redis').default;
 const redis = require('redis');
@@ -29,19 +30,21 @@ redisClient.on('connect', function (err) {
 
 let redisStore = new RedisStore({
   client: redisClient,
-  prefix: "pha:",
+  prefix: 'pha:',
+  ttl: 86400
 })
 
+app.use(cookieParser());
 app.use(
   session({
     store: redisStore,
     resave: false, // required: force lightweight session keep alive (touch)
     saveUninitialized: true, // recommended: only save session when data exists
-    secret: "keyboard cat",
+    secret: 'mariahcarey',
     cookie: { 
       httpOnly: false,
       secure: false,
-      maxAge: 60 * 60 * 1000 
+      maxAge: 86400000 
   }
   })  
 )
@@ -60,13 +63,8 @@ const sequelize = new Sequelize('pha_cart', 'root', '', {
   }
 })();
 
-app.use('/api', cartRoutes);
+app.use('/cart', cartRoutes);
 
-app.use((req, res, next) => {
-  res.set('X-Session-ID', req.sessionID);
-  next();
-});
-
-app.listen(3000, () => {
-  console.log('Server started on port 3000');
+app.listen(3010, () => {
+  console.log('Server started on port 3010');
 });

@@ -19,11 +19,13 @@ function authenticateToken(req, res, next) {
   });
 }
 
-router.get('/getsessioncart', cartController.getCart);
-router.post('/addsessioncart', cartController.addToCart);
-router.post('/cart', authenticateToken, cartController.addToCart);
-router.get('/cart', authenticateToken, cartController.getCart);
-router.put('/cart', authenticateToken, cartController.updateCartItem);
-router.delete('/cart', authenticateToken, cartController.deleteCartItem);
+router.get('/session', cartController.getCart);
+router.post('/session', cartController.addToCart);
+router.put('/session', cartController.updateCartItem);
+router.delete('/session', cartController.deleteCartItem)
+router.post('/user', authenticateToken, cartController.addToCart);
+router.get('/user', authenticateToken, cartController.getCart);
+router.put('/user', authenticateToken, cartController.updateCartItem);
+router.delete('/user', authenticateToken, cartController.deleteCartItem);
 
 module.exports = router;
