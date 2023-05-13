@@ -38,6 +38,7 @@ router.get('/user-wishlist', authenticateToken, userController.getUsersWishlist)
 router.post('/user-wishlist', authenticateToken, userController.addUserWishlist);
 router.delete('/user-wishlist', authenticateToken, userController.deleteUserWishlist);
 router.get('/user-reviews/:id', userController.getReviewsById);
+router.get('/user-reviews/:productId', userController.getReviewsById); //not yet
 router.delete('/user-reviews', authenticateToken, userController.deleteUserReviews);
 router.post('/user-reviews', authenticateToken, userController.addUserReviews);
 router.get('/user-transactions', authenticateToken, userController.getUserTransactions);

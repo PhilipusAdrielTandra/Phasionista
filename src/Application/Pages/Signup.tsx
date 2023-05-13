@@ -38,9 +38,6 @@ const Login: React.FC = () => {
       <div className="right">
         <img className="logo" src={logo} alt="branding" />
         <p className="flext">"Wear Your Values On Your Sleeve With Our Clothing"</p>
-        <div className="max-w-md text-center text">
-          <p className="splext">"Make sure the fear of missing out doesn't get to you first"</p>
-        </div>
         <form onSubmit={handleLogin}>
           <div className="input-container">
             <TextField

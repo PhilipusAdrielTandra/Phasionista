@@ -23,7 +23,12 @@ function ImageSlider() {
   }, [images]);
 
   return (
-    <img className="left" src={imageUrl} alt="slider image" style={{opacity: opacity, transition: 'opacity 1s ease-in-out'}} />
+    <div className="left">
+      <div className="max-w-md text-center text">
+          <p className="splext">"Make sure the fear of missing out doesn't get to you first"</p>
+      </div>
+      <img className="picture" src={imageUrl} alt="slider image" style={{opacity: opacity, transition: 'opacity 1s ease-in-out'}} />
+    </div>
   );
 }
 

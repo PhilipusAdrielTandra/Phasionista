@@ -22,6 +22,9 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
+    size: {
+      type: DataTypes.STRING(5),
+    },
     description: {
       type: DataTypes.TEXT,
       allowNull: false
@@ -38,6 +41,8 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'product_inventory',
     timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
     indexes: [
       {
         name: "PRIMARY",
