@@ -2,7 +2,7 @@
     {
       "id": 1,
       "name": "Product 1",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=1",
       "rating": 4.5,
       "price": 19.99,
       "category": "men-clothing"
@@ -10,7 +10,7 @@
     {
       "id": 2,
       "name": "Product 2",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=2",
       "rating": 3.2,
       "price": 9.99,
       "category": "women-clothing"
@@ -18,7 +18,7 @@
     {
       "id": 3,
       "name": "Product 3",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=3",
       "rating": 2.8,
       "price": 29.99,
       "category": "electronics"
@@ -26,7 +26,7 @@
     {
       "id": 4,
       "name": "Product 4",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=4",
       "rating": 4.9,
       "price": 49.99,
       "category": "men-clothing"
@@ -34,7 +34,7 @@
     {
       "id": 5,
       "name": "Product 5",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=5",
       "rating": 3.7,
       "price": 14.99,
       "category": "women-clothing"
@@ -42,7 +42,7 @@
     {
       "id": 6,
       "name": "Product 6",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=6",
       "rating": 4.2,
       "price": 39.99,
       "category": "electronics"
@@ -50,7 +50,7 @@
     {
       "id": 7,
       "name": "Product 7",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=7",
       "rating": 2.5,
       "price": 79.99,
       "category": "men-clothing"
@@ -58,7 +58,7 @@
     {
       "id": 8,
       "name": "Product 8",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=8",
       "rating": 3.9,
       "price": 24.99,
       "category": "women-clothing"
@@ -66,7 +66,7 @@
     {
       "id": 9,
       "name": "Product 9",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=9",
       "rating": 4.7,
       "price": 59.99,
       "category": "electronics"
@@ -74,7 +74,7 @@
     {
       "id": 10,
       "name": "Product 10",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=10",
       "rating": 4.1,
       "price": 34.99,
       "category": "men-clothing"
@@ -82,7 +82,7 @@
     {
       "id": 11,
       "name": "Product 11",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=11",
       "rating": 3.6,
       "price": 12.99,
       "category": "women-clothing"
@@ -90,7 +90,7 @@
     {
       "id": 12,
       "name": "Product 12",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=12",
       "rating": 2.9,
       "price": 19.99,
       "category": "electronics"
@@ -98,7 +98,7 @@
     {
       "id": 13,
       "name": "Product 13",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=13",
       "rating": 4.3,
       "price": 44.99,
       "category": "men-clothing"
@@ -106,7 +106,7 @@
     {
       "id": 14,
       "name": "Product 14",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=14",
       "rating": 3.8,
       "price": 29.99,
       "category": "women-clothing"
@@ -114,7 +114,7 @@
     {
       "id": 15,
       "name": "Product 15",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=15",
       "rating": 4.6,
       "price": 54.99,
       "category": "electronics"
@@ -122,7 +122,7 @@
     {
       "id": 16,
       "name": "Product 16",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=16",
       "rating": 4.2,
       "price": 39.99,
       "category": "men-clothing"
@@ -130,7 +130,7 @@
     {
       "id": 17,
       "name": "Product 17",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=17",
       "rating": 3.5,
       "price": 17.99,
       "category": "women-clothing"
@@ -138,7 +138,7 @@
     {
       "id": 18,
       "name": "Product 18",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=18",
       "rating": 4.4,
       "price": 49.99,
       "category": "electronics"
@@ -146,7 +146,7 @@
     {
       "id": 19,
       "name": "Product 19",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=19",
       "rating": 3.3,
       "price": 24.99,
       "category": "men-clothing"
@@ -154,7 +154,7 @@
     {
       "id": 20,
       "name": "Product 20",
-      "image": "https://dummyimage.com/300x300/000/fff",
+      "image": "https://picsum.photos/600/800?random=20",
       "rating": 4.0,
       "price": 14.99,
       "category": "women-clothing"

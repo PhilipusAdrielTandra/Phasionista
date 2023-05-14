@@ -74,7 +74,7 @@
   }
   
   .product.list {
-    height: 40rem;
+    height: 100%;
     width: 90%;
     margin-bottom: 2rem;
     margin-right: 1rem;
@@ -92,7 +92,7 @@
   
   .product img.grid {
     width: 100%;
-    height: auto;
+    height: 20rem;
     margin-bottom: 1rem;
   }
 
@@ -105,11 +105,26 @@
   .product h2 {
     margin-top: 0;
     margin-bottom: 0.5rem;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    font-weight: 300
   }
   
   .product-rating {
     margin-bottom: 0.5rem;
+  }
+
+  .product-name.grid {
+    font-weight: 300;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .product-name.list {
+    position: absolute;
+    font-weight: 300;
+    font-size: 1.2rem;
+    text-align: center;
   }
   
   .product-rating .star {
@@ -117,12 +132,19 @@
     font-size: 1.2rem;
   }
   
-  .product-price {
-    font-weight: bold;
+  .product-price.grid {
+    font-weight: 300;
     font-size: 1.2rem;
     margin-bottom: 1rem;
+    text-align: center;
   }
-  
+
+  .product-price.list {
+    font-weight: 300;
+    font-size: 2rem;
+    text-align: center;
+  }
+
   .product-list-pagination {
     display: flex;
     justify-content: center;

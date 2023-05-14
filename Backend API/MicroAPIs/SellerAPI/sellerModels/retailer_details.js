@@ -26,10 +26,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    products: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     location_id: {
       type: DataTypes.INTEGER,
       allowNull: false,

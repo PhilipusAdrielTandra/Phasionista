@@ -30,14 +30,35 @@ const Product = () => {
   const [price, setPrice] = useState("49.99");
   const sizes = ["Small", "Medium", "Large"];
   const [stock, setStock] = useState(10);
+  const [quantity, setQuantity] = useState(1);
   const classes = useStyles();
   const [size, setSize] = useState("");
   const [activeImage, setActiveImage] = useState(0);
   const handleSizeChange = (event : React.ChangeEvent<HTMLSelectElement>) => setSize(event.target.value);
   const handleImageClick = (index : number) => setActiveImage(index);
 
+  const increaseQty = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
+
+  const decreaseQty = () => {
+    if (quantity > 1) {
+      setQuantity((prevQuantity) => prevQuantity - 1);
+    }
+  };
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+    console.log('Added to cart:', quantity);
+  };
+
+  const handleInputChange = (event: any) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    setQuantity(newQuantity);
+  };
+
   useEffect(() => {
-    fetch(`http://localhost:3001/products/${id}`)
+    fetch(`http://localhost:3014/product/item/${id}`)
     .then(response => response.json())
     .then(data => {
       const { id, name, stock, sales, description, price, ge_product_category_id, created_at, updated_at } = data;
@@ -100,13 +121,25 @@ const Product = () => {
               ))}
             </select>
             <Box mt={6}>
-            <MaterialButton
-                variant="outlined"
-                color="default"
-                className="buy-now-button custom-button"
-              >
-                Add to Cart
-              </MaterialButton>
+            <form className="wrapper" onSubmit={handleSubmit}>
+              <div className="cart-box">
+                <div className="qty qty-minus" onClick={decreaseQty}>
+                  -
+                </div>
+                <input
+                  id="cartQty"
+                  className="qty"
+                  type="number"
+                  value={quantity}
+                  onChange={handleInputChange}  
+                  min="1"
+                />
+                <div className="qty qty-plus" onClick={increaseQty}>
+                  +
+                </div>
+                <input className="submit" type="submit" value="Add to Cart" />
+              </div>
+            </form>
             </Box>
           </Box>
         </GridItem>

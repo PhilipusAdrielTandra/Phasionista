@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('pha_product', 'root', '', {
-    host: 'localhost',
-    dialect: 'mysql',
-  });
+const sequelize = new Sequelize('pha_product', 'admin', 'password', {
+  dialect: 'mysql',
+  host: 'phasionista-products.ctjeibahvnce.ap-southeast-1.rds.amazonaws.com'
+});
 
 const initModels = require('./productModels/init-models')(sequelize); 
 const { product_details, product_images, product_inventory, ge_product_category } = initModels;

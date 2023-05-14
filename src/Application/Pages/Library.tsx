@@ -4,6 +4,7 @@ import { Checkbox, FormControlLabel } from '@material-ui/core';
 import Header from "../Components/header"
 import Deck from "../Components/deck"
 import Footer from "../Components/footer";
+import LibraryCartBtn from '../Components/LibraryCartBtn';
 import LibraryData from '../Data/LibraryData.json'
 
 type Props = {
@@ -81,17 +82,16 @@ function Library({ productsPerPage = 15 }: Props) {
             .map(product => (
               <div key={product.id} className={`product ${displayMode}`}>
                 <img className={`product img ${displayMode}`} src={product.image} alt={product.name} />
-                <h2>{product.name}</h2>
+                <h2 className={`product-name ${displayMode}`}>{product.name}</h2>
                 <div className="product-rating">
                   {[...Array(Math.round(product.rating)).keys()].map((_, index) => (
-                    <span key={index} className="star">
+                    <span key={index} className={`star`}>
                       ★
                     </span>
                   ))}
-                </div>
-                <div className="product-price">${product.price}</div>
-                <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
-                <button onClick={() => handleAddToWishlist(product.id)}>Add to Wishlist</button>
+                  </div>
+                  <div className={`product-price ${displayMode}`}>${product.price}</div>
+                  <LibraryCartBtn/>
                 </div>
               ))}
           </div>
