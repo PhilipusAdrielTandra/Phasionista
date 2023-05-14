@@ -22,7 +22,7 @@ const sequelize = new Sequelize('pha_seller', 'root', '', {
   }
 })();
 
-app.use('/api', sellerRoutes);
+app.use('/seller', sellerRoutes);
 
 app.listen(3015, () => {
   console.log('Server started on port 3015');

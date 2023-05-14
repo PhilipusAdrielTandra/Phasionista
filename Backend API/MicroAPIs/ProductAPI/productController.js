@@ -241,4 +241,13 @@ exports.getInventoryByProductId = async (req, res) => {
   }
 }
 
-
+exports.getRetailerProducts = async (req, res) => {
+  try {
+    const products = await product_details.findAll({
+      where: { retailer_id: req.params.rid }
+    });
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}

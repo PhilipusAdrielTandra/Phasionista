@@ -6,6 +6,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
+    retailer_id: {
+      type: DataTypes.STRING(36),
+      allowNull: false
+    },
     name: {
       type: DataTypes.STRING(100),
       allowNull: false

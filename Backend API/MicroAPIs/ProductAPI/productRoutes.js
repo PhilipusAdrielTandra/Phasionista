@@ -25,12 +25,13 @@ router.delete('/categories/:id', restriction, productController.deleteCategory);
 router.get('/images/:id', productController.getProductImages);
 router.post('/images/:id', restriction, productController.addProductImage);
 router.delete('/images/:id', restriction, productController.deleteProductImage);
-router.get('/product-inventory', productController.getInventory);
-router.get('/product-inventory/:id', productController.getInventoryById);
-router.get('/product-inventory/:pid', productController.getInventoryByProductId)
-router.post('/product-inventory/:id', restriction, productController.addInventory);
-router.put('/product-inventory/:id', restriction, productController.updateInventory);
-router.delete('/product-inventory/:id', restriction, productController.deleteInventory);
+router.get('/inventory', productController.getInventory);
+router.get('/inventory/:id', productController.getInventoryById);
+router.get('/inventory/:pid', productController.getInventoryByProductId)
+router.post('/inventory/:id', restriction, productController.addInventory);
+router.put('/inventory/:id', restriction, productController.updateInventory);
+router.delete('/inventory/:id', restriction, productController.deleteInventory);
+router.get('/retailer/:rid', productController.getRetailerProducts);
 
 
 module.exports = router;
