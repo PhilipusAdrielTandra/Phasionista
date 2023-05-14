@@ -9,14 +9,6 @@ module.exports = function(sequelize, DataTypes) {
     name: {
       type: DataTypes.STRING(255),
       allowNull: false
-    },
-    parent_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'ge_product_category',
-        key: 'id'
-      }
     }
   }, {
     sequelize,
@@ -31,13 +23,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "fk_ge_product_category_parent_id",
-        using: "BTREE",
-        fields: [
-          { name: "parent_id" },
         ]
       },
     ]

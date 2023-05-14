@@ -132,6 +132,39 @@ exports.deleteCategory = async (req, res) => {
   }
 }
 
+exports.getProductImages = async (req, res) => {
+  try {
+    const images = await product_images.findAll();
+    res.json(images);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+exports.addProductImage = async (req, res) => {
+  try {
+    const image = await product_images.create(req.body);
+    res.status(201).json(image);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
+
+exports.deleteProductImage = async (req, res) => {
+  try {
+    const deletedCount = await product_images.destroy({
+      where: { id: req.params.id }
+    });
+    if (deletedCount > 0) {
+      res.json({ message: 'Image deleted' });
+    } else {
+      res.status(404).json({ message: 'Image not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 exports.getInventory = async (req, res) => {
   try {
     const inventory = await product_inventory.findAll();
