@@ -1,11 +1,15 @@
 import React from 'react';
+import { YouTube, LinkedIn, Twitter, Instagram } from '@material-ui/icons';
 import Header from '../Components/header'
 import '../Styles/Chat.css';
 import profile from '../Assets/images/future.jpg'
+import philip from '../Assets/images/philip.jpg'
+import peter from '../Assets/images/peter.jpg'
+import rachel from '../Assets/images/rachel.jpg'
 
 const About: React.FC = () => {
   return (
-    <div>
+    <div className=''>
       <Header/>
         <div className='mt-24 flex pt-9'>
           {/* left side */}
@@ -27,10 +31,27 @@ const About: React.FC = () => {
           </p>
           </div>
         </div>
-        <div className='text-center'>
-          <h1>""</h1>
-          <p>Right now, the highest art form is actually fashion</p>
-          <h1>""</h1>
+        <div className='text-center pt-[20px '>
+          <h1 className='absolute text-[40px] absolute m-auto left-0 right-0'>""</h1>
+          <p className='pt-8 text-[25px]'>Right now, the highest art form is actually fashion.</p>
+          <h1 className='text-[20px] font-thin'>-Kanye West</h1>
+        </div>
+        <div className='flex justify-center items-center pt-12 w-[40%] m-auto'>
+          <div className='relative flex-[33%] text-center'>
+            <img src={philip} className='mx-auto'/>
+            <h1>Philipus Adriel Tandra</h1>
+            <span>Front-end developer</span>
+          </div>
+          <div className='relative flex-[33%] text-center'>
+            <img src={rachel} className='mx-auto'/>
+            <h1>Rachel Anastasia Wijaya</h1>
+            <span>Front-end developer</span>
+          </div>
+          <div className='relative flex-[33%] text-center'>
+            <img src={peter} className='mx-auto'/>
+            <h1>Peter Nelson Subrata</h1>
+            <span>Back-end developer</span>
+          </div>
         </div>
       </div>
   );
