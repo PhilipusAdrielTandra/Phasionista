@@ -1,7 +1,7 @@
 import React from 'react';
 import Dashboard from '../Components/Dashboard';
 import '../Styles/Chat.css';
-import profile from '../Assets/branding/nelson.jpg'
+import profile from '../Assets/images/nelson.jpg'
 
 const Home: React.FC = () => {
   return (

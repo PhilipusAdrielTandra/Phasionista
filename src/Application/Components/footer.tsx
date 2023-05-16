@@ -2,6 +2,7 @@ import * as React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Button, Divider } from '@material-ui/core';
 import { YouTube, LinkedIn, Twitter, Instagram } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -78,7 +79,9 @@ const Footer: React.FC = () => {
       <div className={classes.container}>
         <div className={classes.section}>
           <div className={classes.sectionTitle}>About Us</div>
+          <Link to={"/about"}>
           <Button className={classes.sectionButton}>About Us</Button>
+          </Link>
           <Button className={classes.sectionButton}>Locations</Button>
           <Button className={classes.sectionButton}>Contacts</Button>
           <Button className={classes.sectionButton}>Orders</Button>
