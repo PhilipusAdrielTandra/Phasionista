@@ -10,6 +10,8 @@ import Profile from './Application/Pages/Profile';
 import Library from './Application/Pages/Library';
 import NotFound from './Application/Pages/NotFound';
 import Chat from './Application/Pages/Chat';
+import About from './Application/Pages/About';
+import FAQ from './Application/Pages/FAQ';
 import { authStore } from './Application/Redux/authenticationState';
 import './App.css';
 
@@ -30,6 +32,8 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/library" element={<Library />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/about" element={<About/>} />
+          <Route path="/faqs" element={<FAQ />}/>
           <Route path="/404" element={<NotFound />} />
         </Routes>
       </div>
