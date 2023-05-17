@@ -1,32 +1,70 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const Sequelize = require('sequelize');
-const routes = require('./userRoutes');
+const cors = require('cors');
+const { Sequelize } = require('sequelize');
+const userRoutes = require('./userRoutes');
 
-// Create an Express.js app
 const app = express();
-
-// Parse request bodies as JSON
 app.use(bodyParser.json());
+app.use(cors())
 
-// Connect to the MySQL database using Sequelize
-const sequelize = new Sequelize('pha_users', 'root', '', {
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const RedisStore = require('connect-redis').default;
+const redis = require('redis');
+
+let redisClient = redis.createClient({
   host: 'localhost',
-  dialect: 'mysql',
+  port: 6379,
+  password: ''
+})
+
+redisClient.connect().catch(console.error)
+
+redisClient.on('error', function (err) {
+  console.log('Could not establish a connection with redis. ' + err);
+});
+redisClient.on('connect', function (err) {
+  console.log('Connected to redis successfully');
 });
 
-// Test the database connection
-sequelize.authenticate()
-  .then(() => console.log('Database connection successful'))
-  .catch((err) => console.error('Database connection error:', err));
+let redisStore = new RedisStore({
+  client: redisClient,
+  prefix: 'pha:',
+  ttl: 86400
+})
 
-// Define the port for the app to listen on
-const port = 3016;
+app.use(cookieParser());
+app.use(
+  session({
+    store: redisStore,
+    resave: false,
+    saveUninitialized: true, 
+    secret: 'mariahcarey',
+    cookie: { 
+      httpOnly: false,
+      secure: false,
+      maxAge: 86400000 
+  }
+  })  
+)
 
-// Mount the routes on the /api path
-app.use('/user', routes);
+const sequelize = new Sequelize('pha_users', 'root', '', {
+  dialect: 'mysql',
+  host: 'localhost'
+});
 
-// Start the server listening on the specified port
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+})();
+
+app.use('/user', userRoutes);
+
+app.listen(3016, () => {
+  console.log('Server started on port 3016');
 });

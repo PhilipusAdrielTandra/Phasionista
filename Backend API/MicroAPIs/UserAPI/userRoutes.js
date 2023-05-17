@@ -18,7 +18,7 @@ function authenticateToken(req, res, next) {
   }
 
 router.use(session({
-  secret: 'your-secret-key',
+  secret: 'mariahcarey',
   resave: false,
   saveUninitialized: false,
   cookie: {

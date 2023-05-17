@@ -113,7 +113,7 @@ exports.getCart = async (req, res) => {
               await existingCartItem.update({ quantity: updatedQuantity });
             } else {
               await user_cart.create({
-                id: sessionCartItem.id,
+                id: sessionCartItem.sessionId,
                 user_id: userId,
                 product_id: sessionCartItem.product_id,
                 quantity: sessionCartItem.quantity
