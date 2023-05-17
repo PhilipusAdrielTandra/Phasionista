@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import Header from "../Components/header";
-import data from '../Components/QuestionData'
-import SingleQuestion from '../Components/Question'
+import data from '../Data/QuestionData'
 import Accordion from '../Components/Accordion';
+import "../Styles/FAQ.css"
 
 
 const FAQ: React.FC = () => {
@@ -10,14 +10,18 @@ const FAQ: React.FC = () => {
     const [questions, setQuestions] = useState(data)
 
     return (
-        <div className='container'>
-        <h3>questions and answers about login</h3>
-        <section className='info'>
-          {questions.map((question) => (
-            <Accordion key={question.id} {...question} />
-          ))}
-        </section>
+      <div className= "FAQ">
+        <Header></Header>
+        <div className='container' >
+          <h3>Our Frequently Asked Questions</h3>
+          <section className='info'>
+            {questions.map((question) => (
+              <Accordion key={question.id} {...question} />
+            ))}
+          </section>
+        </div>
       </div>
+
     );
   };
       

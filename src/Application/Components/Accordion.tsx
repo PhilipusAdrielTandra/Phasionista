@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 interface AccordionProps {
   title: React.ReactNode
   content: React.ReactNode
@@ -26,11 +27,7 @@ export const Accordion: React.FC<AccordionProps> = ({ title, content }) => {
         onClick={toggleAccordion}
       >
         <p className="inline-block text-footnote light">{title}</p>
-        <img
-          src={`../Assets/images/chevron.png`}
-          alt="Chevron icon"
-          className={`${rotate} inline-block`}
-        />
+        <FontAwesomeIcon icon={faChevronDown} className={`${rotate} inline-block`} />
       </button>
       <div
         ref={contentSpace}

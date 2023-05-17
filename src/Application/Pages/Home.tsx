@@ -21,7 +21,7 @@ const Home: React.FC = () => {
 
       <header>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <h1>Perfection, right at your fingertips.</h1>
+        <h2>Perfection, right at your fingertips.</h2>
       </header>
       <main>
         <p>
