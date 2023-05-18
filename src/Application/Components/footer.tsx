@@ -88,11 +88,17 @@ const Footer: React.FC = () => {
         </div>
         <div className={classes.section}>
           <div className={classes.sectionTitle}>Useful Links</div>
-          <Button className={classes.sectionButton}>Returns</Button>
-          <Button className={classes.sectionButton}>Support Policy</Button>
-          <Button className={classes.sectionButton}>Size Guide</Button>
+          <Link to={"/returns"}>
+            <Button className={classes.sectionButton}>Returns</Button>
+          </Link>
+          <Link to={"/support-policy"}>
+            <Button className={classes.sectionButton}>Support Policy</Button>
+          </Link>
+          <Link to={"/sizes"}>
+            <Button className={classes.sectionButton}>Size Guide</Button>
+          </Link>
           <Link to={"/faqs"}>
-          <Button className={classes.sectionButton}>FAQs</Button>
+            <Button className={classes.sectionButton}>FAQs</Button>
           </Link>
         </div>
         <div className={classes.section}>

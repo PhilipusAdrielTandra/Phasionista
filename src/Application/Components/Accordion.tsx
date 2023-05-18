@@ -23,16 +23,16 @@ export const Accordion: React.FC<AccordionProps> = ({ title, content }) => {
   return (
     <div className="flex flex-col">
       <button
-        className="py-6 box-border appearance-none cursor-pointer focus:outline-none flex items-center justify-between"
+        className="space-x-10 py-6 box-border appearance-none cursor-pointer focus:outline-none flex items-center justify-between"
         onClick={toggleAccordion}
       >
-        <p className="inline-block text-footnote light">{title}</p>
+        <p className="font-bold inline-block text-footnote light">{title}</p>
         <FontAwesomeIcon icon={faChevronDown} className={`${rotate} inline-block`} />
       </button>
       <div
         ref={contentSpace}
         style={{ maxHeight: `${height}` }}
-        className="overflow-auto transition-max-height duration-700 ease-in-out"
+        className="overflow-auto transition-max-height duration-700 ease-in-out md:overflow-auto"
       >
         <div className="pb-10">{content}</div>
       </div>

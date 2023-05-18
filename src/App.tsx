@@ -12,8 +12,10 @@ import NotFound from './Application/Pages/NotFound';
 import Chat from './Application/Pages/Chat';
 import About from './Application/Pages/About';
 import FAQ from './Application/Pages/FAQ';
+import Sizes from './Application/Pages/Sizes';
 import { authStore } from './Application/Redux/authenticationState';
 import './App.css';
+
 
 function App() {
   const authenticated: boolean = authStore.getState().authen.authenticated;
@@ -34,6 +36,7 @@ function App() {
           <Route path="/chat" element={<Chat />} />
           <Route path="/about" element={<About/>} />
           <Route path="/faqs" element={<FAQ />}/>
+          <Route path="/sizes" element={<Sizes />}/>
           <Route path="/404" element={<NotFound />} />
         </Routes>
       </div>
