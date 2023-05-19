@@ -41,27 +41,23 @@ const About: React.FC = () => {
         </div>
         
         {/* meet the team */}
-        <div className='flex justify-center items-center mt-12 w-[30%] m-auto'>
-          {/* team member */}
-          <div className='relative flex-1/3 text-center '>
-            <img src={philip} className='pt-3 mx-auto'/>
-              <h1 className='pt-2 mx-3'>Philipus Adriel Tandra</h1>
-              <span className='text-[16px]'>Developer</span>
+        <section className="container mx-auto py-40 px-8">
+          <div className='grid lg:grid-cols-3'>
+            <div>
+              hello world
+              <img src={philip} className='rounded mx-auto'/>
+            </div>
+            <div>
+              hello world
+            </div>
+            <div>
+              hello world
+            </div>
           </div>
-          <div className='relative flex-1/3 text-center mx-7'>
-            <img src={rachel} className='pt-3 mx-auto'/>
-            <h1 className='pt-2 mx-3'>Rachel Anastasia Wijaya</h1>
-            <span className='text-[16px]'>Developer</span>
-          </div>
-          <div className='relative flex-1/3 text-center '>
-            <img src={peter} className='pt-3 mx-auto'/>
-            <h1 className='pt-2 mx-4'>Peter Nelson Subrata</h1>
-            <span className='text-[16px]'>Developer</span>
-          </div>
-        </div>
+        </section>
 
-        <div className='flex pt-32 px-44 justify-center h-96' id='locations'>
-          {/* left */}
+        {/* <div className='flex pt-32 px-44 justify-center h-96' id='locations'>
+
             <div className='pl-36 flex-[70%]'>
               <h1 className='text-4xl text-center'>Contact us</h1>
               <h1 className='text-[25px]'>Name</h1>
@@ -90,13 +86,12 @@ const About: React.FC = () => {
               </div>
             </div>
           
-          {/* right */}
           <div className='relative flex-[30%] overflow-hidden m-auto justify-center'>
             <h1 className='text-[32px]'>Our Office</h1>
             <p className='relative w-[65%] text-[20px]'>Jalan Kapten Harun Kabir No.724, Cibeureum, Kec. Cisarua, Kabupaten Bogor, Jawa Barat 16750</p>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.402432817232!2d106.9459645783986!3d-6.7206491759360185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69b5cf14e6ee83%3A0x6586bb20b8f11d9!2sTaman%20Safari%20Indonesia%20Bogor!5e0!3m2!1sen!2sid!4v1684397824044!5m2!1sen!2sid" width="300" height="400" style={{border:0}} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
-        </div>
+        </div> */}
     </div>
   );
 }
