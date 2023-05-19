@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { AppBar, Toolbar, IconButton, InputBase, Menu, MenuItem, Popper, Paper, PopperPlacementType, Fade, MenuList } from '@material-ui/core';
 import { createStyles, fade, makeStyles, Theme } from '@material-ui/core/styles';
+import { Autocomplete } from '@material-ui/lab';
 import { HomeOutlined, StoreOutlined, PagesOutlined, MailOutline, Search, AccountCircle, Favorite, ShoppingCart, ExpandMore } from '@material-ui/icons';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
@@ -87,6 +88,26 @@ const useStyles = makeStyles((theme: Theme) =>
         visibility: 'hidden',
         transform: 'translateY(-100%)',
       },
+      autocomplete: {
+        width: '100%',
+        marginLeft: theme.spacing(3),
+        [theme.breakpoints.up('md')]: {
+          width: '20ch',
+        },
+      },
+      autocompletePaper: {
+        marginTop: theme.spacing(1),
+      },
+      autocompleteOption: {
+        display: 'flex',
+        alignItems: 'center',
+        padding: theme.spacing(1, 2),
+      },
+      autocompleteImage: {
+        width: theme.spacing(4),
+        height: theme.spacing(4),
+        marginRight: theme.spacing(2),
+      },
     },
   }),
 );
@@ -96,6 +117,12 @@ const TopHeader: React.FC = () => {
   const [isHidden, setIsHidden] = React.useState(false);
   const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(null);
   const [menuPlacement, setMenuPlacement] = React.useState<PopperPlacementType>('bottom-start');
+
+  const suggestions: Product[] = [
+    { name: "Product 1", image: "image-url-1" },
+    { name: "Product 2", image: "image-url-2" },
+    { name: "Product 3", image: "image-url-3" },
+  ];
 
   const handleScroll = React.useCallback(() => {
     if (window.pageYOffset > 0) {
@@ -115,6 +142,19 @@ const TopHeader: React.FC = () => {
     setMenuAnchorEl((prev) => (prev ? null : prev));
     setMenuPlacement('bottom');
   };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = event.target.value;
+    // Implement logic to fetch product suggestions based on searchValue
+    // and update the suggestions state.
+    // For example, you can make an API call to retrieve relevant products.
+  };
+
+  const handleSearchSelect = (event: React.ChangeEvent<{}>, value: any) => {
+    // Handle search select event.
+    // For example, you can navigate to the selected product page.
+  };
+
   
   return (
     <div className={classes.grow}>
@@ -200,16 +240,33 @@ const TopHeader: React.FC = () => {
     </div>
     <div className={classes.grow} />
     <div className={classes.search}>
-    <div className={classes.searchIcon}>
-        <Search />
-    </div>
-    <InputBase
-    placeholder="Search…"
-    classes={{
-        root: classes.inputRoot,
-        input: classes.inputInput,
-        }}
-        inputProps={{ 'aria-label': 'search' }}
+    <Autocomplete
+      className={classes.autocomplete}
+      options={suggestions} // Array of product suggestions
+      getOptionLabel={(option: any) => option.name} // Assuming each product object has a 'name' property
+      renderOption={(option: any) => (
+        <div className={classes.autocompleteOption}>
+          <img src={option.image} alt={option.name} className={classes.autocompleteImage} />
+          {option.name}
+        </div>
+      )}
+      renderInput={(params: any) => (
+        <div ref={params.InputProps.ref} className={classes.search}>
+          <div className={classes.searchIcon}>
+            <Search />
+          </div>
+          <InputBase
+            {...params.inputProps}
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ ...params.inputProps, 'aria-label': 'search' }}
+            onChange={handleSearchChange}
+          />
+        </div>
+      )}
     />
     </div>
     <IconButton edge="end" color="inherit" aria-label="profile">

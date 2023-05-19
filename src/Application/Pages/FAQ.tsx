@@ -3,7 +3,7 @@ import Header from "../Components/header";
 import Footer from "../Components/footer";
 import data from '../Data/QuestionData'
 import Accordion from '../Components/Accordion';
-import "../Styles/FAQ.css"
+import  "../Styles/FAQ.css"
 
 
 const FAQ: React.FC = () => {
