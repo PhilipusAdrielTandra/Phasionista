@@ -1,7 +1,8 @@
 import React from 'react';
 import { YouTube, LinkedIn, Twitter, Instagram } from '@material-ui/icons';
+import {Button} from '@material-ui/core'
+import { TextField } from '@material-ui/core';
 import Header from '../Components/header'
-import '../Styles/Chat.css';
 import profile from '../Assets/images/future.jpg'
 import philip from '../Assets/images/philip.jpg'
 import peter from '../Assets/images/peter.jpg'
@@ -31,29 +32,72 @@ const About: React.FC = () => {
           </p>
           </div>
         </div>
-        <div className='text-center pt-[20px '>
-          <h1 className='absolute text-[40px] absolute m-auto left-0 right-0'>""</h1>
-          <p className='pt-8 text-[25px]'>Right now, the highest art form is actually fashion.</p>
+
+        {/* quote */}
+        <div className='text-center pt-[20px]'>
+          <h1 className='pt-2 absolute text-[40px] m-auto left-0 right-0'>""</h1>
+          <p className='pt-12 text-[25px]'>Right now, the highest art form is actually fashion.</p>
           <h1 className='text-[20px] font-thin'>-Kanye West</h1>
         </div>
-        <div className='flex justify-center items-center pt-12 w-[40%] m-auto'>
-          <div className='relative flex-[33%] text-center'>
-            <img src={philip} className='mx-auto'/>
-            <h1>Philipus Adriel Tandra</h1>
-            <span>Front-end developer</span>
+        
+        {/* meet the team */}
+        <div className='flex justify-center items-center mt-12 w-[30%] m-auto'>
+          {/* team member */}
+          <div className='relative flex-1/3 text-center '>
+            <img src={philip} className='pt-3 mx-auto'/>
+              <h1 className='pt-2 mx-3'>Philipus Adriel Tandra</h1>
+              <span className='text-[16px]'>Developer</span>
           </div>
-          <div className='relative flex-[33%] text-center'>
-            <img src={rachel} className='mx-auto'/>
-            <h1>Rachel Anastasia Wijaya</h1>
-            <span>Front-end developer</span>
+          <div className='relative flex-1/3 text-center mx-7'>
+            <img src={rachel} className='pt-3 mx-auto'/>
+            <h1 className='pt-2 mx-3'>Rachel Anastasia Wijaya</h1>
+            <span className='text-[16px]'>Developer</span>
           </div>
-          <div className='relative flex-[33%] text-center'>
-            <img src={peter} className='mx-auto'/>
-            <h1>Peter Nelson Subrata</h1>
-            <span>Back-end developer</span>
+          <div className='relative flex-1/3 text-center '>
+            <img src={peter} className='pt-3 mx-auto'/>
+            <h1 className='pt-2 mx-4'>Peter Nelson Subrata</h1>
+            <span className='text-[16px]'>Developer</span>
           </div>
         </div>
-      </div>
+
+        <div className='flex pt-32 px-44 justify-center h-96'>
+          {/* left */}
+            <div className='pl-36 flex-[70%]'>
+              <h1 className='text-4xl text-center'>Contact us</h1>
+              <h1 className='text-[25px]'>Name</h1>
+              <div className='float-left relative flex flex-col w-[45%] pr-5 pb-6'>
+                <h2>First Name</h2>
+                <TextField variant='outlined' className='w-full'/>
+              </div>
+              <div className='float-left relative flex flex-col w-[45%] pb-6'>
+                <h2>Last Name</h2>
+                <TextField variant='outlined' className='w-full mb-5'/>
+              </div>
+              <div className='relative flex flex-col w-[90%] pb-6'>
+                <h2>Email</h2>
+                <TextField variant='outlined' className='w-full'/>
+              </div>
+              <div className='relative flex flex-col w-[90%] pb-6'>
+                <h2>Subject</h2>
+                <TextField variant='outlined' className='w-full'/>
+              </div>
+              <div className='relative flex flex-col w-[90%] h-20'>
+                <h2>Message</h2>
+                <TextField variant='outlined' inputProps={{style: {height: "80px",},}} className='w-full h-24'/>
+              </div>
+              <div className='relative flex'>
+              <Button variant="contained">Contained</Button>
+              </div>
+            </div>
+          
+          {/* right */}
+          <div className='relative flex-[30%] overflow-hidden m-auto justify-center'>
+            <h1 className='text-[32px]'>Our Office</h1>
+            <p className='relative w-[65%] text-[20px]'>Jalan Kapten Harun Kabir No.724, Cibeureum, Kec. Cisarua, Kabupaten Bogor, Jawa Barat 16750</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.402432817232!2d106.9459645783986!3d-6.7206491759360185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69b5cf14e6ee83%3A0x6586bb20b8f11d9!2sTaman%20Safari%20Indonesia%20Bogor!5e0!3m2!1sen!2sid!4v1684397824044!5m2!1sen!2sid" width="300" height="400" style={{border:0}} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+    </div>
   );
 }
 export default About;
