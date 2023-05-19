@@ -8,9 +8,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors())
 
-const sequelize = new Sequelize('pha_chat', 'root', '', {
+const sequelize = new Sequelize('pha_chat', 'admin', 'password', {
   dialect: 'mysql',
-  host: 'localhost'
+  host: 'phasionista-chat.ctjeibahvnce.ap-southeast-1.rds.amazonaws.com'
 });
 
 (async () => {
@@ -22,7 +22,7 @@ const sequelize = new Sequelize('pha_chat', 'root', '', {
   }
 })();
 
-app.use('/api', chatRoutes);
+app.use('/chat', chatRoutes);
 
 app.listen(3011, () => {
   console.log('Server started on port 3011');

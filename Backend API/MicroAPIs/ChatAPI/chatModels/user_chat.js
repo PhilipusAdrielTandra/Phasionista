@@ -18,6 +18,10 @@ module.exports = function(sequelize, DataTypes) {
         model: 'user_openchat_retail',
         key: 'uuid'
       }
+    },
+    userID: {
+      type: DataTypes.STRING(36),
+      allowNull: false,
     }
   }, {
     sequelize,
