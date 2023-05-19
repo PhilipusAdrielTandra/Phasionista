@@ -60,7 +60,7 @@ const About: React.FC = () => {
           </div>
         </div>
 
-        <div className='flex pt-32 px-44 justify-center h-96'>
+        <div className='flex pt-32 px-44 justify-center h-96' id='locations'>
           {/* left */}
             <div className='pl-36 flex-[70%]'>
               <h1 className='text-4xl text-center'>Contact us</h1>
