@@ -1,12 +1,17 @@
 import React, { useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { View, Image, ImageSourcePropType } from 'react-native';
+
 interface AccordionProps {
   title: React.ReactNode
   content: React.ReactNode
+  image: string
 }
 
-export const Accordion: React.FC<AccordionProps> = ({ title, content }) => {
+
+
+export const Accordion: React.FC<AccordionProps> = ({ title, content, image }) => {
   const [active, setActive] = useState(false)
   const [height, setHeight] = useState('0px')
   const [rotate, setRotate] = useState('transform duration-700 ease')
@@ -34,7 +39,10 @@ export const Accordion: React.FC<AccordionProps> = ({ title, content }) => {
         style={{ maxHeight: `${height}` }}
         className="overflow-auto transition-max-height duration-700 ease-in-out md:overflow-auto"
       >
-        <div className="pb-10">{content}</div>
+        <div className="pb-5">{content}</div>
+        <div className="pb-5">
+          <img src={image}/>
+        </div>
       </div>
     </div>
   )

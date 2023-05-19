@@ -15,6 +15,7 @@ import FAQ from './Application/Pages/FAQ';
 import Sizes from './Application/Pages/Sizes';
 import { authStore } from './Application/Redux/authenticationState';
 import './App.css';
+import Return from './Application/Pages/Return';
 
 
 function App() {
@@ -36,7 +37,9 @@ function App() {
           <Route path="/chat" element={<Chat />} />
           <Route path="/about" element={<About/>} />
           <Route path="/faqs" element={<FAQ />}/>
+          <Route path="/support" element={<FAQ />}/>
           <Route path="/sizes" element={<Sizes />}/>
+          <Route path="/returns" element={<Return />}/>
           <Route path="/404" element={<NotFound />} />
         </Routes>
       </div>

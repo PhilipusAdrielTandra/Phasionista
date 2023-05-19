@@ -91,7 +91,7 @@ const Footer: React.FC = () => {
           <Link to={"/returns"}>
             <Button className={classes.sectionButton}>Returns</Button>
           </Link>
-          <Link to={"/support-policy"}>
+          <Link to={"/faqs"}>
             <Button className={classes.sectionButton}>Support Policy</Button>
           </Link>
           <Link to={"/sizes"}>
