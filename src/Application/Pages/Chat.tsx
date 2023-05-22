@@ -50,7 +50,8 @@ const Home: React.FC = () => {
             <p className='relative right-0 text-right max-w-[65%] p-[12px] bg-[#63A375] rounded-[10px]'>Hey, do you want to buy my products?<br/><span className='block text-left text-[14px] font-light'>12:15</span></p>
           </div>
         </div>
-        <div className='relative w-full h-[65px] bg-slate-200 flex justify-between items-center p-[15px] border-[1px]'>
+        {/* input chat */}
+        <div className='relative w-full h-[65px] bg-slate-200 flex justify-between items-center p-[15px] border-t-[1px] border-b-[1px] border-black'>
           <input type='text' placeholder='type a message' className='relative w-[90%] rounded-[30px]'></input>
         </div>
       </div>

@@ -47,5 +47,6 @@ async function createChat(req, res) {
 module.exports = {
   getUserChat,
   createChat,
-  getRetailerChat
+  getRetailerChat,
+  getChats
 };
