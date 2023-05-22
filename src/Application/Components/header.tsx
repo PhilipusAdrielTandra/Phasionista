@@ -208,6 +208,9 @@ const TopHeader: React.FC = () => {
               <Link to="/register">
                 <MenuItem onClick={handleCloseMenu} >Register</MenuItem>
               </Link>
+              <Link to="/AR">
+                <MenuItem onClick={handleCloseMenu} >AR</MenuItem>
+              </Link>
             </MenuList>
           </Paper>
         </Fade>

@@ -13,6 +13,7 @@ import Chat from './Application/Pages/Chat';
 import About from './Application/Pages/About';
 import FAQ from './Application/Pages/FAQ';
 import Sizes from './Application/Pages/Sizes';
+import ARComponent from './Application/Components/ARComponent';
 import { authStore } from './Application/Redux/authenticationState';
 import './App.css';
 import Return from './Application/Pages/Return';
@@ -41,6 +42,7 @@ function App() {
           <Route path="/sizes" element={<Sizes />}/>
           <Route path="/returns" element={<Return />}/>
           <Route path="/404" element={<NotFound />} />
+          <Route path="/AR" element={<ARComponent />} />
         </Routes>
       </div>
     </Router>
