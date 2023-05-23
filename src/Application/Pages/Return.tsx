@@ -3,7 +3,7 @@ import Header from "../Components/header";
 import Footer from "../Components/footer";
 import data from '../Data/QuestionData'
 import Accordion from '../Components/Accordion';
-import "../Styles/FAQ.css"
+import styles from "../Styles/FAQ.module.css"
 
 
 const Return: React.FC = () => {
@@ -11,10 +11,10 @@ const Return: React.FC = () => {
     const [questions, setQuestions] = useState(data)
 
     return (
-      <div className= "FAQ">
+      <div className={styles.FAQ}>
         <Header></Header>
-        <div className='container' >
-          <h3 className='underline'>Returns and Exchanges</h3>
+        <div className={styles.container} >
+          <h3 className={styles.underline}>Returns and Exchanges</h3>
           <p>Welcome to our Returns and Exchanges page! We want to ensure that you have a hassle-free shopping experience with us. If you are not completely satisfied with your purchase, we're here to help. Please take a moment to review our return and exchange policies outlined below.</p>
           <h3>Returns Policy</h3>
           <p>We gladly accept returns within 30 days of the delivery date for a full refund or store credit. To be eligible for a return, the item must be unused, unworn, and in its original packaging with all tags attached. Please note that certain items such as swimwear, underwear, and accessories (including jewelry and hair accessories) are non-returnable due to hygiene reasons, unless they arrived damaged or defective.</p>

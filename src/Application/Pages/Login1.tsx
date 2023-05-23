@@ -6,6 +6,7 @@ import ImageSlider from '../Components/ImageSlider';
 import { FaGoogle, FaLinkedin } from 'react-icons/fa';
 import logo from '../Assets/branding/branding.png';
 import { makeStyles } from '@material-ui/core/styles';
+import { GoogleLogin } from 'react-google-login';
 import Header from "../Components/header"
 import Deck from "../Components/deck"
 import Footer from "../Components/footer";
@@ -43,6 +44,12 @@ const Login1: React.FC = () => {
   const handleLinkedinLogin = () => {
     // handle LinkedIn login logic
   };
+
+  const responseGoogle = (response: any) => {
+    console.log(response);
+    console.log("Google Id Token: ", response.tokenId);
+    console.log("Google Access Token: ", response.accessToken);
+  }
 
   return (
     <div>
@@ -84,8 +91,13 @@ const Login1: React.FC = () => {
           </div>
           <div className="glink">
             <Button onClick={handleGoogleLogin} className="google-button">
-              <FaGoogle />
-              <span>Sign in with Google</span>
+            <GoogleLogin
+              clientId="469647397924-5n1idp8n1a880mq8q1d9q5qt654odatf.apps.googleusercontent.com"
+              buttonText="Login with Google"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={'single_host_origin'}
+            />
             </Button>
             <Button onClick={handleLinkedinLogin} className="linkedin-button">
               <FaLinkedin />
@@ -105,4 +117,4 @@ const Login1: React.FC = () => {
   );
 };
 
-export default Login;
+export default Login1;

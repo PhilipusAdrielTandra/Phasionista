@@ -145,14 +145,9 @@ const TopHeader: React.FC = () => {
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = event.target.value;
-    // Implement logic to fetch product suggestions based on searchValue
-    // and update the suggestions state.
-    // For example, you can make an API call to retrieve relevant products.
   };
 
   const handleSearchSelect = (event: React.ChangeEvent<{}>, value: any) => {
-    // Handle search select event.
-    // For example, you can navigate to the selected product page.
   };
 
   
@@ -204,6 +199,9 @@ const TopHeader: React.FC = () => {
               </Link>
               <Link to="/login">
                 <MenuItem onClick={handleCloseMenu} >Login</MenuItem>
+              </Link>
+              <Link to="/login1">
+                <MenuItem onClick={handleCloseMenu} >Login1</MenuItem>
               </Link>
               <Link to="/register">
                 <MenuItem onClick={handleCloseMenu} >Register</MenuItem>
