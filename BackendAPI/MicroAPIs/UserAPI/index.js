@@ -49,9 +49,9 @@ app.use(
   })  
 )
 
-const sequelize = new Sequelize('pha_users', 'root', '', {
+const sequelize = new Sequelize('pha_users', 'admin', '9n49NvuQZjk6KoLdQLdv', {
   dialect: 'mysql',
-  host: 'localhost'
+  host: 'phasionista-user.ctjeibahvnce.ap-southeast-1.rds.amazonaws.com'
 });
 
 (async () => {
