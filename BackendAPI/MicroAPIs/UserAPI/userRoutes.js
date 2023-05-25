@@ -1,21 +1,25 @@
 const express = require('express');
+const { OAuth2Client } = require('google-auth-library');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const session = require('express-session');
+const client = new OAuth2Client('469647397924-5n1idp8n1a880mq8q1d9q5qt654odatf.apps.googleusercontent.com');
 
 const userController = require('./userController');
 
 function authenticateToken(req, res, next) {
-    const token = req.headers['authorization'];
-  
-    if (token == null) return res.sendStatus(401);
-  
-    jwt.verify(token, 'mariahcarey', (err, user) => {
-      if (err) return res.sendStatus(403);
-      req.user = user;
-      next();
-    });
-  }
+  const header = req.headers['authorization'];
+  if (!header) return res.sendStatus(401);
+
+  const [bearer, token] = header.split(' ');
+  if (bearer !== 'Bearer' || !token) return res.sendStatus(401);
+
+  jwt.verify(token, 'mariahcarey', (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+}
 
 router.use(session({
   secret: 'mariahcarey',

@@ -24,8 +24,9 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getUserById = async (req, res) => {
   const token = req.headers['authorization'];
-  const decoded = jwt.decode(token);
-  const userId = decoded.id;
+  const bearer = token ? token.split(" ")[1] : undefined;
+  const decoded = jwt.decode(bearer);
+  const userId = decoded ? decoded.id : null;
 
   try {
     const user = await users_detail.findByPk(userId,
@@ -71,7 +72,7 @@ exports.login = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   const userData = req.body;
-  const { firstName, lastName, email, hash, about, club_level, points, userAddress } = userData; 
+  const { fullName, email, phoneNumber, password, about, club_level, points, userAddress } = userData; 
   const { address, city, state, zip_code, country } = userAddress;
 
   const exisitingEmail = await users_detail.findOne({ where: { email }});
@@ -93,10 +94,10 @@ exports.createUser = async (req, res) => {
   try {
     const user = await users_detail.create({
       id,
-      firstName,
-      lastName,
+      fullName,
       email,
-      hash: await argon.hash(hash),
+      phoneNumber,
+      hash: await argon.hash(password),
       about,
       club_level,
       points
@@ -108,9 +109,11 @@ exports.createUser = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 
+  let addId = uuidv4();
+
   try {
     const addr = await user_address.create({
-      id: uuidv4(),
+      id: addId,
       user_id: id,
       address,
       city,
@@ -132,19 +135,20 @@ exports.createUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   const token = req.headers['authorization'];
-  const decoded = jwt.decode(token);
-  const userId = decoded.id;
+  const bearer = token ? token.split(" ")[1] : undefined;
+  const decoded = jwt.decode(bearer);
+  const userId = decoded ? decoded.id : null;
 
-  const { firstName, lastName, email, password, about, clubLevel, region, city, points } = req.body;
+  const { fullName, email, phoneNumber, password, about, clubLevel, region, city, points } = req.body;
   try {
     const user = await users_detail.findByPk(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
    
-    user.firstName = firstName ? firstName : user.firstName;
-    user.lastName = lastName ? lastName : user.lastName;
+    user.fullName = fullName ? fullName : user.fullName;
     user.email = email ? email : user.email;
+    user.phoneNumber = phoneNumber ? phoneNumber: user.phoneNumber;
     user.hash = password ? await argon.hash(password) : user.hash;
     user.about = about ? about : user.about;
     user.club_level = clubLevel ? clubLevel : user.club_level;
@@ -161,8 +165,9 @@ exports.updateUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   const token = req.headers['authorization'];
-  const decoded = jwt.decode(token);
-  const userId = decoded.id;
+  const bearer = token ? token.split(" ")[1] : undefined;
+  const decoded = jwt.decode(bearer);
+  const userId = decoded ? decoded.id : null;
 
   try {
     const user = await users_detail.findByPk(userId);
@@ -202,8 +207,9 @@ exports.getUsersWishlist = async (req, res) => {
 
 exports.addUserWishlist = async (req, res) => {
   const token = req.headers['authorization'];
-  const decoded = jwt.decode(token);
-  const userId = decoded.id;
+  const bearer = token ? token.split(" ")[1] : undefined;
+  const decoded = jwt.decode(bearer);
+  const userId = decoded ? decoded.id : null;
 
   const { product_id } = req.body;
 
@@ -238,8 +244,9 @@ exports.addUserWishlist = async (req, res) => {
 
 exports.deleteUserWishlist = async (req, res) => {
   const token = req.headers['authorization'];
-  const decoded = jwt.decode(token);
-  const userId = decoded.id;
+  const bearer = token ? token.split(" ")[1] : undefined;
+  const decoded = jwt.decode(bearer);
+  const userId = decoded ? decoded.id : null;
   const { product_id } = req.body;
 
   try { 
@@ -283,8 +290,9 @@ exports.getReviewsById = async (req, res) => {
 
 exports.addUserReviews = async (req, res) => {
   const token = req.headers['authorization'];
-  const decoded = jwt.decode(token);
-  const userId = decoded.id;
+  const bearer = token ? token.split(" ")[1] : undefined;
+  const decoded = jwt.decode(bearer);
+  const userId = decoded ? decoded.id : null;
 
   const { product_id, rating, review } = req.body;
 
@@ -316,8 +324,9 @@ exports.addUserReviews = async (req, res) => {
 
 exports.deleteUserReviews = async (req, res) => {
   const token = req.headers['authorization'];
-  const decoded = jwt.decode(token);
-  const userId = decoded.id;
+  const bearer = token ? token.split(" ")[1] : undefined;
+  const decoded = jwt.decode(bearer);
+  const userId = decoded ? decoded.id : null;
   const { product_id } = req.body;
 
   try { 
@@ -341,8 +350,9 @@ exports.deleteUserReviews = async (req, res) => {
 
 exports.getUserTransactions = async (req, res) => {
   const token = req.headers['authorization'];
-  const decoded = jwt.decode(token);
-  const userId = decoded.id;
+  const bearer = token ? token.split(" ")[1] : undefined;
+  const decoded = jwt.decode(bearer);
+  const userId = decoded ? decoded.id : null;
 
   try {
     const transactions = await user_transactions.findAll({
@@ -363,8 +373,9 @@ exports.getUserTransactions = async (req, res) => {
 
 exports.addUserTransactions = async (req, res) => {
   const token = req.headers['authorization'];
-  const decoded = jwt.decode(token);
-  const userId = decoded.id;
+  const bearer = token ? token.split(" ")[1] : undefined;
+  const decoded = jwt.decode(bearer);
+  const userId = decoded ? decoded.id : null;
 
   const { product_id } = req.body;
 

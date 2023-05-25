@@ -8,16 +8,16 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    firstName: {
+    fullName: {
       type: DataTypes.STRING(50),
-      allowNull: false
-    },
-    lastName: {
-      type: DataTypes.STRING(20),
       allowNull: false
     },
     email: {
       type: DataTypes.STRING(80),
+      allowNull: false
+    },
+    phoneNumber: {
+      type: DataTypes.INTEGER(40),
       allowNull: false
     },
     hash: {

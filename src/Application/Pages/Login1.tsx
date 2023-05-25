@@ -10,6 +10,7 @@ import { GoogleLogin } from 'react-google-login';
 import Header from "../Components/header"
 import Deck from "../Components/deck"
 import Footer from "../Components/footer";
+import { authStore } from '../Redux/authenticationState';
 import '../Styles/tailwind.css';
 import '../Styles/Login.css';
 
@@ -29,7 +30,7 @@ const Login1: React.FC = () => {
   const [error, setError] = useState('');
 
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     fetch('http://localhost:3016/user/login', {
     method: 'POST',
@@ -49,8 +50,14 @@ const Login1: React.FC = () => {
     })
     .then((data) => {
       console.log(data);
-      const accessToken = data['access-token'];
-      console.log('Access Token:', accessToken);
+      const accessToken = data['access_token'];
+      authStore.dispatch({ type: "login"});
+      document.cookie = `access-token=${data['access_token']}; path=/;`;
+      document.cookie = `refresh-token=${data['refresh_token']}; path=/;`;
+
+      const cookies = document.cookie;
+      console.log(cookies)
+      window.location.href = '/';
     })
     .catch((error) => {
       console.log('Error:', error);
@@ -91,11 +98,12 @@ const Login1: React.FC = () => {
     
     setTimeout(() => {
       popup.parentElement?.removeChild(popup);
-    }, 3000); // Adjust the duration as needed
+    }, 3000);
   };
 
-  const handleGoogleLogin = () => {
-    // handle Google login logic
+  const handleGoogleLogin = (response: any) => {
+    const { tokenId } = response;
+    console.log('Google Id Token:', tokenId);
   };
 
 
@@ -139,7 +147,7 @@ const Login1: React.FC = () => {
             />
           </div>
           <div className="button-container">
-            <Button type="submit" variant="contained" className="start-button">
+            <Button type="submit" variant="contained" className="start-button" onClick={handleLogin}>
               LOGIN
             </Button>
           </div>

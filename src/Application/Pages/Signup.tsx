@@ -9,6 +9,7 @@ import Header from '../Components/header';
 import Deck from '../Components/deck';
 import Footer from '../Components/footer';
 import { GoogleLogin } from 'react-google-login';
+import { authStore } from '../Redux/authenticationState';
 import '../Styles/tailwind.css';
 import '../Styles/Login.css';
 
@@ -17,17 +18,92 @@ const Registration: React.FC = () => {
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState('');
+  const fullName = "Not set";
+  const about = "Not set";
+  const club_level = "bronze";
+  const points = 0;
+
+  const showErrorMessage = (message: string) => {
+    const popup = document.createElement('div');
+    popup.classList.add('popup');
+    
+    const content = document.createElement('div');
+    content.classList.add('popup-content');
+    content.textContent = message;
+    
+    const closeButton = document.createElement('span');
+    closeButton.classList.add('popup-close');
+    closeButton.textContent = 'x';
+    closeButton.addEventListener('click', () => {
+      popup.parentElement?.removeChild(popup);
+    });
+    
+    popup.appendChild(content);
+    popup.appendChild(closeButton);
+    
+    // Center the popup horizontally and vertically
+    popup.style.position = 'fixed';
+    popup.style.boxShadow = '5';
+    popup.style.color = 'white';
+    popup.style.background = 'red';
+    popup.style.width = '30rem';
+    popup.style.top = '90%';
+    popup.style.left = '50%';
+    popup.style.transform = 'translate(-50%, -50%)';
+    
+    document.body.appendChild(popup);
+    
+    setTimeout(() => {
+      popup.parentElement?.removeChild(popup);
+    }, 3000);
+  };
+
+  const userAddress = {
+    "address": "Not set",
+    "city": "Not set",
+    "state": "Not set",
+    "zip_code": "Not set",
+    "country": "Not set"
+  }
 
   const handleRegistration = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // handle registration logic
+    console.log(fullName, email, password, about, club_level, points, userAddress)
+    fetch('http://localhost:3016/user/createuser', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      fullName: fullName,
+      email: email,
+      hash: password,
+      about: about,
+      club_level: club_level,
+      points: points,
+      userAddress: userAddress
+    })
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(res.status);
+      }
+      return res.json();
+    })
+    .then((data) => {
+      console.log(data);
+      const accessToken = data['access-token'];
+      console.log('Access Token:', accessToken);
+    })
+    .catch((error) => {
+      console.log('Error:', error);
+      const errorMessage = 'User not found'; // You can customize the error message here
+      showErrorMessage(errorMessage);
+    });
   };
 
   const handleGoogleRegistration = (response: any) => {
-    console.log("hello", response)
-    const { name, email, tokenId } = response;
-    console.log('Name:', name);
-    console.log('Email:', email);
+    const { tokenId } = response;
     console.log('Google Id Token:', tokenId);
   };
 
