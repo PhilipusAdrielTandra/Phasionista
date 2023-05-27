@@ -4,6 +4,8 @@ import { createStyles, fade, makeStyles, Theme } from '@material-ui/core/styles'
 import { Autocomplete } from '@material-ui/lab';
 import { HomeOutlined, StoreOutlined, PagesOutlined, MailOutline, Search, AccountCircle, Favorite, ShoppingCart, ExpandMore } from '@material-ui/icons';
 import Typography from '@material-ui/core/Typography';
+import emptyProfile from '../Assets/images/profile-icon.png';
+import { authStore } from '../Redux/authenticationState';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -117,6 +119,8 @@ const TopHeader: React.FC = () => {
   const [isHidden, setIsHidden] = React.useState(false);
   const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(null);
   const [menuPlacement, setMenuPlacement] = React.useState<PopperPlacementType>('bottom-start');
+  const loggedIn: boolean = authStore.getState().authen.authenticated;
+  const [profilePicture, setProfilePicture] = React.useState(true);
 
   const suggestions: Product[] = [
     { name: "Product 1", image: "image-url-1" },
@@ -149,6 +153,8 @@ const TopHeader: React.FC = () => {
 
   const handleSearchSelect = (event: React.ChangeEvent<{}>, value: any) => {
   };
+
+
 
   
   return (
@@ -272,7 +278,7 @@ const TopHeader: React.FC = () => {
     </div>
     <IconButton edge="end" color="inherit" aria-label="profile">
       <Link to="/profile">
-        <AccountCircle />
+        { profilePicture ? <img src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwRLLoEgHLTwYRUGxF10U_N_w3FdQl4KCySg7pJjxd&s"} style={{ width: '1.5rem', height: '1.5rem', borderRadius: '2rem'}}/> : <img src={emptyProfile} style={{ width: '1.5rem', height: '1.5rem'}}/>}
       </Link>
     </IconButton>
     <IconButton edge="end" color="inherit" aria-label="wishlist">

@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     phoneNumber: {
-      type: DataTypes.INTEGER(40),
+      type: DataTypes.STRING(40),
       allowNull: false
     },
     hash: {
@@ -35,6 +35,10 @@ module.exports = function(sequelize, DataTypes) {
     points: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    profile_picture: {
+      type: DataTypes.STRING(200),
+      allowNull: true
     },
   }, {
     sequelize,

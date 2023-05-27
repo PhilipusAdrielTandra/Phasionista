@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame } from 'react-three-fiber';
-import { useLoader } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { useGLTF } from '@react-three/drei';
 import * as bodyPix from '@tensorflow-models/body-pix';
 import '@tensorflow/tfjs-backend-webgl';
 import { BodyPixPersonSegmentation } from '@tensorflow-models/body-pix/dist/body_pix_model';
@@ -15,32 +14,53 @@ const BodyPixComponent: React.FC = () => {
   const [bodyCenter, setBodyCenter] = useState({ x: 0, y: 0 });
   const objectPosition = { x: 0, y: 0, z: -2 };
 
+  // Store previous positions to calculate the moving average
+  let previousPositionsX: any = [];
+  let previousPositionsY: any = [];
+
+  // Define the number of previous positions to consider in the moving average
+  const movingAverageSize = 2;
+
   function calculateBodyCenter(segmentation: BodyPixPersonSegmentation): { x: number; y: number } {
     const { allPoses, height, width } = segmentation;
     const { keypoints } = allPoses[0];
-
-    let centerX = 0;
-    let centerY = 0;
-
-    keypoints.forEach((keypoint: Keypoint) => {
-      centerX += keypoint.position.x;
-      centerY += keypoint.position.y;
-    });
-
-    centerX /= keypoints.length;
-    centerY /= keypoints.length;
-
+  
+    const rightShoulder = keypoints.find((keypoint: Keypoint) => keypoint.part === 'rightShoulder');
+    const leftShoulder = keypoints.find((keypoint: Keypoint) => keypoint.part === 'leftShoulder');
+  
+    if (!rightShoulder || !leftShoulder) {
+      return { x: 0, y: 0 };
+    }
+  
+    // Calculate the center position between the two shoulders
+    let centerX = (rightShoulder.position.x + leftShoulder.position.x) / 2;
+    let centerY = (rightShoulder.position.y + leftShoulder.position.y) / 2;
+  
     const videoCanvas = document.getElementById('video-canvas');
     const videoCanvasWidth = videoCanvas?.clientWidth ?? 0;
     const videoCanvasHeight = videoCanvas?.clientHeight ?? 0;
-
+  
     const scaleX = videoCanvasWidth / width;
     const scaleY = videoCanvasHeight / height;
-
+  
     centerX *= scaleX;
     centerY *= scaleY;
-
-    return { x: centerX, y: centerY };
+  
+    // Add the new position to the previous positions
+    previousPositionsX.push(centerX);
+    previousPositionsY.push(centerY);
+  
+    // Only keep the last movingAverageSize positions
+    if (previousPositionsX.length > movingAverageSize) {
+      previousPositionsX.shift();
+      previousPositionsY.shift();
+    }
+  
+    // Calculate the moving average
+    const averageX = previousPositionsX.reduce((a: any, b: any) => a + b, 0) / previousPositionsX.length;
+    const averageY = previousPositionsY.reduce((a: any, b: any) => a + b, 0) / previousPositionsY.length;
+  
+    return { x: averageX, y: averageY };
   }
 
   useEffect(() => {
@@ -83,10 +103,14 @@ const BodyPixComponent: React.FC = () => {
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
-      <video ref={videoRef} style={{ position: 'absolute', top: 0, left: 0, zIndex: 1, transform: 'scale(1)' }} />
-      <canvas id="video-canvas" ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, zIndex: 4, transform: 'scale(1)' }} />
+      <video ref={videoRef} style={{ position: 'absolute', top: '18vh', left: '22vw', zIndex: 1, transform: 'scale(1)' }} />
+      <canvas
+        id="video-canvas"
+        ref={canvasRef}
+        style={{ position: 'absolute', top: '18vh', left: '22vw', zIndex: 0, transform: 'scale(1)' }}
+      />
       <Canvas
-        style={{ position: 'absolute', top: 0, left: 0, zIndex: 2, transform: 'scale(1)' }}
+        style={{ position: 'absolute', top: 0, left: 0, zIndex: 6, transform: 'scale(0.9)' }}
         camera={{ position: [0, 0, 5] }}
         onCreated={({ gl }) => {
           gl.setSize(window.innerWidth, window.innerHeight);
@@ -116,20 +140,42 @@ interface ModelProps {
 }
 
 const Model: React.FC<ModelProps> = ({ bodyCenter, modelRef, canvasWidth, canvasHeight }) => {
-  const gltf = useLoader(GLTFLoader, 'http://localhost:8080/adamHead.gltf');
+  const { scene } = useGLTF('http://localhost:8080/shirt.glb');
 
   const centerX = (bodyCenter.x / canvasWidth) * 2 - 1;
   const centerY = -(bodyCenter.y / canvasHeight) * 2 + 1;
 
+  const [rotationAngle, setRotationAngle] = useState(0);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowLeft') {
+        setRotationAngle((prevAngle) => prevAngle - Math.PI / 180); // Rotate left by 1 degree
+      } else if (event.key === 'ArrowRight') {
+        setRotationAngle((prevAngle) => prevAngle + Math.PI / 180); // Rotate right by 1 degree
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   useFrame(() => {
     if (modelRef.current) {
+      // Adjust the model's y position to align with the shoulders
+      modelRef.current.position.y = -centerY;
       modelRef.current.position.x = centerX;
-      modelRef.current.position.y = centerY;
       modelRef.current.position.z = -2;
+      modelRef.current.rotation.y = rotationAngle;
     }
   });
 
-  return <primitive object={gltf.scene} ref={modelRef} />;
+
+  return <primitive object={scene} ref={modelRef} />;
 };
+
 
 export default BodyPixComponent;

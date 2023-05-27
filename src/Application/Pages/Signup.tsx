@@ -77,7 +77,7 @@ const Registration: React.FC = () => {
     body: JSON.stringify({
       fullName: fullName,
       email: email,
-      hash: password,
+      password: password,
       about: about,
       club_level: club_level,
       points: points,

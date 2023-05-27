@@ -16,6 +16,7 @@
     "@material-ui/icons": "^4.11.3",
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@mui/material": "^5.11.12",
+    "@react-three/drei": "^9.69.2",
     "@rebass/preset": "^4.0.5",
     "@reduxjs/toolkit": "^1.9.3",
     "@tensorflow-models/body-pix": "^2.2.0",

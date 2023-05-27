@@ -103,15 +103,7 @@ exports.createUser = async (req, res) => {
       points
     });
 
-
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error' });
-  }
-
-  let addId = uuidv4();
-
-  try {
+    let addId = uuidv4();
     const addr = await user_address.create({
       id: addId,
       user_id: id,
@@ -121,15 +113,13 @@ exports.createUser = async (req, res) => {
       zip_code,
       country
     });
-  }
 
-  catch (err) {
+    const access_token = jwt.sign({ id: id }, 'mariahcarey', { expiresIn: '1h' });  
+    res.json({ access_token });
+  } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
-
-  const access_token = jwt.sign({ id: id }, 'mariahcarey', { expiresIn: '1h' });  
-  res.json({ access_token });
 };
 
 

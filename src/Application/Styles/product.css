@@ -1,9 +1,10 @@
-.centerify{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 5rem;
+.centerify {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; 
 }
+
 
 .custom-button {
     position: relative;
@@ -259,45 +260,128 @@
     }
 
     @media (max-width: 767px) {
-    .product-grid {
-    display: flex;
-    flex-direction: column;
+      .product-grid {
+        grid-template-columns: 1fr; /* Change grid to single column */
+      }
+    
+      .image-gallery {
+        padding-left: 0; /* Remove left padding */
+        width: 100%; /* Adjust width to full width */
+      }
+    
+      .product-info {
+        font-size: 1.2rem; 
+        margin-top: 2rem; 
+      }
+    
+      .product-name {
+        font-size: 1.8rem;
+        text-align: center;
+      }
+    
+      .product-stock {
+        font-size: 1.2rem;
+        text-align: center;
+      }
+    
+      .product-id {
+        font-size: 0.8rem;
+        font-weight: 300;
+        text-align: center;
+      }
+    
+      .product-price {
+        font-size: 1.3rem;
+        text-align: center;
+      }
+    
+      .product-size-select {
+        width: 80%;
+        margin: 0 auto;
+        margin-bottom: 1rem; 
+        font-size: 1.2rem; 
+      }
+    
+      .add-to-cart-button,
+      .buy-now-button {
+        font-size: 1.2rem;
+        padding: 0.8rem 2rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
+    
+      .tab-list {
+        width: 100%; 
+        font-size: 1.3rem;
+        margin-top: 2rem; 
+      }
+    
+      .tab-panel {
+        font-size: 1.3rem;
+        line-height: 2rem; 
+      }
     }
-
-    .product-info {
-    margin-top: 20px;
+    
+    @media (max-width: 480px) {
+      .product-grid {
+        grid-template-columns: 1fr; /* Change grid to single column */
+      }
+    
+      .image-gallery {
+        padding-left: 0; /* Remove left padding */
+        width: 100%; /* Adjust width to full width */
+      }
+    
+      .product-info {
+        font-size: 1rem; /* Reduce font size */
+        margin-top: 2rem; /* Increase top margin */
+      }
+    
+      .product-name {
+        font-size: 1.5rem; /* Reduce font size */
+        text-align: center; /* Center align text */
+      }
+    
+      .product-stock {
+        font-size: 1rem; /* Reduce font size */
+        text-align: center; /* Center align text */
+      }
+    
+      .product-id {
+        font-size: 0.8rem;
+        font-weight: 300;
+        text-align: center; /* Center align text */
+      }
+    
+      .product-price {
+        font-size: 1.2rem; /* Reduce font size */
+        text-align: center; /* Center align text */
+      }
+    
+      .product-size-select {
+        width: 80%; /* Increase width */
+        margin: 0 auto; /* Center align select box */
+        margin-bottom: 1rem; /* Increase bottom margin */
+        font-size: 1rem; /* Reduce font size */
+      }
+    
+      .add-to-cart-button,
+      .buy-now-button {
+        font-size: 1rem; /* Reduce font size */
+        padding: 0.8rem 1.5rem; /* Adjust padding */
+        margin-top: 1rem;
+        margin-bottom: 1rem; /* Increase top and bottom margins */
+      }
+    
+      .tab-list {
+        width: 100%; /* Adjust width to full width */
+        font-size: 1.2rem; /* Reduce font size */
+        margin-top: 2rem; /* Increase top margin */
+      }
+    
+      .tab-panel {
+        font-size: 1.2rem; /* Reduce font size */
+        line-height: 1.8rem; /* Adjust line height */
+      }
     }
-
-    .product-name {
-    font-size: 1.5rem;
-    }
-
-    .product-price {
-    font-size: 1.5rem;
-    }
-
-    .product-size-select {
-    font-size: 1.5rem;
-    padding: 0.5rem;
-    border: 2px solid #cbd5e0;
-    border-radius: 4px;
-    }
-
-    .add-to-cart-button,
-    .buy-now-button {
-    font-size: 1.5rem;
-    padding: 1rem 2rem;
-    }
-
-    .tab-list {
-    font-size: 1.5rem;
-    margin-top: 2rem;
-    }
-
-    .tab-panel {
-    font-size: 1.5rem;
-    line-height: 2.8rem;
-    }
-
-
-}
+    
