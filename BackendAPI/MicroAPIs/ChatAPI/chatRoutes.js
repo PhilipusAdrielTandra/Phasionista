@@ -6,5 +6,6 @@ const chatController = require('./chatController');
 router.get('/user/:id', chatController.getUserChat);
 router.get('/retailer/:id', chatController.getRetailerChat);
 router.post('/create-chat', chatController.createChat);
+router.get('/', chatController.test);
 
 module.exports = router;

@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import io from 'socket.io-client'
 import Dashboard from '../Components/Dashboard';
 import '../Styles/Chat.css';
 import profile from '../Assets/images/nelson.jpg'
 import Header from '../Components/header'
 import Footer from '../Components/footer'
 
-const Home: React.FC = () => {
+
+const socket = io('http://localhost:3011/chat');
+
+const Chat: React.FC = () => {
+  useEffect(() => {
+    console.log(socket.id); // Log the socket ID on component mount
+
+    return () => {
+      socket.disconnect(); // Disconnect the socket when the component unmounts
+    };
+  }, []);
+
   return (
     <div className=''>
     <Header/>
@@ -62,4 +74,4 @@ const Home: React.FC = () => {
   );
 }
 
-export default Home;
+export default Chat;
