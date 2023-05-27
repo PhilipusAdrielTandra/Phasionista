@@ -148,8 +148,7 @@ const Login1: React.FC = () => {
           </div>
           <div className="button-container">
             <Button type="submit" variant="contained" className="start-button" onClick={handleLogin}>
-              LOGIN
-            </Button>
+              LOGIN</Button>
           </div>
           <div className="divider">
             <div className="divider-line"></div>
