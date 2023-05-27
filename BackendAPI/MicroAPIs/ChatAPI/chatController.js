@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('pha_chat', 'admin', 'password', {
+const sequelize = new Sequelize('pha_chat', 'admin', '9n49NvuQZjk6KoLdQLdv', {
     host: 'phasionista-chat.ctjeibahvnce.ap-southeast-1.rds.amazonaws.com',
     dialect: 'mysql',
   });
@@ -48,5 +48,4 @@ module.exports = {
   getUserChat,
   createChat,
   getRetailerChat,
-  getChats
 };

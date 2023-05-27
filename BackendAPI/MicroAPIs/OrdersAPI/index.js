@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors())
 
-const sequelize = new Sequelize('pha_orders', 'root', '', {
+const sequelize = new Sequelize('pha_orders', 'admin', '9n49NvuQZjk6KoLdQLdv ', {
   dialect: 'mysql',
   host: 'localhost'
 });

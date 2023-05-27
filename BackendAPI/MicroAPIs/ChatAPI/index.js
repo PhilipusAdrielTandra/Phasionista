@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors())
 
-const sequelize = new Sequelize('pha_chat', 'admin', 'password', {
+const sequelize = new Sequelize('pha_chat', 'admin', '9n49NvuQZjk6KoLdQLdv', {
   dialect: 'mysql',
   host: 'phasionista-chat.ctjeibahvnce.ap-southeast-1.rds.amazonaws.com'
 });
