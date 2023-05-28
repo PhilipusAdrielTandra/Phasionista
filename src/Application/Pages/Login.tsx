@@ -122,7 +122,7 @@ const Login = () => {
     return(
       <Header headerTop="visible">
           <div className="w-full min-h-screen flex items-start">
-              <div className="relative w-1/2 h-full flex flex-col">
+              <div className="sm:hidden relative w-1/2 h-full flex flex-col lg:block">
                   <div className="absolute top-[40%] left-[5%] flex flex-col">
                       <h1 className="text-4xl text-white font-bold my-4">Share your fashion and your values with Phasionista</h1>
                       <p className="text-xl text-white font-normal">Sign up for free and join others in their Phasionista journey</p>
