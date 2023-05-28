@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Logo from "./logo";
 import NavMenu from "./NavMenu";
 import IconGroup from "./IconGroup";
-import MobileMenu from ".//MobileMenu";
+import MobileMenu from "./MobileMenu";
 import HeaderTop from "./HeaderTop";
 
 const HeaderOne = ({
@@ -41,7 +41,6 @@ const HeaderOne = ({
         )}
       >
         <div className={layout === "container-fluid" ? layout : "container"}>
-          {/* header top */}
           <HeaderTop borderStyle={borderStyle} />
         </div>
       </div>
@@ -56,21 +55,17 @@ const HeaderOne = ({
         <div className={layout === "container-fluid" ? layout : "container"}>
           <div className="row">
             <div className="col-xl-2 col-lg-2 col-md-6 col-4">
-              {/* header logo */}
               <Logo imageUrl="/assets/img/logo/logo.png" logoClass="logo" />
             </div>
             <div className="col-xl-8 col-lg-8 d-none d-lg-block">
-              {/* Nav menu */}
               <NavMenu />
             </div>
             <div className="col-xl-2 col-lg-2 col-md-6 col-8">
-              {/* Icon group */}
               <IconGroup />
             </div>
           </div>
         </div>
-        {/* mobile menu */}
-        <MobileMenu />
+        {/* <MobileMenu /> */}
       </div>
     </header>
   );

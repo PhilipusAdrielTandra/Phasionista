@@ -33,7 +33,7 @@ const MobileMenu = () => {
     }
   });
 
-  const sideMenuExpand = e => {
+  const sideMenuExpand = (e: any) => {
     e.currentTarget.parentElement.classList.toggle("active");
   };
 

@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getDiscountPrice } from "../../Components/productHelper";
+import { getDiscountPrice } from "../productHelper";
 import { deleteFromCart } from "../../Redux/cart-slice"
 
 const MenuCart = () => {

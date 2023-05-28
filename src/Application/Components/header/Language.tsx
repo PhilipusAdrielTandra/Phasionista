@@ -4,12 +4,12 @@ import { useTranslation } from "react-i18next";
 import { setCurrency } from "../../Redux/currency-slice"
 
 const LanguageCurrencyChanger = ({ currency }: any) => {
-  const { i18n } = useTranslation();
+  // const { i18n } = useTranslation();
   const dispatch = useDispatch();
-  const changeLanguageTrigger = (e: any) => {
-    const languageCode = e.target.value;
-    i18n.changeLanguage(languageCode);
-  };
+  // const changeLanguageTrigger = (e: any) => {
+  //   const languageCode = e.target.value;
+  //   i18n.changeLanguage(languageCode);
+  // };
 
   const setCurrencyTrigger = (e: any) => {
     const currencyName = e.target.value;
@@ -20,29 +20,29 @@ const LanguageCurrencyChanger = ({ currency }: any) => {
     <div className="language-currency-wrap">
       <div className="same-language-currency language-style">
         <span>
-          {i18n.resolvedLanguage === "en"
+          {/* {i18n.resolvedLanguage === "en"
             ? "English"
             : i18n.resolvedLanguage === "fn"
             ? "French"
             : i18n.resolvedLanguage === "de"
             ? "Germany"
             : ""}{" "}
-          <i className="fa fa-angle-down" />
+          <i className="fa fa-angle-down" /> */}
         </span>
         <div className="lang-car-dropdown">
           <ul>
             <li>
-              <button value="en" onClick={e => changeLanguageTrigger(e)}>
+              <button value="en">
                 English
               </button>
             </li>
             <li>
-              <button value="fn" onClick={e => changeLanguageTrigger(e)}>
+              <button value="fn">
                 French
               </button>
             </li>
             <li>
-              <button value="de" onClick={e => changeLanguageTrigger(e)}>
+              <button value="de" >
                 Germany
               </button>
             </li>
@@ -74,7 +74,7 @@ const LanguageCurrencyChanger = ({ currency }: any) => {
         </div>
       </div>
       <div className="same-language-currency">
-        <p>Call Us 3965410</p>
+        <p>{"  "}</p>
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ import 'swiper/swiper-bundle.min.css';
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import "./Application/Components/i18n";
+import "./Application/Styles/scss/styles.scss";
 
 
 store.dispatch(setProducts(products));

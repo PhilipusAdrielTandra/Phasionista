@@ -3,21 +3,21 @@ import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getDiscountPrice } from "../Components/productHelper";
 import SEO from "./SEO";
-import LayoutOne from "../Components/header/layout";
-import Sty from "../Styles/scss/styles.module.scss";
+import Header from "../Components/header/layout";
 
 const Checkout = () => {
   let cartTotalPrice = 0;
 
   let { pathname } = useLocation();
   const currency = useSelector((state: any) => state.currency);
-  const { cartItems } : any= 
+  const { cartItems } : any= [
     {
       name: "Sample Product",
       price: 20.99,
       discount: 0.1, 
       quantity: 2 
     }
+  ]
 
   return (
     <Fragment>
@@ -25,9 +25,9 @@ const Checkout = () => {
         titleTemplate="Checkout"
         description="Checkout page of Phasionista"
       />
-      <LayoutOne headerTop="visible">
+      <Header headerTop="visible">
         <div className="checkout-area pt-95 pb-100">
-          <div className={Sty.container}>
+          <div className="container">
             {cartItems && cartItems.length >= 1 ? (
               <div className="row">
                 <div className="col-lg-7">
@@ -138,7 +138,7 @@ const Checkout = () => {
                         </div>
                         <div className="your-order-middle">
                           <ul>
-                            {/* {cartItems.map(({cartItem, key} : any) => {
+                            {cartItems.map(({cartItem, key} : any) => {
                               const discountedPrice = getDiscountPrice(
                                 cartItem.price,
                                 cartItem.discount
@@ -174,7 +174,7 @@ const Checkout = () => {
                                   </span>
                                 </li>
                               );
-                            })} */}
+                            })}
                           </ul>
                         </div>
                         <div className="your-order-bottom">
@@ -210,7 +210,7 @@ const Checkout = () => {
                     </div>
                     <div className="item-empty-area__text">
                       No items found in cart to checkout <br />{" "}
-                      <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                      <Link to={process.env.PUBLIC_URL + "/library"}>
                         Shop Now
                       </Link>
                     </div>
@@ -220,7 +220,7 @@ const Checkout = () => {
             )}
           </div>
         </div>
-      </LayoutOne>
+      </Header>
     </Fragment>
   );
 };
