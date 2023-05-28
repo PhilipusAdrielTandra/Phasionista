@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { FaShoppingCart } from "react-icons/fa";
 import { Button as MaterialButton } from "@material-ui/core";
 import { Button as ChakraButton } from "@chakra-ui/react";
-import Header from "../Components/header"
+import Header from "../Components/header/layout";
 import Deck from "../Components/deck"
 import Footer from "../Components/footer";
 import { Carousel } from "react-responsive-carousel";
@@ -14,7 +14,7 @@ import "../Styles/product.css";
 
 const useStyles = makeStyles(() => ({
   root: {
-    paddingTop: "80px",
+    paddingTop: "10px",
   },
 }));
 
@@ -75,8 +75,8 @@ const Product = () => {
   }, []); 
 
   return (
+    <Header headerTop="visible">
     <Box className={classes.root}>
-      <Header/>
       <Grid templateColumns="repeat(2, 1fr)" gap={6}>
         <GridItem>
           <Box className="image-gallery">
@@ -182,6 +182,7 @@ const Product = () => {
       <Footer/>
       <Deck/>
 </Box>
+</Header>
 );
 };
 
