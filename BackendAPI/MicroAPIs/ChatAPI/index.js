@@ -3,16 +3,16 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const { Sequelize } = require('sequelize');
 const chatRoutes = require('./chatRoutes');
-
+const http = require('http');
+const { Server } = require('socket.io');
 const app = express();
 app.use(bodyParser.json());
 app.use(cors())
 
-const sequelize = new Sequelize('pha_chat', 'admin', 'password', {
+const sequelize = new Sequelize('pha_chat', 'admin', '9n49NvuQZjk6KoLdQLdv', {
   dialect: 'mysql',
   host: 'phasionista-chat.ctjeibahvnce.ap-southeast-1.rds.amazonaws.com'
 });
-
 (async () => {
   try {
     await sequelize.authenticate();
@@ -22,8 +22,23 @@ const sequelize = new Sequelize('pha_chat', 'admin', 'password', {
   }
 })();
 
+
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+  },
+});
+
+io.on('connection', (socket) => {
+  console.log(`User connected ${socket.id}`);
+
+  // We can write our socket event listeners in here...
+});
+
 app.use('/chat', chatRoutes);
 
-app.listen(3011, () => {
+server.listen(3011, () => {
   console.log('Server started on port 3011');
 });

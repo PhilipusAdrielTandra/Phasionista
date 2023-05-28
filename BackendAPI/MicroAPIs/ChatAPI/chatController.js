@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('pha_chat', 'admin', 'password', {
+const sequelize = new Sequelize('pha_chat', 'admin', '9n49NvuQZjk6KoLdQLdv', {
     host: 'phasionista-chat.ctjeibahvnce.ap-southeast-1.rds.amazonaws.com',
     dialect: 'mysql',
   });
@@ -33,10 +33,27 @@ async function getRetailerChat(req, res) {
   }
 }
 
+// async function createChat(req, res) {
+//   try {
+//     const { message, openchat_uuid } = req.body;
+//     const chat = await user_chat.create({ message, openchat_uuid });
+//     res.json(chat);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('Internal server error');
+//   }
+// }
+
+const io = require('socket.io-client')('http://localhost:3011');
+
 async function createChat(req, res) {
   try {
     const { message, openchat_uuid } = req.body;
     const chat = await user_chat.create({ message, openchat_uuid });
+
+    // Emit the created chat message to all connected clients
+    io.emit('chatMessage', chat);
+
     res.json(chat);
   } catch (error) {
     console.error(error);
@@ -44,9 +61,15 @@ async function createChat(req, res) {
   }
 }
 
+
+async function test(req, res){
+  res.send("hello world");
+}
+
+
 module.exports = {
   getUserChat,
   createChat,
   getRetailerChat,
-  getChats
+  test
 };

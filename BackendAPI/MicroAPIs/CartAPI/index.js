@@ -49,7 +49,7 @@ app.use(
   })  
 )
 
-const sequelize = new Sequelize('pha_cart', 'root', '', {
+const sequelize = new Sequelize('pha_cart', 'admin', '9n49NvuQZjk6KoLdQLdv ', {
   dialect: 'mysql',
   host: 'localhost'
 });

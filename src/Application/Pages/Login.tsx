@@ -1,6 +1,10 @@
 //@ts-ignore
 import React, { useState } from 'react';
+import { Button, TextField } from '@mui/material';
 import { background } from "@chakra-ui/styled-system"
+import { authStore } from '../Redux/authenticationState';
+import { makeStyles } from '@material-ui/core/styles';
+import { GoogleLogin } from 'react-google-login';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faGoogle} from "@fortawesome/free-brands-svg-icons"
 import COVER_IMAGE from "../Assets/images/cover.webp"
@@ -11,28 +15,108 @@ const colors= {
     disbaled: "#D9D9D9"
 }
 
+const useStyles = makeStyles((theme) => ({
+    textField: {
+      height: 60, // Set the desired height here
+      margin: theme.spacing(1),
+    },
+  }));
+
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [error, setError] = useState('');
-  
-  
-    const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      // handle login logic
-    };
-  
-  
-    const handleGoogleLogin = () => {
-      // handle Google login logic
-    };
-  
-  
-  
-    const handleLinkedinLogin = () => {
-      // handle LinkedIn login logic
-    };
+    const classes = useStyles();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [error, setError] = useState('');
+
+
+  const handleLogin = (e: React.MouseEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fetch('http://localhost:3016/user/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email,
+      password
+    })
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(res.status);
+      }
+      return res.json();
+    })
+    .then((data) => {
+      console.log(data);
+      const accessToken = data['access_token'];
+      authStore.dispatch({ type: "login"});
+      document.cookie = `access-token=${data['access_token']}; path=/;`;
+      document.cookie = `refresh-token=${data['refresh_token']}; path=/;`;
+
+      const cookies = document.cookie;
+      console.log(cookies)
+      window.location.href = '/';
+    })
+    .catch((error) => {
+      console.log('Error:', error);
+      const errorMessage = 'User not found'; // You can customize the error message here
+      showErrorMessage(errorMessage);
+    });
+  };
+
+  const showErrorMessage = (message: string) => {
+    const popup = document.createElement('div');
+    popup.classList.add('popup');
+    
+    const content = document.createElement('div');
+    content.classList.add('popup-content');
+    content.textContent = message;
+    
+    const closeButton = document.createElement('span');
+    closeButton.classList.add('popup-close');
+    closeButton.textContent = 'x';
+    closeButton.addEventListener('click', () => {
+      popup.parentElement?.removeChild(popup);
+    });
+    
+    popup.appendChild(content);
+    popup.appendChild(closeButton);
+    
+    // Center the popup horizontally and vertically
+    popup.style.position = 'fixed';
+    popup.style.boxShadow = '5';
+    popup.style.color = 'white';
+    popup.style.background = 'red';
+    popup.style.width = '30rem';
+    popup.style.top = '90%';
+    popup.style.left = '50%';
+    popup.style.transform = 'translate(-50%, -50%)';
+    
+    document.body.appendChild(popup);
+    
+    setTimeout(() => {
+      popup.parentElement?.removeChild(popup);
+    }, 3000);
+  };
+
+  const handleGoogleLogin = (response: any) => {
+    const { tokenId } = response;
+    console.log('Google Id Token:', tokenId);
+  };
+
+
+
+  const handleLinkedinLogin = () => {
+    // handle LinkedIn login logic
+  };
+
+  const responseGoogle = (response: any) => {
+    console.log(response);
+    console.log("Google Id Token: ", response.tokenId);
+    console.log("Google Access Token: ", response.accessToken);
+  }
 
     return(
         <div className="w-full min-h-screen flex items-start">
@@ -50,51 +134,68 @@ const Login = () => {
                 <div className="w-full flex flex-col max-w-[800px] mt-2">
                     <div className="w-full flex flex-col mb-2">
                         <h3 className="text-3xl font-semibold mb-2">Login</h3>
-                        <p className="text-base mb-2">Hello! You're one step away from paradise. Please enter your details</p>
+                        <p className="text-base mb-2">Welcome back! You're one step away from paradise. Please enter your details</p>
                     </div>
-                
-                    <div className="w-full flex flex-col">
-                        <input 
-                            type="email"
-                            placeholder="Email"
-                            className="w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none"/>
-                        
-                        <input 
-                            type="password"
-                            placeholder="Password"
-                            className="w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none"/>
 
-                    </div>
-                    <div className="w-full flex items-center justify-between">
-                        <div className="w-full flex items-center">
-                            <input type="checkbox" className="w-4 h-4 mr-2"/>
-                            <p className="text-sm">Remember me for 30 days</p>
-
+                    <form onSubmit={handleLogin}>
+                        <div className="w-full flex flex-col my-4">
+                        <TextField
+                            className="w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none"
+                            label="Email"
+                            variant="outlined"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            />
                         </div>
-                        <p className="text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset2">Forgot password?</p>
-                    </div>
-                    <div className="w-full flex flex-col my-4">
-                        <button className="w-full text-white bg-[#060606] my-2 rounded-md font-semibold p-4 text-center flex items-center justify-center hover:scale-105 focus:ring-4 shadow-lg transform active:scale-75 transition-transform">
-                            Login
-                        </button>
-                        <button className="w-full text-black bg-white my-2 rounded-md border-2 font-semibold border-black p-4 text-center flex items-center justify-center hover:scale-105 focus:ring-4 shadow-lg transform active:scale-75 transition-transform">
-                            Sign Up
-                        </button>
+                        <div className="w-full flex flex-col my-4">
+                            <TextField
+                                className="w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none"
+                                label="Password"
+                                type="password"
+                                variant="outlined"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
+                        <div className="w-full flex items-center justify-between">
+                            <div className="w-full flex items-center">
+                                <input type="checkbox" className="w-4 h-4 mr-2"/>
+                                <p className="text-sm">Remember me for 30 days</p>
 
-                    </div>
-                    <div className="w-full flex items-center justify-center relative py-2">
-                        <div className="w-full h-[1px] bg-black"></div>
-                        <p className="text-lg absolute text-black/80 bg-[#f5f5f5] mb-1 px-2">or</p>
-                    </div>
+                            </div>
+                            <p className="text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset2">Forgot password?</p>
+                        </div>
+                        
+                        <div className="w-full flex flex-col my-4">
+                            <button onClick={handleLogin} className="w-full text-white bg-[#060606] my-2 rounded-md font-semibold p-4 text-center flex items-center justify-center hover:scale-105 focus:ring-4 shadow-lg transform active:scale-75 transition-transform">
+                                Login
+                            </button>
+                        </div>
+                        <div className="w-full flex items-center justify-center relative py-2">
+                            <div className="w-full h-[1px] bg-black"></div>
+                            <p className="text-lg absolute text-black/80 bg-[#f5f5f5] mb-1 px-2">or</p>
+                        </div>
+                        <button onClick={handleGoogleLogin}className="w-full text-black bg-white my-2 rounded-md border-2 font-semibold border-black p-4 text-center flex items-center justify-center hover:scale-105 focus:ring-4 shadow-lg transform active:scale-75 transition-transform">
+                            <GoogleLogin
+                                clientId="469647397924-5n1idp8n1a880mq8q1d9q5qt654odatf.apps.googleusercontent.com"
+                                buttonText="Log In with Google"
+                                onSuccess={responseGoogle}
+                                onFailure={responseGoogle}
+                                cookiePolicy={'single_host_origin'}
+                            />
+                            </button>
+                        <button className="w-full text-black bg-white my-4 rounded-md border-2 font-semibold border-black/40 p-4 text-center flex items-center justify-center hover:scale-105 focus:ring-4 shadow-lg transform active:scale-75 transition-transform">                            
+                            <FontAwesomeIcon className="h-6 mr-4" icon={faGoogle} />
+                            Log In With LinkedIn
+                        </button>
+                    </form>
                 </div>
+                
 
-                <button className="w-full text-black bg-white my-4 rounded-md border-2 font-semibold border-black/40 p-4 text-center flex items-center justify-center hover:scale-105 focus:ring-4 shadow-lg transform active:scale-75 transition-transform">
-                    <FontAwesomeIcon className="h-6 mr-4" icon={faGoogle} />
-                    Sign In With Google
-                </button>
+
                                 
                 <div className="w-full items-center justify-center">
-                        <p className="text-sm font-normal text-[#060606]">Don't have an account? <span className="font-semibold underline underline-offset-2 cursor-pointer">Register here</span></p>
+                        <p className="text-sm font-normal text-[#060606]">Don't have an account?<a href="/register"><span className="font-semibold underline underline-offset-2 cursor-pointer"> Register here</span></a></p>
                 </div>
 
             </div>
