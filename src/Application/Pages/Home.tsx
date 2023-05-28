@@ -8,7 +8,6 @@ import Header from "../Components/header"
 import Footer from '../Components/footer';
 import Deck from '../Components/deck'
 import Carousel from '../Components/Carousel';
-import Navbar from '../Components/Navbar';
 
 const Home: React.FC = () => {
   return (

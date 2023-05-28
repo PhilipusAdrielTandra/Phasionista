@@ -120,7 +120,7 @@ const Login = () => {
 
     return(
         <div className="w-full min-h-screen flex items-start">
-            <div className="relative w-1/2 h-full flex flex-col">
+            <div className="hidden md:block relative w-1/2 h-full flex flex-col ">
                 <div className="absolute top-[40%] left-[5%] flex flex-col">
                     <h1 className="text-4xl text-white font-bold my-4">Share your fashion and your values with Phasionista</h1>
                     <p className="text-xl text-white font-normal">Sign up for free and join others in their Phasionista journey</p>
@@ -128,8 +128,8 @@ const Login = () => {
                 <img src = {COVER_IMAGE} className= "w-full h-screen object-cover object-top"/>
             </div>
 
-            <div className="w-1/2 h-screen bg-[#f5f5f5] flex flex-col p-60 justify-between">
-                <h1 className="text-xl text-[#060606] font-semibold">Phasionista</h1>
+            <div className="w-full max-w-3xl h-screen flex flex-col p-40 justify-between md: w-1/2 max-w-5xl h-screen bg-[#f5f5f5] md:p-60 md:justify-between">
+                <h1 className="md:text-xl text-[#060606] font-semibold">Phasionista</h1>
 
                 <div className="w-full flex flex-col max-w-[800px] mt-2">
                     <div className="w-full flex flex-col mb-2">
