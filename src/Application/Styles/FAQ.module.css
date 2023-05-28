@@ -9,6 +9,7 @@
     max-width: var(--fixed-width);
     display: grid;
     gap: 1rem 2rem;
+    font-size:1.20rem;
   }
   .container h3 {
     line-height: 1.2;
@@ -21,11 +22,6 @@
   .question-title {
     cursor: pointer;
   }
-
-  p {
-    font-size: 1rem !important;
-  }
-
 
   
   

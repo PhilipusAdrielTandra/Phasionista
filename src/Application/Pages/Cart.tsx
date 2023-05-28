@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@chakra-ui/react"
-import Header from "../Components/header/layout";
+import Header from "../Components/header"
+import Deck from "../Components/deck"
 import Footer from "../Components/footer";
 import "../Styles/Cart.css";
 
@@ -46,28 +47,28 @@ function Cart() {
 
 
   return (
-    <Header headerTop="visible">
-      <div>
-        <div className="cart-container">
-          <h1>Shopping Cart</h1>
-          {products.map((product) => (
-            <div className="product-item" key={product.id}>
-              <img src={product.image} alt={product.name} />
-              <div>
-                <h2>{product.name}</h2>
-                <p>Amount: {product.amount}</p>
-                <p>Price: ${product.price}</p>
-              </div>
+    <div>
+      <Header/>
+      <div className="cart-container">
+        <h1>Shopping Cart</h1>
+        {products.map((product) => (
+          <div className="product-item" key={product.id}>
+            <img src={product.image} alt={product.name} />
+            <div>
+              <h2>{product.name}</h2>
+              <p>Amount: {product.amount}</p>
+              <p>Price: ${product.price}</p>
             </div>
-          ))}
-          <div className="total-price">
-            <h3>Total: ${totalPrice}</h3>
-            <Button>Go to checkout</Button>
           </div>
+        ))}
+        <div className="total-price">
+          <h3>Total: ${totalPrice}</h3>
+          <Button>Go to checkout</Button>
         </div>
-        <Footer/>
       </div>
-    </Header>
+      <Footer/>
+      <Deck/>
+    </div>
   );
 }
 

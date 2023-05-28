@@ -1,92 +1,115 @@
-import { Fragment, useState, useEffect } from 'react';
-import Paginator from 'react-hooks-paginator';
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom"
-import { getSortedProducts } from '../Components/productHelper';
-import SEO from "../Pages/SEO";
-import Header from "../Components/header/layout";
-import ShopSidebar from '../Components/library/librarySidebar';
-import ShopTopbar from '../Components/library/libraryTopbar';
-import ShopProducts from '../Components/library/libraryProducts';
+import React, { useState } from 'react';
+import '../Styles/Library.css';
+import { Checkbox, FormControlLabel } from '@material-ui/core';
+import Header from "../Components/header"
+import Deck from "../Components/deck"
+import Footer from "../Components/footer";
+import Heart from "../Components/heart";
+import LibraryCartBtn from '../Components/LibraryCartBtn';
+import LibraryData from '../Data/LibraryData.json'
 
-const ShopGridStandard = () => {
-    const [layout, setLayout] = useState('grid three-column');
-    const [sortType, setSortType] = useState('');
-    const [sortValue, setSortValue] = useState('');
-    const [filterSortType, setFilterSortType] = useState('');
-    const [filterSortValue, setFilterSortValue] = useState('');
-    const [offset, setOffset] = useState(0);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [currentData, setCurrentData] = useState([]);
-    const [sortedProducts, setSortedProducts] = useState([]);
-    const { products } = useSelector((state: any) => state.product);
+type Props = {
+  productsPerPage?: number;
+};
 
-    const pageLimit = 15;
-    let { pathname } = useLocation();
+function Library({ productsPerPage = 15 }: Props) {
+  const [products, setProducts] = useState(LibraryData);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [displayMode, setDisplayMode] = useState<'grid' | 'list'>('grid');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
-    const getLayout = (layout: any) => {
-        setLayout(layout)
-    }
+  const handleAddToCart = (productId: number) => {
+  };
 
-    const getSortParams = ({sortType, sortValue}: any) => {
-        setSortType(sortType);
-        setSortValue(sortValue);
-    }
+  const handleAddToWishlist = (productId: number) => {
+  };
 
-    const getFilterSortParams = ({sortType, sortValue}: any) => {
-        setFilterSortType(sortType);
-        setFilterSortValue(sortValue);
-    }
+  const handleCategoryFilter = (category: string) => {
+    setSelectedCategory(category);
+  };
 
-    useEffect(() => {
-        let sortedProducts = getSortedProducts(products, sortType, sortValue);
-        const filterSortedProducts = getSortedProducts(sortedProducts, filterSortType, filterSortValue);
-        sortedProducts = filterSortedProducts;
-        setSortedProducts(sortedProducts);
-        setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
-    }, [offset, products, sortType, sortValue, filterSortType, filterSortValue ]);
+  const handleDisplayModeChange = (mode: 'grid' | 'list') => {
+    setDisplayMode(mode);
+  };
 
-    return (
-        <Fragment>
-            <SEO
-                titleTemplate="Shop Page"
-                description="Shop page of flone react minimalist eCommerce template."
-            />
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
 
-            <Header headerTop="visible">
+  const filteredProducts = selectedCategory
+    ? products.filter(product => product.category === selectedCategory)
+    : products;
 
-                <div className="shop-area pt-95 pb-100">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-lg-3 order-2 order-lg-1">
-                                <ShopSidebar products={products} getSortParams={getSortParams} sideSpaceClass="mr-30"/>
-                            </div>
-                            <div className="col-lg-9 order-1 order-lg-2">
-                                <ShopTopbar getLayout={getLayout} getFilterSortParams={getFilterSortParams} productCount={products.length} sortedProductCount={currentData.length} />
-
-                                <ShopProducts layout={layout} products={currentData} />
-
-                                <div className="pro-pagination-style text-center mt-30">
-                                    <Paginator
-                                        totalRecords={sortedProducts.length}
-                                        pageLimit={pageLimit}
-                                        pageNeighbours={2}
-                                        setOffset={setOffset}
-                                        currentPage={currentPage}
-                                        setCurrentPage={setCurrentPage}
-                                        pageContainerClass="mb-0 mt-0"
-                                        pagePrevText="«"
-                                        pageNextText="»"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  return (
+    <div>
+      <Header />
+      <div className="product-list-container">
+        <div className="product-list-filters">
+          <h2>Categories</h2>
+          <button
+            className={selectedCategory === '' ? 'active' : ''}
+            onClick={() => handleCategoryFilter('')}
+          >
+            <Checkbox checked={selectedCategory === ''} />
+            All
+          </button>
+          <button
+            className={selectedCategory === 'men-clothing' ? 'active' : ''}
+            onClick={() => handleCategoryFilter('men-clothing')}
+          >
+            <Checkbox checked={selectedCategory === 'men-clothing'} />
+            Men's Clothing
+          </button>
+          <button
+            className={selectedCategory === 'women-clothing' ? 'active' : ''}
+            onClick={() => handleCategoryFilter('women-clothing')}
+          >
+            <Checkbox checked={selectedCategory === 'women-clothing'} />
+            Women's Clothing
+          </button>
+          <h2>Display mode</h2>
+          <button onClick={() => handleDisplayModeChange('grid')}>
+            <Checkbox checked={displayMode === 'grid'} />
+            Grid
+          </button>
+          <button onClick={() => handleDisplayModeChange('list')}>
+            <Checkbox checked={displayMode === 'list'} />
+            List
+          </button>
+        </div>
+        <div className={`product-list ${displayMode}`}>
+          {filteredProducts
+            .slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage)
+            .map(product => (
+              <div key={product.id} className={`product ${displayMode}`}>
+                <img className={`product img ${displayMode}`} src={product.image} alt={product.name} />
+                <Heart/>
+                <h2 className={`product-name ${displayMode}`}>{product.name}</h2>
+                <div className="product-rating">
+                  {[...Array(Math.round(product.rating)).keys()].map((_, index) => (
+                    <span key={index} className={`star`}>
+                      ★
+                    </span>
+                  ))}
+                  </div>
+                  <div className={`product-price ${displayMode}`}>${product.price}</div>
+                  <LibraryCartBtn/>
                 </div>
-            </Header>
-        </Fragment>
-    )
+              ))}
+          </div>
+        </div>
+        <div className="product-list-pagination">
+      {[...Array(Math.ceil(filteredProducts.length / productsPerPage)).keys()].map(pageNumber => (
+        <button key={pageNumber} className={currentPage === pageNumber + 1 ? 'active' : ''} onClick={() => handlePageChange(pageNumber + 1)}>
+          {pageNumber + 1}
+        </button>
+      ))}
+    </div>
+  <Footer />
+  <Deck />
+</div>
+
+);
 }
 
-
-export default ShopGridStandard;
+export default Library;

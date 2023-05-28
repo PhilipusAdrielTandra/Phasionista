@@ -1,5 +1,4 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Application/Pages/Home';
 import Login from './Application/Pages/Login';
@@ -15,7 +14,6 @@ import Chat from './Application/Pages/Chat';
 import About from './Application/Pages/About';
 import FAQ from './Application/Pages/FAQ';
 import Sizes from './Application/Pages/Sizes';
-import Checkout from './Application/Pages/Checkout';
 import ARComponent from './Application/Components/ARComponent';
 import { authStore } from './Application/Redux/authenticationState';
 import './App.css';
@@ -47,7 +45,6 @@ function App() {
           <Route path="/returns" element={<Return />}/>
           <Route path="/404" element={<NotFound />} />
           <Route path="/AR" element={<ARComponent />} />
-          <Route path="/checkout" element={<Checkout/>}/>
         </Routes>
       </div>
     </Router>
