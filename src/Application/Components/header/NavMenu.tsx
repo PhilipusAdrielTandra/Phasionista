@@ -181,6 +181,11 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }: any) => {
               {"contact_us"}
             </Link>
           </li>
+          <li>
+            <Link to={process.env.PUBLIC_URL + "/contact"}>
+              {"transactions"}
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>
