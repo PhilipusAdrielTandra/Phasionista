@@ -8,7 +8,7 @@ export const IntroSection: React.FC = () => {
           <div className='mt-24 flex pt-9'>
           {/* left side */}
           <div className='relative flex-[30%]'>
-            <img src={profile} className='absolute w-[600px] h-auto float-left rounded-md ml-40 top-0 bottom-0 m-auto'/>
+            <img src={profile} className='absolute max-w-full h-auto float-left rounded-md left-24 top-0 bottom-0 m-auto '/>
           </div>
           {/* right side */}
           <div className='relative flex-[70%] px-52 h-auto'>
