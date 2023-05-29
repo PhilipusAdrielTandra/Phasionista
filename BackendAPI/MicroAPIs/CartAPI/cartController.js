@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('pha_cart', 'admin', '9n49NvuQZjk6KoLdQLdv', {
-  host: 'localhost',
+  host: 'phasionista-cart.ctjeibahvnce.ap-southeast-1.rds.amazonaws.com',
   dialect: 'mysql',
 });
 
@@ -89,7 +89,7 @@ exports.getCart = async (req, res) => {
   const sessionId = cookieParser.signedCookie(signedCookie, 'mariahcarey');
 
   try {
-    let cartItems;
+    let cartItems = [];
 
     if (userId) {
       // If there is a userId, get the cart items for that user
@@ -125,14 +125,12 @@ exports.getCart = async (req, res) => {
           await redisClient.del(sessionId);
         }
       }
-    } else {
-      // If there is no userId, get the cart items for the sessionId
+    } else if (sessionId) {
+      // If there is no userId, but there is a sessionId, get the cart items for the sessionId
       const sessionCartItems = await redisClient.get(sessionId);
 
       if (sessionCartItems) {
         cartItems = JSON.parse(sessionCartItems);
-      } else {
-        cartItems = [];
       }
     }
 

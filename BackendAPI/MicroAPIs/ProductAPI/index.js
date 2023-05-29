@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors())
 
-const sequelize = new Sequelize('pha_product', 'admin', '9n49NvuQZjk6KoLdQLdv ', {
+const sequelize = new Sequelize('pha_product', 'admin', '9n49NvuQZjk6KoLdQLdv', {
   dialect: 'mysql',
   host: 'phasionista-products.ctjeibahvnce.ap-southeast-1.rds.amazonaws.com'
 });

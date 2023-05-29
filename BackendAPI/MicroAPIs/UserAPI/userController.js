@@ -48,6 +48,27 @@ exports.getUserById = async (req, res) => {
   }
 };
 
+exports.getToken = async (req, res) => {
+  const token = req.headers['authorization'];
+  const bearer = token ? token.split(" ")[1] : undefined;
+  const decoded = jwt.decode(bearer);
+  const userId = decoded ? decoded.id : null;
+
+  try {
+    const user = await users_detail.findByPk(decoded.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    const token = jwt.sign({ id: user.id }, 'mariahcarey', {
+      expiresIn: '1h'
+    });
+    res.json({ token });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -61,7 +82,8 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: 'Incorrect password' });
     }
     const access_token = jwt.sign({ id: user.id }, 'mariahcarey', { expiresIn: '1h' });
-    res.json({ access_token });
+    const refresh_token = jwt.sign({ id: user.id }, 'refresher', { expiresIn: '30d' });
+    res.json({ access_token, refresh_token });
   }
 
   catch (err) {
@@ -115,7 +137,8 @@ exports.createUser = async (req, res) => {
     });
 
     const access_token = jwt.sign({ id: id }, 'mariahcarey', { expiresIn: '1h' });  
-    res.json({ access_token });
+    const refresh_token = jwt.sign({ id: id }, 'refresher', { expiresIn: '30d' });
+    res.json({ access_token, refresh_token });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });

@@ -102,8 +102,8 @@ const Login = () => {
     }, 3000);
   };
 
-  const handleGoogleLogin = (response: any) => {
-    const { tokenId } = response;
+  const handleGoogleLogin = async (response: any) => {
+    const { tokenId } = await response;
     console.log('Google Id Token:', tokenId);
   };
 

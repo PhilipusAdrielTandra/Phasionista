@@ -39,6 +39,7 @@
     "cogo-toast": "^4.2.3",
     "emotion-theming": "^11.0.0",
     "express-session": "^1.17.3",
+    "firebase": "^9.22.1",
     "framer-motion": "^10.2.3",
     "gapi-script": "^1.2.0",
     "google-maps-react": "^2.0.6",

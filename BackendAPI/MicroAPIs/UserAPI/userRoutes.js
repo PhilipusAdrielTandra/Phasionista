@@ -21,6 +21,20 @@ function authenticateToken(req, res, next) {
   });
 }
 
+function authenticateRefreshToken(req, res, next) {
+  const header = req.headers['authorization'];
+  if (!header) return res.sendStatus(401);
+
+  const [bearer, token] = header.split(' ');
+  if (bearer !== 'Bearer' || !token) return res.sendStatus(401);
+
+  jwt.verify(token, 'refresher', (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+}
+
 router.use(session({
   secret: 'mariahcarey',
   resave: false,
@@ -33,8 +47,9 @@ router.use(session({
 }));
 
 router.get('/getall', userController.getAllUsers);
-router.get('/getid', authenticateToken, userController.getUserById);
+router.get('/getbyid', authenticateToken, userController.getUserById);
 router.post('/login', userController.login);
+router.get('/token', authenticateRefreshToken, userController.getToken);
 router.post('/createuser', userController.createUser);
 router.put('/updateuser', authenticateToken, userController.updateUser);
 router.delete('/deleteuser', authenticateToken, userController.deleteUser);

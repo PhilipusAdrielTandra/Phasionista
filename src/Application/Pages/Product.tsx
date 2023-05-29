@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Box, Grid, GridItem, Heading, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { makeStyles } from "@material-ui/core/styles";
 import { FaShoppingCart } from "react-icons/fa";
-import { Button as MaterialButton } from "@material-ui/core";
+import { Button, Button as MaterialButton } from "@material-ui/core";
 import { Button as ChakraButton } from "@chakra-ui/react";
 import Header from "../Components/header/layout";
 import Deck from "../Components/deck"
@@ -127,6 +127,7 @@ const Product = () => {
                   -
                 </div>
                 <input
+                  contentEditable="true"
                   id="cartQty"
                   className="qty"
                   type="number"
@@ -137,8 +138,10 @@ const Product = () => {
                 <div className="qty qty-plus" onClick={increaseQty}>
                   +
                 </div>
-                <input className="submit" type="submit" value="Add to Cart" />
               </div>
+              <button  className="w-1/2 text-white bg-[#060606] my-2 rounded-md  p-3 text-center flex items-center justify-center -mt-1 hover:scale-105 focus:ring-4 shadow-lg transform active:scale-75 transition-transform">
+                    Add to cart
+              </button>
             </form>
             </Box>
           </Box>

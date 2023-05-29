@@ -8,9 +8,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors())
 
-const sequelize = new Sequelize('pha_orders', 'admin', '9n49NvuQZjk6KoLdQLdv ', {
+const sequelize = new Sequelize('pha_orders', 'admin', '9n49NvuQZjk6KoLdQLdv', {
   dialect: 'mysql',
-  host: 'localhost'
+  host: 'phasionista-orders.ctjeibahvnce.ap-southeast-1.rds.amazonaws.com'
 });
 
 (async () => {
@@ -22,7 +22,7 @@ const sequelize = new Sequelize('pha_orders', 'admin', '9n49NvuQZjk6KoLdQLdv ', 
   }
 })();
 
-app.use('/api', ordersRoutes);
+app.use('/order', ordersRoutes);
 
 app.listen(3012, () => {
   console.log('Server started on port 3012');

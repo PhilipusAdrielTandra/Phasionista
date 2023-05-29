@@ -11,6 +11,8 @@ import Header from "../Components/header"
 import Deck from "../Components/deck"
 import Footer from "../Components/footer";
 import { authStore } from '../Redux/authenticationState';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import 'firebase/auth';
 import '../Styles/tailwind.css';
 import '../Styles/Login.css';
 
@@ -101,12 +103,29 @@ const Login1: React.FC = () => {
     }, 3000);
   };
 
-  const handleGoogleLogin = (response: any) => {
+  const handleGoogleLogin = async (response: any) => {
     const { tokenId } = response;
     console.log('Google Id Token:', tokenId);
+  
+    const provider = new GoogleAuthProvider();
+  
+    try {
+      // Sign in with the Google provider
+      const userCredential = await signInWithPopup(auth, provider);
+      const { user } = userCredential;
+      console.log('Firebase User:', user);
+      // Perform any additional actions with the signed-in user
+    } catch (error) {
+      if (error.code === 'auth/popup-closed-by-user') {
+        // Handle the error when the user closes the sign-in popup
+        console.log('User closed the sign-in popup');
+      } else {
+        console.log('Error:', error);
+        const errorMessage = 'Google Sign-In failed'; // Customize the error message if needed
+        showErrorMessage(errorMessage);
+      }
+    }
   };
-
-
 
   const handleLinkedinLogin = () => {
     // handle LinkedIn login logic
@@ -158,7 +177,7 @@ const Login1: React.FC = () => {
           <div className="glink">
             <Button onClick={handleGoogleLogin} className="google-button">
             <GoogleLogin
-              clientId="469647397924-5n1idp8n1a880mq8q1d9q5qt654odatf.apps.googleusercontent.com"
+              clientId="675419593671-gdqi5slmrtd8cc0op8ks035es1ojjtu0.apps.googleusercontent.com"
               buttonText="Login with Google"
               onSuccess={responseGoogle}
               onFailure={responseGoogle}

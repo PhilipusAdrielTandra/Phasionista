@@ -49,9 +49,9 @@ app.use(
   })  
 )
 
-const sequelize = new Sequelize('pha_cart', 'admin', '9n49NvuQZjk6KoLdQLdv ', {
+const sequelize = new Sequelize('pha_cart', 'admin', '9n49NvuQZjk6KoLdQLdv', {
   dialect: 'mysql',
-  host: 'localhost'
+  host: 'phasionista-cart.ctjeibahvnce.ap-southeast-1.rds.amazonaws.com'
 });
 
 (async () => {
