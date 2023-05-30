@@ -27,8 +27,22 @@ function Cart() {
   }]);
 
   useEffect(() => {
-    const url = 'http://localhost:3000/api/cart';
+    const url = 'http://localhost:3010/cart';
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFlMGVkM2M0LWZhZGMtNDQyZS1iM2FhLWM5NWM3ODRlYjk3MSIsImlhdCI6MTY4MzY5ODUwNCwiZXhwIjoxNjgzNzAyMTA0fQ.dZqLMLJXwUROv2h63S-mJnXquTxjLxhF3AT7Ip8nBUY';
+
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+    }).then(response => response.json())
+    .then(result => {
+      dispatch({ type: 'DATA_DELETED', payload: result });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 
     fetch(url, {
       method: 'GET', // or 'POST', 'PUT', etc. depending on the request
@@ -57,6 +71,8 @@ function Cart() {
   
   const currency = useSelector((state) => state.currency);
   const { cartItems } = useSelector((state) => state.cart);
+  
+
 
   return (
     <Fragment>

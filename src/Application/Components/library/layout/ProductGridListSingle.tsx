@@ -10,6 +10,7 @@ import { addToCart } from "../../../Redux/cart-slice";
 import { addToWishlist } from "../../../Redux/wishlist-slice";
 import { addToCompare } from "../../../Redux/compare-slice";
 
+
 const ProductGridListSingle = ({
   product,
   currency,
@@ -25,6 +26,25 @@ const ProductGridListSingle = ({
     discountedPrice * currency.currencyRate
   ).toFixed(2);
   const dispatch = useDispatch();
+
+  const handleProduct = () =>{
+    console.log(product);
+    const url = 'http://localhost:3010/cart/session';
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"product_id": product.id})
+    }).then(response => response.json()).then(result =>{
+      dispatch({type: 'DATA SUBMITTED', payload: result});
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    })
+  }
+
+  
 
   return (
     <Fragment>
@@ -90,7 +110,8 @@ const ProductGridListSingle = ({
                   </Link>
                 ) : product.stock && product.stock > 0 ? (
                   <button
-                    onClick={() => dispatch(addToCart(product))}
+                    onClick={() => {handleProduct();
+                      dispatch(addToCart(product))}}
                     className={
                       cartItem !== undefined && cartItem.quantity > 0
                         ? "active"
@@ -238,7 +259,8 @@ const ProductGridListSingle = ({
                       </Link>
                     ) : product.stock && product.stock > 0 ? (
                       <button
-                        onClick={() => dispatch(addToCart(product))}
+                        onClick={() => {handleProduct(); 
+                          dispatch(addToCart(product))}}
                         className={
                           cartItem !== undefined && cartItem.quantity > 0
                             ? "active"
