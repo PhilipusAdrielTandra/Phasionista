@@ -19,7 +19,16 @@ exports.createProduct = async (req, res) => {
 
 exports.getProducts = async (req, res) => {
   try {
-    const products = await Product.findAll();
+    const products = await Product.findAll({
+      include: [{
+        model: product_inventory, 
+        as: "variations"
+    },
+    {
+      model: product_images,
+      as: "product_images"
+    }]
+    });
     res.json(products);
   } catch (error) {
     res.status(500).json({ message: error.message });

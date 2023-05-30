@@ -3,7 +3,6 @@ import { Box, Grid, GridItem, Heading, Tab, TabList, TabPanel, TabPanels, Tabs, 
 import { makeStyles } from "@material-ui/core/styles";
 import { FaShoppingCart } from "react-icons/fa";
 import { Button, Button as MaterialButton } from "@material-ui/core";
-import { Button as ChakraButton } from "@chakra-ui/react";
 import Header from "../Components/header/layout";
 import Deck from "../Components/deck"
 import Footer from "../Components/footer";

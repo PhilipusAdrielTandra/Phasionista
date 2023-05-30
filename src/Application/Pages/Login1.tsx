@@ -13,8 +13,7 @@ import Footer from "../Components/footer";
 import { authStore } from '../Redux/authenticationState';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import 'firebase/auth';
-import '../Styles/tailwind.css';
-import '../Styles/Login.css';
+// import '../Styles/Login.css';
 
 const useStyles = makeStyles((theme) => ({
   textField: {

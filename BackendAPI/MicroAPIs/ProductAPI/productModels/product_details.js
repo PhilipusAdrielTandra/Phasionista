@@ -57,7 +57,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "fk_product_details_ge_product_category",
         using: "BTREE",
         fields: [
-          { name: "ge_product_category_id" },
+          { name: "categories" },
         ]
       },
     ]
