@@ -20,6 +20,7 @@ import ARComponent from './Application/Components/ARComponent';
 import { authStore } from './Application/Redux/authenticationState';
 import './App.css';
 import Return from './Application/Pages/Return';
+import JoinChat from './Application/Pages/JoinChat';
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
           <Route path="/404" element={<NotFound />} />
           <Route path="/AR" element={<ARComponent />} />
           <Route path="/checkout" element={<Checkout/>}/>
+          <Route path="/joinchat" element={<JoinChat/>}/>
         </Routes>
       </div>
     </Router>
