@@ -18,11 +18,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    sales: {
+    saleCount: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    description: {
+    category: {
+      type: DataTypes.STRING(50),
+      allowNull: false
+    },
+    fullDescription: {
       type: DataTypes.STRING(400),
       allowNull: false
     },

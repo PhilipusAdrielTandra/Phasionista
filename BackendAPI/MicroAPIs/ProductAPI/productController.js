@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const { v4: uuidv4 } = require('uuid');
 const sequelize = new Sequelize('pha_product', 'admin', '9n49NvuQZjk6KoLdQLdv', {
   dialect: 'mysql',
   host: 'phasionista-products.ctjeibahvnce.ap-southeast-1.rds.amazonaws.com'
@@ -10,7 +11,7 @@ const Product = product_details;
 
 exports.createProduct = async (req, res) => {
   try {
-    const product = await Product.create(req.body);
+    const product = await Product.create({ ...req.body, id: uuidv4() });
     res.status(201).json(product);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -20,20 +21,30 @@ exports.createProduct = async (req, res) => {
 exports.getProducts = async (req, res) => {
   try {
     const products = await Product.findAll({
-      include: [{
-        model: product_inventory, 
-        as: "variations"
-    },
-    {
-      model: product_images,
-      as: "product_images"
-    }]
+      include: [
+        {
+          model: product_images,
+          as: "image",
+        },
+      ],
     });
-    res.json(products);
+
+    const modifiedProducts = products.map((product) => {
+      const categories = product.category.split(", ");
+      const images = product.image.map((image) => image.image);
+      return {
+        ...product.toJSON(),
+        category: categories,
+        image: images,
+      };
+    });
+
+    res.json(modifiedProducts);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 exports.getProductById = async (req, res) => {
   try {
@@ -52,7 +63,7 @@ exports.getProductById = async (req, res) => {
 exports.updateProduct = async (req, res) => {
   try {
     const [updatedCount, updatedRows] = await Product.update(req.body, {
-      where: { id: req.params.id }
+      where: { id: req.params.id },
     });
     if (updatedCount > 0) {
       res.json(await Product.findByPk(req.params.id));
@@ -91,17 +102,17 @@ exports.getCategories = async (req, res) => {
 
 exports.addCategory = async (req, res) => {
   try {
-    const category = await ge_product_category.create(req.body);
+    const category = await ge_product_category.create({ ...req.body, id: uuidv4() });
     res.status(201).json(category);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-}
+};
 
 exports.updateCategory = async (req, res) => {
   try {
     const [updatedCount, updatedRows] = await ge_product_category.update(req.body, {
-      where: { id: req.params.id }
+      where: { id: req.params.id },
     });
     if (updatedCount > 0) {
       res.json(await ge_product_category.findByPk(req.params.id));
@@ -111,7 +122,7 @@ exports.updateCategory = async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-}
+};
 
 exports.getCategoryById = async (req, res) => {
   try {
@@ -152,12 +163,13 @@ exports.getProductImages = async (req, res) => {
 
 exports.addProductImage = async (req, res) => {
   try {
-    const image = await product_images.create(req.body);
+    const { id } = req.params;
+    const image = await product_images.create({ image: req.body.image, id: uuidv4(), product_id: id });
     res.status(201).json(image);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-}
+};
 
 exports.deleteProductImage = async (req, res) => {
   try {
@@ -185,17 +197,17 @@ exports.getInventory = async (req, res) => {
 
 exports.addInventory = async (req, res) => {
   try {
-    const inventory = await product_inventory.create(req.body);
+    const inventory = await product_inventory.create({ ...req.body, id: uuidv4() });
     res.status(201).json(inventory);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-}
+};
 
 exports.updateInventory = async (req, res) => {
   try {
     const [updatedCount, updatedRows] = await product_inventory.update(req.body, {
-      where: { id: req.params.id }
+      where: { id: req.params.id },
     });
     if (updatedCount > 0) {
       res.json(await product_inventory.findByPk(req.params.id));
@@ -205,7 +217,7 @@ exports.updateInventory = async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-}
+};
 
 exports.getInventoryById = async (req, res) => {
   try {

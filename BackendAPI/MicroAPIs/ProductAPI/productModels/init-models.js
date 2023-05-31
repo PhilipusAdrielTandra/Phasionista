@@ -33,7 +33,7 @@ function initModels(sequelize) {
   product_bundle_product_details.belongsTo(product_details, { as: "product", foreignKey: "product_id"});
   product_details.hasMany(product_bundle_product_details, { as: "product_bundle_product_details", foreignKey: "product_id"});
   product_images.belongsTo(product_details, { as: "product", foreignKey: "product_id"});
-  product_details.hasMany(product_images, { as: "product_images", foreignKey: "product_id"});
+  product_details.hasMany(product_images, { as: "image", foreignKey: "product_id"});
   product_inventory.belongsTo(product_details, { as: "variations", foreignKey: "product_id"});
   product_details.hasMany(product_inventory, { as: "variations", foreignKey: "product_id"});
   product_on_sale.belongsTo(product_details, { as: "product", foreignKey: "product_id"});

@@ -1,10 +1,14 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { authStore } from "../../Redux/authenticationState";
 import clsx from "clsx";
+import profile from "../../Assets/images/profile-icon.png"
 import MenuCart from "./MenuCart";
 
 const IconGroup = ({ iconWhiteClass }: any) => {
+  const isAuthenticated: boolean = authStore.getState().authen.authenticated;
+  const userProfilePicture = null;
   const handleClick = (e: any) => {
     e.currentTarget.nextSibling.classList.toggle("active");
   };
@@ -39,33 +43,47 @@ const IconGroup = ({ iconWhiteClass }: any) => {
           className="account-setting-active"
           onClick={e => handleClick(e)}
         >
-          <i className="pe-7s-user-female" />
+          {isAuthenticated ? (
+            <img
+              src={userProfilePicture || profile}
+              style={{width: "1.5rem", height: "1.5rem"}}
+              alt="Profile"
+              className="profile-picture"
+            />
+          ) : (
+            <img
+              src={ profile }
+              style={{width: "1.5rem", height: "1.5rem"}}
+              alt="Profile"
+              className="profile-picture"
+            />
+          )}
         </button>
-        <div className="account-dropdown">
+        {isAuthenticated ? 
+          <div className="account-dropdown">
           <ul>
             <li>
-              <Link to={process.env.PUBLIC_URL + "/login-register"}>Login</Link>
-            </li>
-            <li>
-              <Link to={process.env.PUBLIC_URL + "/login-register"}>
-                Register
-              </Link>
-            </li>
-            <li>
-              <Link to={process.env.PUBLIC_URL + "/my-account"}>
+              <Link to={process.env.PUBLIC_URL + "/profile"}>
                 my account
+              </Link>
+              <Link to={process.env.PUBLIC_URL + "/profile"} style={{ color: "red" }}>
+                log out
               </Link>
             </li>
           </ul>
-        </div>
-      </div>
-      <div className="same-style header-compare">
-        <Link to={process.env.PUBLIC_URL + "/compare"}>
-          <i className="pe-7s-shuffle" />
-          <span className="count-style">
-            {compareItems && compareItems.length ? compareItems.length : 0}
-          </span>
-        </Link>
+        </div> :
+        <div className="account-dropdown">
+          <ul>
+            <li>
+              <Link to={process.env.PUBLIC_URL + "/login"}>Login</Link>
+            </li>
+            <li>
+              <Link to={process.env.PUBLIC_URL + "/register"}>
+                Register
+              </Link>
+            </li>
+          </ul>
+        </div>}
       </div>
       <div className="same-style header-wishlist">
         <Link to={process.env.PUBLIC_URL + "/wishlist"}>
