@@ -21,6 +21,7 @@ import { authStore } from './Application/Redux/authenticationState';
 import './App.css';
 import Return from './Application/Pages/Return';
 import JoinChat from './Application/Pages/JoinChat';
+import Orders from './Application/Pages/Order';
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route path="/AR" element={<ARComponent />} />
           <Route path="/checkout" element={<Checkout/>}/>
           <Route path="/joinchat" element={<JoinChat/>}/>
+          <Route path="/orders" element={<Orders/>}/>
         </Routes>
       </div>
     </Router>
