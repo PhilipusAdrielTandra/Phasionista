@@ -66,7 +66,7 @@ const IconGroup = ({ iconWhiteClass }: any) => {
               <Link to={process.env.PUBLIC_URL + "/profile"}>
                 my account
               </Link>
-              <Link to={process.env.PUBLIC_URL + "/profile"} style={{ color: "red" }}>
+              <Link to={process.env.PUBLIC_URL + "/home"} style={{ color: "red" }} onClick={() => authStore.dispatch({ type: "logout"})}>
                 log out
               </Link>
             </li>

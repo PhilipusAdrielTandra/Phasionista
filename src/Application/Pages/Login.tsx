@@ -58,6 +58,8 @@ const Login = () => {
 
       const cookies = document.cookie;
       console.log(cookies)
+      authStore.dispatch({ type: 'login'});
+      console.log(authStore.getState().authen.authenticated)
       window.location.href = '/';
     })
     .catch((error) => {

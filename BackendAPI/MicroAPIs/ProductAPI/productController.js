@@ -48,10 +48,24 @@ exports.getProducts = async (req, res) => {
 
 exports.getProductById = async (req, res) => {
   try {
-    const product = await Product.findByPk(req.params.id);
+    const product = await Product.findByPk(req.params.id, {
+      include: [
+        {
+          model: product_images,
+          as: "image",
+        },
+      ],
+    });
     if (product) {
+      const categories = product.category.split(", ");
+      const images = product.image.map((image) => image.image);
+      const modifiedProduct = {
+        ...product.toJSON(),
+        category: categories,
+        image: images,
+      };
       res.header('Access-Control-Allow-Origin', '*');
-      res.json(product);
+      res.json(modifiedProduct);
     } else {
       res.status(404).json({ message: 'Product not found' });
     }
@@ -59,6 +73,7 @@ exports.getProductById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 exports.updateProduct = async (req, res) => {
   try {

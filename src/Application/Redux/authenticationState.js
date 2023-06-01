@@ -1,27 +1,37 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 const initialState = {
-    authenticated: false,
-  };
+  authenticated: false,
+};
 
-  //reducer function  for the authentication of user
-  const authReducer = (state = initialState, action) => {
-    switch(action.type){
-      case "login": {
-        return Object.assign({}, state, {authenticated: true});
-      }
-      case "signup": {
-        return Object.assign({}, state, {authenticated: true});
-      }
-      case "logout": {
-        return Object.assign({}, state, {authenticated: false});
-      }
-      default: {
-        return state;
-      }
+export const authReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "login": {
+      return { ...state, authenticated: true };
+    }
+    case "signup": {
+      return { ...state, authenticated: true };
+    }
+    case "logout": {
+      return { ...state, authenticated: false };
+    }
+    default: {
+      return state;
     }
   }
-  export default authReducer;
+};
 
-export const authStore = configureStore({reducer:{authen: authReducer}});
-export const authSelector = state => state.authen.authentication;
+const persistConfig = {
+  key: "authStore",
+  storage,
+};
+
+const persistedAuthReducer = persistReducer(persistConfig, authReducer);
+
+export const authStore = configureStore({
+  reducer: { authen: persistedAuthReducer },
+});
+
+export const persistor = persistStore(authStore);

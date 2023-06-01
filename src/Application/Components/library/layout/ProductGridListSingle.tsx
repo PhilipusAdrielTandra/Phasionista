@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { getDiscountPrice } from "../../productHelper";
 import Rating from "./ProductRating";
 import ProductModal from "./ProductModal";
-import { addToCart } from "../../../Redux/cart-slice";
+import { addToCart, addToCartAPI } from "../../../Redux/cart-slice";
 import { addToWishlist } from "../../../Redux/wishlist-slice";
 import { addToCompare } from "../../../Redux/compare-slice";
 
@@ -53,13 +53,14 @@ const ProductGridListSingle = ({
             <Link to={process.env.PUBLIC_URL + "/product/" + product.id}>
               <img
                 className="default-img"
-                style={{ width: "19rem", height: "19rem" }}
+                style={{ width: "30rem", height: "19rem" }}
                 src={product.image[0]}
                 alt=""
               />
               {product.image.length > 1 ? (
                 <img
                   className="hover-img"
+                  style={{ width: "30rem", height: "19rem"}}
                   src={product.image[1]}
                   alt=""
                 />
@@ -111,8 +112,9 @@ const ProductGridListSingle = ({
                   </Link>
                 ) : product.stock && product.stock > 0 ? (
                   <button
-                    onClick={() => {handleProduct();
-                      dispatch(addToCart(product))}}
+                    onClick={() => {
+                      addToCartAPI(product, dispatch)
+                    }}
                     className={
                       cartItem !== undefined && cartItem.quantity > 0
                         ? "active"
@@ -260,8 +262,9 @@ const ProductGridListSingle = ({
                       </Link>
                     ) : product.stock && product.stock > 0 ? (
                       <button
-                        onClick={() => {handleProduct(); 
-                          dispatch(addToCart(product))}}
+                        onClick={() => {
+                          addToCartAPI(product, dispatch)
+                        }}
                         className={
                           cartItem !== undefined && cartItem.quantity > 0
                             ? "active"

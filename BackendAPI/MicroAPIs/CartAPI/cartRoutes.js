@@ -11,7 +11,7 @@ function authenticateToken(req, res, next) {
 
   const [bearer, token] = header.split(' ');
   if (bearer !== 'Bearer' || !token) return res.sendStatus(401);
-
+  
   jwt.verify(token, 'mariahcarey', (err, user) => {
     if (err) return res.sendStatus(403);
     req.user = user;
