@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../Components/header/layout'
 import test from '../Assets/images/future.jpg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons'
+
 function Orders() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -31,7 +34,10 @@ function Orders() {
             <div className="group:hover:hidden flex items-center"> {/* Added a new div container */}
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-black">Product item</h5>
               <span className="ml-2 text-sm text-black">May 12th 2023</span> {/* Added span element */}
-              <h3 className="hidden group-hover:block text-white absolute align-middle mt-14 ">See Transaction Details</h3> 
+              <h3 className="hidden group-hover:block text-white absolute align-middle mt-14 ">
+                <FontAwesomeIcon className='px-3' icon={faFileInvoiceDollar}/>
+                See Transaction Details
+              </h3> 
             </div>
               <p className='text-black'>1 item x Rp price</p>
               <p className="text-left text-black">Total Price</p>

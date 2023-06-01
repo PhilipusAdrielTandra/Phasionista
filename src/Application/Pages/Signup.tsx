@@ -71,17 +71,17 @@ const Signup = () => {
 
                     <div className="w-full flex items-center justify-center relative py-2">
                         <div className="w-full h-[1px] bg-black"></div>
-                        <p className="text-lg absolute text-black/80 bg-[#f5f5f5] mb-1 px-2">or</p>
                     </div>
                 </div>
                 <div className="w-full flex flex-col my-4">
                   <button className="w-full text-white bg-[#060606] my-2 rounded-md font-semibold p-4 text-center flex items-center justify-center hover:scale-105 focus:ring-4 shadow-lg transform active:scale-75 transition-transform">
-                  <FontAwesomeIcon className="h-6 mr-4" icon={faLinkedin} />
-                    Sign In With LinkedIn
+
+                    <FontAwesomeIcon className="h-6 mr-4" icon={faGoogle} />
+                    Sign In With Google
                   </button>
                   <button className="w-full text-black bg-white my-2 rounded-md border-2 font-semibold border-black p-4 text-center flex items-center justify-center hover:scale-105 focus:ring-4 shadow-lg transform active:scale-75 transition-transform">
-                  <FontAwesomeIcon className="h-6 mr-4" icon={faGoogle} />
-                    Sign In With Google
+                    <FontAwesomeIcon className="h-6 mr-4" icon={faLinkedin} />
+                    Sign In With LinkedIn
                   </button>
 
                 </div>

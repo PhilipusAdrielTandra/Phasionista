@@ -120,7 +120,6 @@ const Login = () => {
   }
 
     return(
-      <Header headerTop="visible">
           <div className="w-full min-h-screen flex items-start">
               <div className="sm:hidden relative w-1/2 h-full flex flex-col lg:block">
                   <div className="absolute top-[40%] left-[5%] flex flex-col">
@@ -130,7 +129,7 @@ const Login = () => {
                   <img src = {COVER_IMAGE} className= "w-full h-screen object-cover object-top"/>
               </div>
 
-              <div className="w-1/2 h-screen bg-[#f5f5f5] flex flex-col p-60 justify-between">
+              <div className="w-1/2 h-screen bg-[#f5f5f5] flex flex-col p-40 justify-between">
                   <h1 className="text-xl text-[#060606] font-semibold">Phasionista</h1>
 
                   <div className="w-full flex flex-col max-w-[800px] mt-2">
@@ -175,7 +174,6 @@ const Login = () => {
                           </div>
                           <div className="w-full flex items-center justify-center relative py-2">
                               <div className="w-full h-[1px] bg-black"></div>
-                              <p className="text-lg absolute text-black/80 bg-[#f5f5f5] mb-1 px-2">or</p>
                           </div>
                           <button onClick={handleGoogleLogin}className="w-full text-black bg-white my-2 rounded-md border-2 font-semibold border-black p-4 text-center flex items-center justify-center hover:scale-105 focus:ring-4 shadow-lg transform active:scale-75 transition-transform">
                               <GoogleLogin
@@ -205,7 +203,6 @@ const Login = () => {
     
 
           </div>
-      </Header>
     )
 }
 
