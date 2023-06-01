@@ -11,7 +11,7 @@ import '../../../Styles/About.css'
 
 export const TeamSection: React.FC = () => {
   return (
-    <div className="wrapper">
+    <div className="wrapper min-h-screen ">
       <div className="our_team">
         <div className="team_member">
           <div className="member_img">

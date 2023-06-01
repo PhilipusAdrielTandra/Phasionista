@@ -22,6 +22,10 @@ import './App.css';
 import Return from './Application/Pages/Return';
 import JoinChat from './Application/Pages/JoinChat';
 import Orders from './Application/Pages/Order';
+import { ContactSection } from './Application/Data/Sections/Intro/Contact.Section';
+import { TeamSection } from './Application/Data/Sections/Intro/Team.Section';
+import { IntroSection } from './Application/Data/Sections/Intro/Intro.Section';
+
 
 
 function App() {

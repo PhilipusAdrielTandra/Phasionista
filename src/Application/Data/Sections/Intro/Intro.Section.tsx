@@ -4,7 +4,7 @@ import profile from '../../../Assets/images/future.jpg';
 
 export const IntroSection: React.FC = () => {
   return (
-    <div className=''>
+    <div className='min-h-screen pt-28'>
           <div className='mt-24 flex pt-9'>
           {/* left side */}
           <div className='relative flex-[30%]'>

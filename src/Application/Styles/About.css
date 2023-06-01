@@ -7,13 +7,15 @@
   
 
   .wrapper{
-    margin-top: 60px;
+    
     text-align: center;
+    min-height: 100vh;
+    
   }
-  
 
   
   .our_team{
+    padding-top: 25vh;
     width: auto;
     display: flex;
     justify-content: center;

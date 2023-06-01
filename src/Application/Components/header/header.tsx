@@ -32,7 +32,7 @@ const HeaderOne = ({
   };
 
   return (
-    <header className={clsx("header-area clearfix", headerBgClass, headerPositionClass)}>
+    <header className={clsx("header-area clearfix shadow", headerBgClass, headerPositionClass)}>
       <div
         className={clsx(
           "header-top-area", 

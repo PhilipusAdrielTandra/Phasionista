@@ -3,6 +3,24 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Button, Divider } from '@material-ui/core';
 import { YouTube, LinkedIn, Twitter, Instagram } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
+import { SectionIdEnum } from '../Data/Types';
+import { Link as SmoothLink, animateScroll as scroll } from "react-scroll";
+
+const navigationItems = [
+  {
+    text: "About Us",
+    to: SectionIdEnum.intro,
+  },
+  {
+    text: "Our Team",
+    to: SectionIdEnum.team,
+  },
+  {
+    text: "Contact Us",
+    to: SectionIdEnum.contact,
+  }
+];
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -72,20 +90,26 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Footer: React.FC = () => {
+
+
   const classes = useStyles();
+  const mappedItems = (
+    navigationItems.map(({ to, text }) => {
+      return (
+        <Link to={`/about#${to}`}>
+            <Button className={classes.sectionButton}>{text}</Button>
+        </Link>
+
+      );
+    })
+  );
 
   return (
     <footer className={classes.root}>
       <div className={classes.container}>
         <div className={classes.section}>
           <div className={classes.sectionTitle}>About Us</div>
-          <Link to={"/about"}>
-          <Button className={classes.sectionButton}>About Us</Button>
-          </Link>
-          <Link to={"/about"}>
-          <Button className={classes.sectionButton}>Locations</Button>
-          </Link>
-          <Button className={classes.sectionButton}>Contacts</Button>
+          {mappedItems}
           <Button className={classes.sectionButton}>Orders</Button>
         </div>
         <div className={classes.section}>

@@ -1,5 +1,5 @@
 import { Box, Container } from '@mui/material';
-import { SectionIdEnum } from '../../../Types';
+import { SectionIdEnum } from '../../../Data/Types';
 
 export type SectionContainerProps = {
   children: React.ReactNode;
@@ -9,8 +9,11 @@ export type SectionContainerProps = {
 export const SectionContainer: React.FC<SectionContainerProps> = ({ children, sectionId }) => {
   return (
     <div id={sectionId} key={sectionId}>
-      <Container maxWidth={false}  disableGutters>
-        <Box maxWidth="100vw">{children}</Box>
+      <Container maxWidth={false}>
+        <div className='max-h-screen'>
+          {children}
+        </div>
+        
       </Container>
     </div>
   );
