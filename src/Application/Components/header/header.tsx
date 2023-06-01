@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import clsx from "clsx";
 import Logo from "./logo";
 import NavMenu from "./NavMenu";
@@ -65,7 +65,9 @@ const HeaderOne = ({
             </div>
           </div>
         </div>
-        {/* <MobileMenu /> */}
+        <Suspense>
+        <MobileMenu />
+        </Suspense>
       </div>
     </header>
   );

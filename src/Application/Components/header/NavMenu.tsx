@@ -172,17 +172,17 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }: any) => {
             </ul>
           </li>
           <li>
-            <Link to={process.env.PUBLIC_URL + "/blog-standard"}>
-              {"blog"}
+            <Link to={process.env.PUBLIC_URL + "/joinchat"}>
+              {"chat"}
             </Link>
           </li>
           <li>
-            <Link to={process.env.PUBLIC_URL + "/contact"}>
-              {"contact us"}
+            <Link to={process.env.PUBLIC_URL + "/about"}>
+              {"about us"}
             </Link>
           </li>
           <li>
-            <Link to={process.env.PUBLIC_URL + "/contact"}>
+            <Link to={process.env.PUBLIC_URL + "/orders"}>
               {"transactions"}
             </Link>
           </li>

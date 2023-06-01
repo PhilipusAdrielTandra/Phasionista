@@ -3,15 +3,13 @@ import {io, Socket} from 'socket.io-client'
 import Dashboard from '../Components/Dashboard';
 import '../Styles/Chat.css';
 import profile from '../Assets/branding/logo.png'
-import Header from '../Components/header'
+import Header from '../Components/header/layout'
 import Footer from '../Components/footer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FaPaperPlane } from 'react-icons/fa';
 
 const socket = io('http://localhost:3011/chat');
-
-
 
 interface ChatProps {
   socket: Socket;
@@ -48,8 +46,6 @@ function Chat({ socket, username, room }: ChatProps) {
   }, [socket]);
   return (
     <div className=''>
-    <Header/>
-
     <div className='flex justify-center items-center min-h-screen bg-[#26547C] pt-8'>
       <div className='relative w-[1100px] max-w-full h-[calc(100vh-140px)] flex'>
       {/* right side */}

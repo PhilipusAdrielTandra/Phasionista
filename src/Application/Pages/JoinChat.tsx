@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import io from 'socket.io-client';
 import Chat from './Chat';
+import Header from '../Components/header/layout'
+import {Button} from '@mui/material'
+
 const socket = io.connect('http://localhost:3011');
 
 function JoinChat() {
@@ -17,24 +20,25 @@ function JoinChat() {
 
   return (
     <div className=''>
+      <Header/>
       {! showChat? (
-    <div className="joinChatContainer">
+    <div className="h-screen flex flex-col justify-center items-center pb-44">
       <h3>Join A Chat</h3>
       <input
         type="text"
-        placeholder="John..."
+        placeholder="Usermame"
         onChange={(event) => {
           setUsername(event.target.value);
-        }}
+        }} className='w-96'
       />
       <input
         type="text"
-        placeholder="Room ID..."
+        placeholder="Room ID"
         onChange={(event) => {
           setRoom(event.target.value);
-        }}
+        }} className='w-96'
       />
-      <button onClick={joinRoom}>Join A Room</button>
+      <Button onClick={joinRoom} variant='outlined' className='my-2'>Join A Room</Button>
       </div>
       )
       :(
