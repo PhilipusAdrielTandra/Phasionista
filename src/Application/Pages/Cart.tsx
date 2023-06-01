@@ -1,30 +1,15 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Button } from "@chakra-ui/react"
 import Header from "../Components/header/layout";
 import Footer from "../Components/footer";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import SEO from "./SEO";
 import { getDiscountPrice } from "../Components/productHelper";
-import { addToCart, decreaseQuantity, deleteFromCart, deleteAllFromCart } from "../Redux/cart-slice";
+import { addToCart, decreaseQuantity, deleteFromCart, deleteAllFromCart, decreaseQuantityAPI, addToCartAPI, IncrementCartAPI } from "../Redux/cart-slice";
 import { cartItemStock } from "../Components/productHelper";
 import "../Styles/Cart.css";
 
 function Cart() {
-  const [products, setProducts] = useState([{
-    id: 1,
-    name: "Sample Product",
-    image: "https://picsum.photos/600/800",
-    price: 49.99, 
-    amount: 1
-  },
-  {
-    id: 1,
-    name: "Sample Product",
-    image: "https://picsum.photos/600/800",
-    price: 49.99, 
-    amount: 1
-  }]);
 
   useEffect(() => {
     const url = 'http://localhost:3010/cart';
@@ -58,11 +43,6 @@ function Cart() {
     .catch((error) => console.error('Error:', error));
   }, []); 
 
-  const totalPrice = products.reduce(
-    (acc, product) => acc + product.price * product.amount,
-    0
-  );
-
   let cartTotalPrice = 0;
 
   const [quantityCount] = useState(1);
@@ -71,8 +51,6 @@ function Cart() {
   
   const currency = useSelector((state) => state.currency);
   const { cartItems } = useSelector((state) => state.cart);
-  
-
 
   return (
     <Fragment>
@@ -189,9 +167,8 @@ function Cart() {
                                   <div className="cart-plus-minus">
                                     <button
                                       className="dec qtybutton"
-                                      onClick={() =>
-                                        dispatch(decreaseQuantity(cartItem))
-                                      }
+                                      onClick={() => { 
+                                        decreaseQuantityAPI(cartItem.id, dispatch) }}
                                     >
                                       -
                                     </button>
@@ -204,10 +181,7 @@ function Cart() {
                                     <button
                                       className="inc qtybutton"
                                       onClick={() =>
-                                        dispatch(addToCart({
-                                          ...cartItem,
-                                          quantity: quantityCount
-                                        }))
+                                        IncrementCartAPI(cartItem.id, dispatch)
                                       }
                                       disabled={
                                         cartItem !== undefined &&

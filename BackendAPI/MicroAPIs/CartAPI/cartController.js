@@ -29,11 +29,11 @@ exports.addToCart = async (req, res) => {
   const decoded = jwt.decode(bearer);
   const userId = decoded ? decoded.id : null;
   const signedCookie = req.cookies['connect.sid'];
-  const sessionId = cookieParser.signedCookie(signedCookie, 'mariahcarey');
+  let sessionId = cookieParser.signedCookie(signedCookie, 'mariahcarey');
 
   let id = uuidv4();
-  if (!userId) {
-    id = sessionId;
+  if (!userId && !sessionId) {
+    sessionId = id;
   }
 
   try {
@@ -55,11 +55,11 @@ exports.addToCart = async (req, res) => {
     } else {
       const cartItemsJson = await redisClient.get(sessionId);
       let cartItems = cartItemsJson ? JSON.parse(cartItemsJson) : [];
-    
+
       if (!Array.isArray(cartItems)) {
         cartItems = [];
       }
-    
+
       const existingCartItemIndex = cartItems.findIndex(item => item.product_id === productId);
       if (existingCartItemIndex !== -1) {
         const updatedQuantity = cartItems[existingCartItemIndex].quantity + Number(amount);
@@ -70,9 +70,9 @@ exports.addToCart = async (req, res) => {
         cartItems.push(newCartItem);
         res.status(200).send({ message: 'Product added to session cart successfully.' });
       }
-    
+
       await redisClient.set(sessionId, JSON.stringify(cartItems));
-    }    
+    }
 
   } catch (error) {
     console.error(error);
@@ -144,10 +144,11 @@ exports.getCart = async (req, res) => {
 
 exports.updateCartItem = async (req, res) => {
   const token = req.headers['authorization'];
-  const decoded = jwt.decode(token);
+  const bearer = token ? token.split(" ")[1] : undefined;
+  const decoded = jwt.decode(bearer);
   const userId = decoded ? decoded.id : null;
   const sessionId = req.headers['session-id'];
-  const { productId, quantity } = req.body;
+  const { productId, amount } = req.body;
 
   try {
     let cartItem;
@@ -164,13 +165,35 @@ exports.updateCartItem = async (req, res) => {
     if (!cartItem) {
       res.status(404).send({ error: 'Cart item not found.' });
     } else {
-      cartItem.quantity = quantity;
-      if (userId) {
-        await cartItem.save();
-        res.status(200).send({ message: 'Cart item updated successfully.' });
+      if (amount === -1) {
+        cartItem.quantity -= 1;
+
+        if (cartItem.quantity === 0) {
+          if (userId) {
+            await cartItem.destroy();
+          } else {
+            const updatedCartItems = cartItems.filter(item => item.product_id !== productId);
+            await redisClient.set(sessionId, JSON.stringify(updatedCartItems));
+          }
+          res.status(200).send({ message: 'Cart item deleted successfully.' });
+        } else {
+          if (userId) {
+            await cartItem.save();
+            res.status(200).send({ message: 'Cart item quantity decreased successfully.' });
+          } else {
+            await redisClient.set(sessionId, JSON.stringify(cartItems));
+            res.status(200).send({ message: 'Cart item updated to session successfully.' });
+          }
+        }
       } else {
-        await redisClient.set(sessionId, JSON.stringify(cartItems));
-        res.status(200).send({ message: 'Cart item updated to session successfully.' });
+        cartItem.quantity = amount;
+        if (userId) {
+          await cartItem.save();
+          res.status(200).send({ message: 'Cart item updated successfully.' });
+        } else {
+          await redisClient.set(sessionId, JSON.stringify(cartItems));
+          res.status(200).send({ message: 'Cart item updated to session successfully.' });
+        }
       }
     }
   } catch (error) {
