@@ -5,6 +5,9 @@ import { authStore } from "../../Redux/authenticationState";
 import clsx from "clsx";
 import profile from "../../Assets/images/profile-icon.png"
 import MenuCart from "./MenuCart";
+import { setCartItems } from "../../Redux/cart-slice";
+import { store } from "../../Redux/store";
+import { deleteAllFromWishlist } from "../../Redux/wishlist-slice";
 
 const IconGroup = ({ iconWhiteClass }: any) => {
   const isAuthenticated: boolean = authStore.getState().authen.authenticated;
@@ -66,7 +69,17 @@ const IconGroup = ({ iconWhiteClass }: any) => {
               <Link to={process.env.PUBLIC_URL + "/profile"}>
                 my account
               </Link>
-              <Link to={process.env.PUBLIC_URL + "/home"} style={{ color: "red" }} onClick={() => authStore.dispatch({ type: "logout"})}>
+              <Link to={process.env.PUBLIC_URL + "/home"} style={{ color: "red" }} onClick={() => { 
+                authStore.dispatch({ type: "logout"});
+                window.location.reload();
+                window.location.href = "/home";
+                store.dispatch(setCartItems([]));
+                store.dispatch(deleteAllFromWishlist())
+                document.cookie = `access-token=""; path=/;`;
+                document.cookie = `refresh-token=""; path=/;`;
+              }
+                
+                }>
                 log out
               </Link>
             </li>

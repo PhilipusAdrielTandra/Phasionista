@@ -130,11 +130,6 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }: any) => {
                 </Link>
               </li>
               <li>
-                <Link to={process.env.PUBLIC_URL + "/login1"}>
-                  {"login1"}
-                </Link>
-              </li>
-              <li>
                 <Link to={process.env.PUBLIC_URL + "/profile"}>
                   {"profile"}
                 </Link>

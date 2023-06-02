@@ -122,6 +122,7 @@ const Login = () => {
   }
 
     return(
+      <Header>
           <div className="w-full min-h-screen flex items-start">
               <div className="sm:hidden relative w-1/2 h-full flex flex-col lg:block">
                   <div className="absolute top-[40%] left-[5%] flex flex-col">
@@ -130,7 +131,6 @@ const Login = () => {
                   </div>
                   <img src = {COVER_IMAGE} className= "w-full h-screen object-cover object-top"/>
               </div>
-
               <div className="w-1/2 h-screen bg-[#f5f5f5] flex flex-col p-40 justify-between">
                   <h1 className="text-xl text-[#060606] font-semibold">Phasionista</h1>
 
@@ -205,6 +205,8 @@ const Login = () => {
     
 
           </div>
+
+        </Header>
     )
 }
 
