@@ -20,7 +20,7 @@ const Home: React.FC = () => {
         titleTemplate="Fashion Home"
         description="Home of Phasionista"
       />
-      <Header headerTop="visible">
+      <Header>
         <div className="Home" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
           <div className="flex-justify-center">
