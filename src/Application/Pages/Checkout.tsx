@@ -10,14 +10,8 @@ const Checkout = () => {
 
   let { pathname } = useLocation();
   const currency = useSelector((state: any) => state.currency);
-  const { cartItems } : any= [
-    {
-      name: "Sample Product",
-      price: 20.99,
-      discount: 0.1, 
-      quantity: 2 
-    }
-  ]
+  const { cartItems } = useSelector((state) => state.cart);
+  console.log(cartItems)
 
   return (
     <Fragment>
@@ -138,7 +132,7 @@ const Checkout = () => {
                         </div>
                         <div className="your-order-middle">
                           <ul>
-                            {cartItems.map(({cartItem, key} : any) => {
+                            {cartItems.map((cartItem, key) => {
                               const discountedPrice = getDiscountPrice(
                                 cartItem.price,
                                 cartItem.discount

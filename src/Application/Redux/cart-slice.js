@@ -157,7 +157,7 @@ export const IncrementCartAPI = async (product, dispatch) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
       },
-      body: JSON.stringify({productId: product.id, amount: 1}),
+      body: JSON.stringify({productId: product, amount: 1}),
     });
 
     if (response.ok) {

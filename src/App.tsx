@@ -16,6 +16,7 @@ import About from './Application/Pages/About';
 import FAQ from './Application/Pages/FAQ';
 import Sizes from './Application/Pages/Sizes';
 import Checkout from './Application/Pages/Checkout';
+import ProductCreation from './Application/Pages/ProductCreation';
 import ARComponent from './Application/Components/ARComponent';
 import { authStore } from './Application/Redux/authenticationState';
 import './App.css';
@@ -56,6 +57,7 @@ function App() {
           <Route path="/checkout" element={<Checkout/>}/>
           <Route path="/joinchat" element={<JoinChat/>}/>
           <Route path="/orders" element={<Orders/>}/>
+          <Route path="/product-create" element={<ProductCreation/>}/>
         </Routes>
       </div>
     </Router>
