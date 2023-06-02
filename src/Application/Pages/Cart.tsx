@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import SEO from "./SEO";
 import { getDiscountPrice } from "../Components/productHelper";
-import { addToCart, decreaseQuantity, deleteFromCart, deleteAllFromCart, decreaseQuantityAPI, addToCartAPI, IncrementCartAPI } from "../Redux/cart-slice";
+import { addToCart, decreaseQuantity, deleteFromCart, deleteAllFromCartAPI, deleteAllFromCart, decreaseQuantityAPI, addToCartAPI, IncrementCartAPI, deleteFromCartAPI } from "../Redux/cart-slice";
 import { cartItemStock } from "../Components/productHelper";
 import "../Styles/Cart.css";
 
@@ -213,7 +213,7 @@ function Cart() {
                                 <td className="product-remove">
                                   <button
                                     onClick={() =>
-                                      dispatch(deleteFromCart(cartItem.cartItemId))
+                                      dispatch(deleteFromCartAPI(cartItem.id, dispatch))
                                     }
                                   >
                                     <i className="fa fa-times"></i>
@@ -238,7 +238,7 @@ function Cart() {
                         </Link>
                       </div>
                       <div className="cart-clear">
-                        <button onClick={() => dispatch(deleteAllFromCart())}>
+                        <button onClick={() => deleteAllFromCartAPI(dispatch)}>
                           Clear Shopping Cart
                         </button>
                       </div>

@@ -204,19 +204,20 @@ exports.updateCartItem = async (req, res) => {
 
 exports.deleteCartItem = async (req, res) => {
   const token = req.headers['authorization'];
-  const decoded = jwt.decode(token);
+  const bearer = token ? token.split(" ")[1] : undefined;
+  const decoded = jwt.decode(bearer);
   const userId = decoded ? decoded.id : null;
   const sessionId = req.headers['session-id'];
-  const { id } = req.params;
+  const { productId } = req.body;
 
   try {
     let cartItem;
     if (userId) {
-      cartItem = await user_cart.findByPk(id);
+      cartItem = await user_cart.findOne({ where: { product_id: productId }});
     } else {
       const cartItemsJson = await redisClient.get(sessionId);
       const cartItems = cartItemsJson ? JSON.parse(cartItemsJson) : [];
-      cartItem = cartItems.find(item => item.id === id);
+      cartItem = cartItems.find(item => item.id === productId);
     }
 
     if (!cartItem) {
@@ -225,7 +226,7 @@ exports.deleteCartItem = async (req, res) => {
       if (userId) {
         await cartItem.destroy();
       } else {
-        const updatedCartItems = cartItems.filter(item => item.id !== id);
+        const updatedCartItems = cartItems.filter(item => item.id !== productId);
         await redisClient.set(sessionId, JSON.stringify(updatedCartItems));
       }
       res.status(200).send({ message: 'Cart item deleted successfully.' });
@@ -233,5 +234,25 @@ exports.deleteCartItem = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: 'Error deleting cart item.' });
+  }
+};
+
+exports.deleteAllCartItems = async (req, res) => {
+  const token = req.headers['authorization'];
+  const bearer = token ? token.split(" ")[1] : undefined;
+  const decoded = jwt.decode(bearer);
+  const userId = decoded ? decoded.id : null;
+  const sessionId = req.headers['session-id'];
+
+  try {
+    if (userId) {
+      await user_cart.destroy({ where: { user_id: userId } });
+    } else {
+      await redisClient.del(sessionId);
+    }
+    res.status(200).send({ message: 'All cart items deleted successfully.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: 'Error deleting cart items.' });
   }
 };
