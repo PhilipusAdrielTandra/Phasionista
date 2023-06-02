@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import cogoToast from 'cogo-toast';
+import thunk from 'redux-thunk';
 import { createSlice } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
@@ -8,6 +9,7 @@ const cartSlice = createSlice({
   initialState: {
     cartItems: [],
   },
+  middleware: [thunk],
   reducers: {
     addToCart(state, action) {
       const product = action.payload;
@@ -107,7 +109,8 @@ const cartSlice = createSlice({
       state.cartItems = action.payload;
     },
   },
-});
+}
+);
 
 export const { addToCart, deleteFromCart, decreaseQuantity, deleteAllFromCart, setCartItems, increaseQuantity } = cartSlice.actions;
 export default cartSlice.reducer;
@@ -149,7 +152,6 @@ export const IncrementCartAPI = async (product, dispatch) => {
   if (match) {
     accessToken = match[1]; // Extract the cookie value
   }
-  console.log(product)
   try {
     const response = await fetch('http://localhost:3010/cart/user', {
       method: 'POST',
@@ -168,10 +170,25 @@ export const IncrementCartAPI = async (product, dispatch) => {
   }
 };
 
-export const deleteFromCartAPI = (cartItemId) => async (dispatch) => {
+export const deleteFromCartAPI = async(cartItemId, dispatch)=> {
+  const cookies = document.cookie; 
+
+  const match = cookies.match(/access-token=([^;]+)/);
+
+  let accessToken = null;
+  if (match) {
+    accessToken = match[1]; // Extract the cookie value
+  }
+
+
   try {
-    const response = await fetch(`/api/deleteCartItem/${cartItemId}`, {
+    const response = await fetch(`http://localhost:3010/cart/user/`, {
       method: 'DELETE',
+      headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+          },
+      body: JSON.stringify({ productId: cartItemId})
     });
 
     if (response.ok) {
@@ -185,7 +202,6 @@ export const deleteFromCartAPI = (cartItemId) => async (dispatch) => {
 };
 
 export const decreaseQuantityAPI = async (cartItemId, dispatch) => {
-  console.log(cartItemId)
   const cookies = document.cookie; 
 
   const match = cookies.match(/access-token=([^;]+)/);
@@ -217,16 +233,31 @@ export const decreaseQuantityAPI = async (cartItemId, dispatch) => {
 
 
 
-export const deleteAllFromCartAPI = () => async (dispatch) => {
+export const deleteAllFromCartAPI = async (dispatch) => {
+  const cookies = document.cookie; 
+
+  const match = cookies.match(/access-token=([^;]+)/);
+
+  let accessToken = null;
+  if (match) {
+    accessToken = match[1]; // Extract the cookie value
+  }
+
   try {
-    const response = await fetch('/api/deleteAllFromCart', {
+    const response = await fetch('http://localhost:3010/cart/user/deleteall', {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
     });
 
     if (response.ok) {
       dispatch(deleteAllFromCart());
     } else {
+      // Handle error case
     }
   } catch (error) {
+    // Handle exception
   }
 };

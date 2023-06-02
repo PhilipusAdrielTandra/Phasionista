@@ -27,5 +27,6 @@ router.post('/user', authenticateToken, cartController.addToCart);
 router.get('/user', authenticateToken, cartController.getCart);
 router.put('/user', authenticateToken, cartController.updateCartItem);
 router.delete('/user', authenticateToken, cartController.deleteCartItem);
+router.delete('/user/deleteall', authenticateToken, cartController.deleteAllCartItems);
 
 module.exports = router;

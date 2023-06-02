@@ -1,5 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 function ProfileHeader() {
+    const [data, setData] = useState(null);
+
+    const fetchProfileData = async () => {
+        const cookies = document.cookie; 
+        const match = cookies.match(/access-token=([^;]+)/);
+      
+        let accessToken = null;
+        if (match) {
+          accessToken = match[1]; // Extract the cookie value
+        }
+      
+        try {
+          const response = await fetch(`http://localhost:3016/user/getbyid`, {
+            method: 'GET',
+            headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${accessToken}`
+                }
+          });
+
+          if (response.ok) {
+            const jsonData = await response.json();
+            setData(jsonData);
+
+        }
+      
+        } catch (error) {
+          // Handle the exception
+        }
+      };
+
+      useEffect(() => {
+        fetchProfileData();
+     }, []);
 
     return (
         <div>
@@ -20,7 +54,7 @@ function ProfileHeader() {
             </div>
             {/* // INFOS */}
             <div className="flex justify-center flex-col mt-5 mb-3.5">
-                <h1 className="text-center font-bold text-3xl">Can Canbolat</h1>
+                <h1 className="text-center font-bold text-3xl">{data ? data.fullName : "Name"}</h1>
                 <a href="#" className="text-center text-blue-700 font-semibold">Add Bio</a>
                 <hr className="full flex self-center w-2/3 mt-2" />
             </div>

@@ -5,11 +5,12 @@ import Comments from '../Components/Comments';
 import CreatePost from '../Components/CreatePost';
 import Post from '../Components/Post';
 import ProfileHeader from '../Components/ProfileHeader';
-import Header from '../Components/header';
+import Header from '../Components/header/layout';
 import Footer from '../Components/footer';
 import Deck from '../Components/deck'
 
 function Profile() {
+
     return (
         <div className="h-screen">
           <Header/>
