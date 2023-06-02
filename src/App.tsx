@@ -13,6 +13,7 @@ import NotFound from './Application/Pages/NotFound';
 import Chat from './Application/Pages/Chat';
 import About from './Application/Pages/About';
 import FAQ from './Application/Pages/FAQ';
+import Shop from './Application/Pages/Shop';
 import Sizes from './Application/Pages/Sizes';
 import Checkout from './Application/Pages/Checkout';
 import ProductCreation from './Application/Pages/ProductCreation';
@@ -48,6 +49,7 @@ function App() {
           <Route path="/about" element={<About/>} />
           <Route path="/faqs" element={<FAQ />}/>
           <Route path="/support" element={<FAQ />}/>
+          <Route path="/shop" element={<Shop />}/>
           <Route path="/sizes" element={<Sizes />}/>
           <Route path="/returns" element={<Return />}/>
           <Route path="/404" element={<NotFound />} />

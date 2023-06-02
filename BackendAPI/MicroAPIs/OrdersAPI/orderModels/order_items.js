@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
-    product_inventory_id: {
+    product_id: {
       type: DataTypes.UUID,
       allowNull: false
     },
