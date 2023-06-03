@@ -198,8 +198,9 @@ res.status(500).json({ message: 'Server error' });
 
 exports.getUsersWishlist = async (req, res) => {
   const token = req.headers['authorization'];
-  const decoded = jwt.decode(token);
-  const userId = decoded.id;
+  const bearer = token ? token.split(" ")[1] : undefined;
+  const decoded = jwt.decode(bearer);
+  const userId = decoded ? decoded.id : null;
 
   try {
     const wishlist = await user_wishlist.findAll({

@@ -9,6 +9,7 @@ import { GoogleLogin } from 'react-google-login';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faGoogle} from "@fortawesome/free-brands-svg-icons"
 import COVER_IMAGE from "../Assets/images/cover.webp"
+import cogoToast from 'cogo-toast';
 
 const colors= {
     primary: "#060606",
@@ -65,43 +66,8 @@ const Login = () => {
     .catch((error) => {
       console.log('Error:', error);
       const errorMessage = 'User not found'; // You can customize the error message here
-      showErrorMessage(errorMessage);
+      cogoToast.warn("User not found/Or email and password is wrong");
     });
-  };
-
-  const showErrorMessage = (message: string) => {
-    const popup = document.createElement('div');
-    popup.classList.add('popup');
-    
-    const content = document.createElement('div');
-    content.classList.add('popup-content');
-    content.textContent = message;
-    
-    const closeButton = document.createElement('span');
-    closeButton.classList.add('popup-close');
-    closeButton.textContent = 'x';
-    closeButton.addEventListener('click', () => {
-      popup.parentElement?.removeChild(popup);
-    });
-    
-    popup.appendChild(content);
-    popup.appendChild(closeButton);
-    
-    // Center the popup horizontally and vertically
-    popup.style.position = 'fixed';
-    popup.style.boxShadow = '5';
-    popup.style.color = 'white';
-    popup.style.background = 'red';
-    popup.style.width = '30rem';
-    popup.style.top = '90%';
-    popup.style.left = '50%';
-    popup.style.transform = 'translate(-50%, -50%)';
-    
-    document.body.appendChild(popup);
-    
-    setTimeout(() => {
-      popup.parentElement?.removeChild(popup);
-    }, 3000);
   };
 
   const handleGoogleLogin = async (response: any) => {

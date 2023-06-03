@@ -13,6 +13,7 @@ import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import "./Application/Components/i18n";
 import "./Application/Styles/scss/style.scss";
+import { setWishlist } from "./Application/Redux/wishlist-slice";
 
 async function fetchCartDataFromApi() {
   try {
@@ -60,6 +61,40 @@ async function fetchCartDataFromApi() {
   }
 }
 
+async function fetchWishlistDataFromApi() {
+  try {
+    let cartApiUrl = "http://localhost:3016/user/user-wishlist";
+
+    const cookies = document.cookie; 
+
+    const match = cookies.match(/access-token=([^;]+)/);
+
+    let accessToken = null;
+    if (match) {
+      accessToken = match[1]; 
+    }
+
+    const response = await fetch(cartApiUrl, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    const wishlistItems = await response.json();
+    
+    const productIds = wishlistItems.map(item => ({
+      productId: item.product_id,
+    }));
+    
+    // Fetch products using the product IDs
+    const products = await fetchProductsFromApi(productIds);
+
+    store.dispatch(setWishlist(products));
+  } catch (error) {
+    console.log('Error fetching cart data:', error);
+  }
+}
+
 async function fetchProductsFromApi(productIds) {
   const productApiUrl = "http://localhost:3014/product/item";
   const products = [];
@@ -83,7 +118,7 @@ async function fetchProductsDataFromApi() {
   }
 }
 
-Promise.all([fetchCartDataFromApi(), fetchProductsDataFromApi()])
+Promise.all([fetchCartDataFromApi(), fetchProductsDataFromApi(), fetchWishlistDataFromApi()])
   .then(() => {
     const container = document.getElementById('root');
     const root = createRoot(container);

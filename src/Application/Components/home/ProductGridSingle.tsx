@@ -6,8 +6,8 @@ import { useDispatch } from "react-redux";
 import Rating from "../library/layout/ProductRating";
 import { getDiscountPrice } from "../productHelper";
 import ProductModal from "../library/layout/ProductModal";
-import { addToCart } from "../../Redux/cart-slice";
-import { addToWishlist } from "../../Redux/wishlist-slice";
+import { addToCart, addToCartAPI } from "../../Redux/cart-slice";
+import { AddToWishlistAPI, addToWishlist } from "../../Redux/wishlist-slice";
 
 const ProductGridSingle = ({
   product,
@@ -68,7 +68,7 @@ const ProductGridSingle = ({
                     ? "Added to wishlist"
                     : "Add to wishlist"
                 }
-                onClick={() => dispatch(addToWishlist(product))}
+                onClick={() => AddToWishlistAPI(product, dispatch)}
               >
                 <i className="pe-7s-like" />
               </button>
@@ -89,7 +89,7 @@ const ProductGridSingle = ({
                 </Link>
               ) : product.stock && product.stock > 0 ? (
                 <button
-                  onClick={() => dispatch(addToCart(product))}
+                  onClick={() => addToCartAPI(product, dispatch)}
                   className={
                     cartItem !== undefined && cartItem.quantity > 0
                       ? "active"

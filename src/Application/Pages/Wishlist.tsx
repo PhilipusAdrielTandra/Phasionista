@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { getDiscountPrice } from "../Components/productHelper";
 import SEO from "./SEO";
-import { addToCart } from "../Redux/cart-slice";
-import { deleteFromWishlist, deleteAllFromWishlist } from "../Redux/wishlist-slice"
+import { addToCart, addToCartAPI } from "../Redux/cart-slice";
+import { deleteFromWishlist, deleteAllFromWishlist, DeleteFromWishlistAPI } from "../Redux/wishlist-slice"
 
 function Wishlist() {
   const [products, setProducts] = useState([{
@@ -151,7 +151,7 @@ function Wishlist() {
                                     wishlistItem.stock > 0 ? (
                                     <button
                                       onClick={() =>
-                                        dispatch(addToCart(wishlistItem))
+                                        addToCartAPI(wishlistItem, dispatch)
                                       }
                                       className={
                                         cartItem !== undefined &&
@@ -184,7 +184,7 @@ function Wishlist() {
                                 <td className="product-remove">
                                   <button
                                     onClick={() =>
-                                      dispatch(deleteFromWishlist(wishlistItem.id))
+                                      DeleteFromWishlistAPI(wishlistItem, dispatch)
                                     }
                                   >
                                     <i className="fa fa-times"></i>

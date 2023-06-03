@@ -4,6 +4,8 @@ import { background } from "@chakra-ui/styled-system"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faGoogle, faLinkedin} from "@fortawesome/free-brands-svg-icons"
 import COVER_IMAGE from "../Assets/images/signup.jpg"
+import { authStore } from '../Redux/authenticationState';
+import cogoToast from 'cogo-toast';
 
 const colors= {
     primary: "#060606",
@@ -18,9 +20,55 @@ const Signup = () => {
     const [error, setError] = useState('');
   
   
-    const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleRegister = (e: React.MouseEvent<HTMLFormElement>) => {
       e.preventDefault();
-      // handle login logic
+      fetch('http://localhost:3016/user/createuser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          fullName: "Not set",
+          email: email,
+          password: password,
+          phoneNumber: phoneNumber,
+          about: "none",
+          club_level: "bronze",
+          points: 0,
+          profile_picture: "none",
+          userAddress: {
+            "address": "Not set",
+            "city": "Not set",
+            "state": "Not set",
+            "zip_code": "Not set",
+            "country": "Not set"
+          }        
+      })
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        const accessToken = data['access_token'];
+        authStore.dispatch({ type: "login"});
+        document.cookie = `access-token=${data['access_token']}; path=/;`;
+        document.cookie = `refresh-token=${data['refresh_token']}; path=/;`;
+  
+        const cookies = document.cookie;
+        console.log(cookies)
+        authStore.dispatch({ type: 'login'});
+        console.log(authStore.getState().authen.authenticated)
+        window.location.href = '/';
+      })
+      .catch((error) => {
+        console.log('Error:', error);
+        const errorMessage = 'User not found'; // You can customize the error message here
+        cogoToast.warn("User not found/Or email and password is wrong or User already exists");
+      });
     };
   
   
@@ -57,15 +105,26 @@ const Signup = () => {
                         <input 
                             type="email"
                             placeholder="Email"
-                            className="w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none"/>
+                            className="w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none"
+                            value={email}
+                            onChange={(e) => {setEmail(e.target.value)}}/>
                         
                         <input 
                             type="password"
                             placeholder="Password"
-                            className="w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none"/>
+                            className="w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none"
+                            value={password}
+                            onChange={(e) => {setPassword(e.target.value)}}/>
+                        <input 
+                            type="phone"
+                            placeholder="Phone Number"
+                            className="w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none"
+                            value={phoneNumber}
+                            onChange={(e) => {setPhoneNumber(e.target.value)}}/>
 
                     </div>
-                    <button className="w-full text-black bg-white my-4 rounded-md border-2 font-semibold border-black/40 p-4 text-center flex items-center justify-center hover:scale-105 focus:ring-4 shadow-lg transform active:scale-75 transition-transform">
+                    <button className="w-full text-black bg-white my-4 rounded-md border-2 font-semibold border-black/40 p-4 text-center flex items-center justify-center hover:scale-105 focus:ring-4 shadow-lg transform active:scale-75 transition-transform"
+                    onClick={handleRegister}>
                       Sign Up
                     </button>
 

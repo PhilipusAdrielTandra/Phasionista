@@ -7,7 +7,7 @@ import profile from "../../Assets/images/profile-icon.png"
 import MenuCart from "./MenuCart";
 import { setCartItems } from "../../Redux/cart-slice";
 import { store } from "../../Redux/store";
-import { deleteAllFromWishlist } from "../../Redux/wishlist-slice";
+import { deleteAllFromWishlist, setWishlist } from "../../Redux/wishlist-slice";
 
 const IconGroup = ({ iconWhiteClass }: any) => {
   const isAuthenticated: boolean = authStore.getState().authen.authenticated;
@@ -74,6 +74,7 @@ const IconGroup = ({ iconWhiteClass }: any) => {
                 window.location.reload();
                 window.location.href = "/home";
                 store.dispatch(setCartItems([]));
+                store.dispatch(setWishlist([]));
                 store.dispatch(deleteAllFromWishlist())
                 document.cookie = `access-token=""; path=/;`;
                 document.cookie = `refresh-token=""; path=/;`;
