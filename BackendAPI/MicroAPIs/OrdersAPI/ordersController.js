@@ -76,7 +76,8 @@ exports.getOrderById = async (req, res) => {
   try {
     const order = await Orders.findAll({
       where: { user_id: userId },
-      include: [{ model: OrderItems, as: 'order_items' }]
+      include: [{ model: OrderItems, as: 'order_items' }],
+      order: [['created_at', 'DESC']]
     });
 
     if (!order) {

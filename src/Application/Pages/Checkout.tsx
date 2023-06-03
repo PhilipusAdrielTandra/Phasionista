@@ -1,17 +1,19 @@
 import { Fragment } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getDiscountPrice } from "../Components/productHelper";
 import SEO from "./SEO";
 import Header from "../Components/header/layout";
 import {CLIENT_ID} from '../../Paypal/config'
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import React, { useState, useEffect } from "react" ;
+import { deleteAllFromCartAPI } from "../Redux/cart-slice";
 
 
 const Checkout = () => {
   let cartTotalPrice = 0;
   let { pathname } = useLocation();
+  const dispatch = useDispatch();
   const currency = useSelector((state: any) => state.currency);
   const { cartItems } = useSelector((state) => state.cart);
   console.log(cartItems)
@@ -68,6 +70,39 @@ const Checkout = () => {
   //capture likely error
   const onError = (data, actions) => {
       setErrorMessage("An Error occured with your payment ");
+  };
+
+  const completeOrder = async (cartItems) => {
+    const cookies = document.cookie; 
+  
+    const match = cookies.match(/access-token=([^;]+)/);
+  
+    let accessToken = null;
+    if (match) {
+      accessToken = match[1]; // Extract the cookie value
+    }
+    try {
+      const response = await fetch('http://localhost:3012/order/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({
+          payment_method: "",
+          status: "ongoing",
+          total_price: "",
+          order_items: cartItems
+        }),
+      });
+  
+      if (response.ok) {
+        deleteAllFromCartAPI(dispatch)
+        window.location.href = "orders"
+      } else {
+      }
+    } catch (error) {
+    }
   };
 
   useEffect(() => {
@@ -254,7 +289,7 @@ const Checkout = () => {
                         <div className="payment-method"></div>
                       </div>
                       <div className="place-order mt-25">
-                        <button className="btn-hover">Place Order</button>
+                        <button className="btn-hover" onClick={() => completeOrder(cartItems)}>Place Order</button>
                         <PayPalButtons
                           style={{ layout: "vertical" }}
                           createOrder={createOrder}

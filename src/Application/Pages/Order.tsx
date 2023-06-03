@@ -110,6 +110,18 @@ function Orders() {
       )}
       <div className="flex flex-col justify-center items-center">
         {transactionData.map((transaction) => {
+          const transactionCreatedAt = new Date(transaction.created_at);
+          const options = {
+            timeZone: "Asia/Jakarta",
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+          };
+
+          const indonesiaTime = transactionCreatedAt.toLocaleString("id-ID", options);
           const totalPrice = Number(transaction.order_items.reduce(
             (acc, item) => acc + item.price,
             0
@@ -132,7 +144,8 @@ function Orders() {
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-black">
                   {transaction.id}
                 </h5>
-                <span className="ml-2 text-sm text-black">{transaction.created_at}</span>
+                <span className="ml-2 text-sm text-black">Created:</span>
+                <span className="ml-2 text-sm text-black">{indonesiaTime.replace(/\./g, ":")}</span>
                 <h3 className="hidden group-hover:block text-white absolute align-middle mt-14">
                   <FontAwesomeIcon className="px-3" icon={faFileInvoiceDollar} />
                   See Transaction Details

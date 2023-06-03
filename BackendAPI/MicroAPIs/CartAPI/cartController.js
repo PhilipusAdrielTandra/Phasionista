@@ -37,7 +37,7 @@ exports.addToCart = async (req, res) => {
   }
 
   try {
-    const { productId, amount } = req.body;
+    const { productId, amount, price } = req.body;
 
     if (userId) {
       const existingCartItem = await user_cart.findOne({
@@ -49,7 +49,7 @@ exports.addToCart = async (req, res) => {
         await existingCartItem.update({ quantity: updatedQuantity });
         res.status(200).send({ message: 'Cart item quantity updated successfully.' });
       } else {
-        await user_cart.create({ id, user_id: userId, product_id: productId, quantity: Number(amount) });
+        await user_cart.create({ id, user_id: userId, product_id: productId, quantity: Number(amount), price: price });
         res.status(200).send({ message: 'Product added to cart successfully.' });
       }
     } else {
@@ -66,7 +66,7 @@ exports.addToCart = async (req, res) => {
         cartItems[existingCartItemIndex].quantity = updatedQuantity;
         res.status(200).send({ message: 'Cart item quantity updated to session successfully.' });
       } else {
-        const newCartItem = { sessionId: sessionId, product_id: productId, quantity: Number(amount) };
+        const newCartItem = { sessionId: sessionId, product_id: productId, quantity: Number(amount), price: price };
         cartItems.push(newCartItem);
         res.status(200).send({ message: 'Product added to session cart successfully.' });
       }
@@ -148,7 +148,7 @@ exports.updateCartItem = async (req, res) => {
   const decoded = jwt.decode(bearer);
   const userId = decoded ? decoded.id : null;
   const sessionId = req.headers['session-id'];
-  const { productId, amount } = req.body;
+  const { productId, amount, price } = req.body;
 
   try {
     let cartItem;

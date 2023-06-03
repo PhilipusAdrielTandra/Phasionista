@@ -74,8 +74,8 @@ const IconGroup = ({ iconWhiteClass }: any) => {
                 window.location.reload();
                 window.location.href = "/home";
                 store.dispatch(setCartItems([]));
-                store.dispatch(setWishlist([]));
                 store.dispatch(deleteAllFromWishlist())
+                store.dispatch(setWishlist([]));
                 document.cookie = `access-token=""; path=/;`;
                 document.cookie = `refresh-token=""; path=/;`;
               }

@@ -140,7 +140,7 @@ export const addToCartAPI = async (product, dispatch) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
       },
-      body: JSON.stringify({productId: product.id, amount: 1}),
+      body: JSON.stringify({productId: product.id, amount: 1, price: product.price}),
     });
 
     if (response.ok) {
