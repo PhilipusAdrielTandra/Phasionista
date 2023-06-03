@@ -145,9 +145,7 @@ function Profile() {
                     <div className="flex items-center justify-between px-4 py-2">
                       <div className="flex space-x-2 items-center">
                       </div>
-                      <div className="w-8 h-8 grid place-items-center text-xl text-gray-500 hover:bg-gray-200 rounded-full cursor-pointer">
-                        <i className='bx bx-dots-horizontal-rounded'></i>
-                      </div>
+
                     </div>
                     <div className="text-justify px-4 py-2">
                       <h3 className="font-bold text-xl">About me</h3>

@@ -183,9 +183,10 @@ function Wishlist() {
 
                                 <td className="product-remove">
                                   <button
-                                    onClick={() =>
-                                      DeleteFromWishlistAPI(wishlistItem, dispatch)
-                                    }
+                                    onClick={() => {
+                                      DeleteFromWishlistAPI(wishlistItem, dispatch);
+                                      window.location.reload();
+                                    }}
                                   >
                                     <i className="fa fa-times"></i>
                                   </button>

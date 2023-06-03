@@ -2,7 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 import cogoToast from 'cogo-toast';
 import thunk from 'redux-thunk';
 import { createSlice } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { SatelliteSharp } from '@material-ui/icons';
 
 const cartSlice = createSlice({
   name: "cart",
@@ -16,14 +17,11 @@ const cartSlice = createSlice({
       if (!product.variation) {
         const cartItem = state.cartItems.find(item => item.id === product.id);
         if (!cartItem) {
-          state.cartItems = [
-            ...state.cartItems,
-            {
-              ...product,
-              quantity: product.quantity ? product.quantity : 1,
-              cartItemId: uuidv4(),
-            },
-          ];
+          state.cartItems.push({
+            ...product,
+            quantity: product.quantity ? product.quantity : 1,
+            cartItemId: uuidv4(),
+          });
         } else {
           state.cartItems = state.cartItems.map(item => {
             if (item.cartItemId === cartItem.cartItemId) {
@@ -46,14 +44,11 @@ const cartSlice = createSlice({
             (product.cartItemId ? product.cartItemId === item.cartItemId : true)
         );
         if (!cartItem) {
-          state.cartItems = [
-            ...state.cartItems,
-            {
-              ...product,
-              quantity: product.quantity ? product.quantity : 1,
-              cartItemId: uuidv4(),
-            },
-          ];
+          state.cartItems.push({
+            ...product,
+            quantity: product.quantity ? product.quantity : 1,
+            cartItemId: uuidv4(),
+          });
         } else if (cartItem !== undefined && (cartItem.selectedProductColor !== product.selectedProductColor || cartItem.selectedProductSize !== product.selectedProductSize)) {
           state.cartItems = [
             ...state.cartItems,
@@ -81,30 +76,38 @@ const cartSlice = createSlice({
       cogoToast.success("Added To Cart", { position: "bottom-left" });
     },
     deleteFromCart(state, action) {
-      state.cartItems = state.cartItems.filter(item => item.cartItemId !== action.payload);
+      const cartItems = action.payload.cartItems
+      state.cartItems = cartItems.filter(item => item.cartItemId !== action.payload);
       cogoToast.error("Removed From Cart", { position: "bottom-left" });
     },
     decreaseQuantity(state, action) {
-      const product = action.payload;
-      if (product.quantity === 1) {
-        state.cartItems = state.cartItems.filter(item => item.cartItemId !== product.cartItemId);
-        cogoToast.error("Removed From Cart", { position: "bottom-left" });
-      } else {
-        state.cartItems = state.cartItems.map(item =>
-          item.cartItemId === product.cartItemId
-            ? { ...item, quantity: item.quantity - 1 }
-            : item
-        );
-        cogoToast.warn("Item Decremented From Cart", { position: "bottom-left" });
-      }
+      const product = action.payload.product;
+      const cartItems = action.payload.cartItems;
+      console.log(cartItems)
+      state.cartItems = cartItems.map((item) => {
+        if (item.id === product) {
+          return {
+            ...item,
+            quantity: item.quantity - 1, // or item.quantity - 1 for decreaseQuantity
+          };
+        }
+        return item;
+      });
+      cogoToast.info("Item Incremented in Cart", { position: "bottom-left" });
     },
-    increaseQuantity(state, action) {
-      const product = action.payload;
-      state.cartItems = state.cartItems.map((item) =>
-        item.cartItemId === product.cartItemId
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      );
+    increaseQuantity(state,action) {
+      const product = action.payload.product;
+      const cartItems = action.payload.cartItems;
+      console.log(cartItems)
+      state.cartItems = cartItems.map((item) => {
+        if (item.id === product) {
+          return {
+            ...item,
+            quantity: item.quantity + 1, // or item.quantity - 1 for decreaseQuantity
+          };
+        }
+        return item;
+      });
       cogoToast.info("Item Incremented in Cart", { position: "bottom-left" });
     },
     deleteAllFromCart(state) {
@@ -114,11 +117,11 @@ const cartSlice = createSlice({
       state.cartItems = action.payload;
     },
   },
-});
+}
+);
 
-export const { addToCart, deleteFromCart, decreaseQuantity, increaseQuantity, deleteAllFromCart, setCartItems } = cartSlice.actions;
+export const { addToCart, deleteFromCart, decreaseQuantity, deleteAllFromCart, setCartItems, increaseQuantity } = cartSlice.actions;
 export default cartSlice.reducer;
-
 
 export const addToCartAPI = async (product, dispatch) => {
   const cookies = document.cookie; 
@@ -148,7 +151,7 @@ export const addToCartAPI = async (product, dispatch) => {
   }
 };
 
-export const IncrementCartAPI = async (product, dispatch) => {
+export const IncrementCartAPI = async (product, dispatch, cartItems) => {
   const cookies = document.cookie; 
 
   const match = cookies.match(/access-token=([^;]+)/);
@@ -168,15 +171,14 @@ export const IncrementCartAPI = async (product, dispatch) => {
     });
 
     if (response.ok) {
-      return 1;
-      // dispatch(increaseQuantity(product));
+      dispatch(increaseQuantity({cartItems: cartItems, product: product}));
     } else {
     }
   } catch (error) {
   }
 };
 
-export const deleteFromCartAPI = async(cartItemId, dispatch)=> {
+export const deleteFromCartAPI = async(cartItemId, dispatch, cartItems)=> {
   const cookies = document.cookie; 
 
   const match = cookies.match(/access-token=([^;]+)/);
@@ -198,7 +200,7 @@ export const deleteFromCartAPI = async(cartItemId, dispatch)=> {
     });
 
     if (response.ok) {
-      dispatch(deleteFromCart(cartItemId));
+      dispatch(deleteFromCart({cartItems: cartItems, product: cartItemId}));
     } else {
       // Handle the error case
     }
@@ -207,7 +209,7 @@ export const deleteFromCartAPI = async(cartItemId, dispatch)=> {
   }
 };
 
-export const decreaseQuantityAPI = async (cartItemId, dispatch) => {
+export const decreaseQuantityAPI = async (cartItemId, dispatch, cartItems) => {
   const cookies = document.cookie; 
 
   const match = cookies.match(/access-token=([^;]+)/);
@@ -228,7 +230,7 @@ export const decreaseQuantityAPI = async (cartItemId, dispatch) => {
     });
 
     if (response.ok) {
-      dispatch(decreaseQuantity(cartItemId));
+      dispatch(decreaseQuantity({cartItems: cartItems, product: cartItemId}));
     } else {
       // Handle the error case
     }

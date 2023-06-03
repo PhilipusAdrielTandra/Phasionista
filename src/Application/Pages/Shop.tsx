@@ -92,116 +92,18 @@ function Shop() {
           </div>
           <div className="w-full flex justify-center">
             <div className="flex justify-between mb-2.5">
-              <ul className="flex px-5 py-1.5">
-                <li className="px-3 font-semibold text-gray-600"><a onClick={openAddressModal}>Address</a></li>
-              </ul>
-              <ul className="flex mb:pl-14">
-                <li className="px-2 font-semibold">
-                  <button className="bg-blue-600 px-5 py-1 rounded-lg text-white font-semibold">
-                    <i className="bx bx-plus-circle text-xl mr-2"></i>
-                    Add to Story
-                  </button>
-                </li>
-                <li className="px-2 font-semibold">
-                  <button className="bg-gray-200 px-5 py-1 rounded-lg text-black font-semibold"
-                    onClick={openEditProfileModal}>
-                    <i className="bx bx-edit-alt mr-2 text-xl"></i>
-                    Edit Profile
-                  </button>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
         <div>
           <div className='bg-gray-100 '>
             <div className="flex justify-center h-screen">
-              <div>
-                <div className="mr-12 mt-4">
-                  <div className="p-4 shadow rounded-lg bg-white w-80" id="intro">
-                    <h1 className="font-bold text-xl">Email</h1>
-                    <p>{data ? data.email : "none"}</p>
-                  </div>
-                </div>
-                <div className="mr-12 mt-4">
-                  <div className="p-4 shadow rounded-lg bg-white w-80" id="intro">
-                    <h1 className="font-bold text-xl">Phone Number</h1>
-                    <p>{data ? data.phoneNumber : "none"}</p>
-                  </div>
-                </div>
-                <div className="mr-12 mt-4">
-                  <div className="p-4 shadow rounded-lg bg-white w-80" id="intro">
-                    <div className="flex justify-between">
-                      <h1 className="font-bold text-xl">Club</h1>
-                    </div>
-                    <div className="">
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div className="w-2/5">
-                <div>
-                  <div className="shadow bg-white mt-4 rounded-lg h-max">
-                    <div className="flex items-center justify-between px-4 py-2">
-                      <div className="flex space-x-2 items-center">
-                      </div>
-                      <div className="w-8 h-8 grid place-items-center text-xl text-gray-500 hover:bg-gray-200 rounded-full cursor-pointer">
-                        <i className='bx bx-dots-horizontal-rounded'></i>
-                      </div>
-                    </div>
-                    <div className="text-justify px-4 py-2">
-                      <h3 className="font-bold text-xl">About me</h3>
-                      <p>
-                        {data ? data.about : "none"}
-                      </p>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Edit Profile Modal */}
-      {isEditProfileModalOpen && (
-        <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-50">
-          <div className="bg-white p-4 rounded-lg">
-            <h1 className="text-2xl font-bold mb-4">Edit Profile</h1>
-            <div className="mb-4">
-              <label className="block mb-2 font-bold">Name:</label>
-              <input type="text" className="border border-gray-300 rounded-lg p-2" />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-2 font-bold">Description:</label>
-              <textarea className="border border-gray-300 rounded-lg p-2" rows="3"></textarea>
-            </div>
-            <div className="flex justify-end">
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2"
-                onClick={closeEditProfileModal}>
-                Cancel
-              </button>
-              <button className="bg-green-500 text-white px-4 py-2 rounded-lg">
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-    {isAddressModalOpen && (
-        <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-50">
-          <div className="bg-white p-4 rounded-lg">
-            <h1 className="text-2xl font-bold mb-4">Address</h1>
-            <p>{data ? data.address : "No address available"}</p>
-            <div className="flex justify-end">
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg" onClick={closeAddressModal}>
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

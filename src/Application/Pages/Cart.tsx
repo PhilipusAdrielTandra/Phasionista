@@ -46,6 +46,7 @@ function Cart() {
   let cartTotalPrice = 0;
 
   const [quantityCount] = useState(1);
+  const [reload, setReload] = useState(false)
   const dispatch = useDispatch();
   let { pathname } = useLocation();
   
@@ -168,7 +169,7 @@ function Cart() {
                                     <button
                                       className="dec qtybutton"
                                       onClick={() => { 
-                                        decreaseQuantityAPI(cartItem.id, dispatch) }}
+                                        decreaseQuantityAPI(cartItem.id, dispatch, cartItems)}}
                                     >
                                       -
                                     </button>
@@ -181,7 +182,7 @@ function Cart() {
                                     <button
                                       className="inc qtybutton"
                                       onClick={() =>
-                                        IncrementCartAPI(cartItem.id, dispatch)
+                                        IncrementCartAPI(cartItem.id, dispatch, cartItems)
                                       }
                                       disabled={
                                         cartItem !== undefined &&
@@ -212,9 +213,10 @@ function Cart() {
 
                                 <td className="product-remove">
                                   <button
-                                    onClick={() =>
-                                      dispatch(deleteFromCartAPI(cartItem.id, dispatch))
-                                    }
+                                    onClick={() => {
+                                      deleteFromCartAPI(cartItem.id, dispatch, cartItems)
+                                      window.location.reload();
+                                    }}
                                   >
                                     <i className="fa fa-times"></i>
                                   </button>

@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getDiscountPrice } from "../productHelper";
-import { deleteFromCart } from "../../Redux/cart-slice"
+import { deleteFromCart, deleteFromCartAPI } from "../../Redux/cart-slice"
 
 const MenuCart = () => {
   const dispatch = useDispatch();
@@ -68,7 +68,7 @@ const MenuCart = () => {
                     )}
                   </div>
                   <div className="shopping-cart-delete">
-                    <button onClick={() => dispatch(deleteFromCart(item.cartItemId))}>
+                    <button onClick={() => { deleteFromCartAPI(item.id, dispatch, cartItems); window.location.reload()}}>
                       <i className="fa fa-times-circle" />
                     </button>
                   </div>
