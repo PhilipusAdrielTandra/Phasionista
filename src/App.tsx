@@ -40,11 +40,12 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Signup />} />
-          <Route path="/product/:id" element={<Product />} />
+          {/* <Route path="/product/:id" element={<Product />} /> */}
           <Route path="/cart" element={<Cart />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/library" element={<Library />} />
+          <Route path="/product/:id" element={<Product />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/about" element={<About/>} />
           <Route path="/faqs" element={<FAQ />}/>
