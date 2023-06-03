@@ -110,7 +110,9 @@ const Footer: React.FC = () => {
         <div className={classes.section}>
           <div className={classes.sectionTitle}>About Us</div>
           {mappedItems}
+          <Link to={"/orders"}>
           <Button className={classes.sectionButton}>Orders</Button>
+          </Link>
         </div>
         <div className={classes.section}>
           <div className={classes.sectionTitle}>Useful Links</div>
@@ -136,16 +138,16 @@ const Footer: React.FC = () => {
         </div>
         <div className={classes.section}>
           <div className={classes.followUsTitle}>Follow Us</div>
-          <Button className={classes.socialButton} style={{ backgroundColor: '#c4302b'          }}>
+          <Button href="https://www.youtube.com/@bagzmate"className={classes.socialButton} style={{ backgroundColor: '#c4302b'          }}>
             <YouTube />
           </Button>
-          <Button className={classes.socialButton} style={{ backgroundColor: '#0077b5' }}>
+          <Button href="https://www.linkedin.com/in/peternelsonsubrata/" className={classes.socialButton} style={{ backgroundColor: '#0077b5' }}>
             <LinkedIn />
           </Button>
-          <Button className={classes.socialButton} style={{ backgroundColor: '#1da1f2' }}>
+          <Button href="https://twitter.com/Onionhat2" className={classes.socialButton} style={{ backgroundColor: '#1da1f2' }}>
             <Twitter />
           </Button>
-          <Button className={classes.socialButton} style={{ backgroundColor: '#3f729b' }}>
+          <Button href="https://www.instagram.com/binusinter/" className={classes.socialButton} style={{ backgroundColor: '#3f729b' }}>
             <Instagram />
           </Button>
         </div>

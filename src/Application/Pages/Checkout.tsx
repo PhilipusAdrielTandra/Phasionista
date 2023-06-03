@@ -29,11 +29,10 @@ const Checkout = () => {
   
     const purchase_units = cartItems.map((cartItem, index) => {
       const discountedPrice = getDiscountPrice(cartItem.price, cartItem.discount);
-      const finalProductPrice = (cartItem.price * currency.currencyRate).toFixed(2);
-      const finalDiscountedPrice = (discountedPrice * currency.currencyRate).toFixed(2);
+      const finalProductPrice = (cartItem.price * currency.currencyRate * cartItem.quantity).toFixed(2);
+      const finalDiscountedPrice = (discountedPrice * currency.currencyRate * cartItem.quantity).toFixed(2);
   
       const itemPrice = discountedPrice !== null ? finalDiscountedPrice : finalProductPrice;
-  
       return {
         reference_id: `unit${index + 1}`,
         description: cartItem.name,
@@ -43,7 +42,7 @@ const Checkout = () => {
         },
       };
     });
-  
+    
     return actions.order
       .create({
         purchase_units,
