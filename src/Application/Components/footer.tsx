@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Button, Divider } from '@material-ui/core';
 import { YouTube, LinkedIn, Twitter, Instagram } from '@material-ui/icons';
@@ -90,7 +90,30 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Footer: React.FC = () => {
-
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbywzUONQ0BsQzTEZ3efD8s4ISl5l0-TCz2c-_snhCIiiDoI4YsCv05V3dg9eBToZ3cwsg/exec';
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+  
+  const handleSubmit = e => {
+    e.preventDefault();
+    const formData = new URLSearchParams();
+    formData.append('email', email);
+    
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    
+    fetch(scriptURL, {mode: 'no-cors', method: 'POST', body: formData, headers })
+      .then(response => {
+        console.log('Success!', response);
+        setSubscribed(true);
+        setEmail('');
+      })
+      .catch(error => console.error('Error!', error.message));
+  };
+  
+  const handleChange = e => {
+    setEmail(e.target.value);
+  };
 
   const classes = useStyles();
   const mappedItems = (
@@ -132,16 +155,19 @@ const Footer: React.FC = () => {
         <div className={classes.section}>
           <div className={classes.sectionTitle}>Subscribe</div>
           <div>
-            <input type="email" placeholder="Enter your email" />
-            <Button className={classes.sectionButton}>Subscribe</Button>
+            <form onSubmit={handleSubmit}>
+              <input type="email" onChange={handleChange} placeholder="Enter your email" />
+              <Button type="submit" className={classes.sectionButton}>Subscribe</Button>
+              {subscribed && <p className='font-light'>Thank you for subscribing!</p>}
+            </form>
           </div>
         </div>
         <div className={classes.section}>
           <div className={classes.followUsTitle}>Follow Us</div>
-          <Button href="https://www.youtube.com/@bagzmate"className={classes.socialButton} style={{ backgroundColor: '#c4302b'          }}>
+          <Button href="https://www.youtube.com/@bagzmate"className={classes.socialButton} style={{ backgroundColor: '#c4302b'}}>
             <YouTube />
           </Button>
-          <Button href="https://www.linkedin.com/in/peternelsonsubrata/" className={classes.socialButton} style={{ backgroundColor: '#0077b5' }}>
+          <Button href="https://www.linkedin.com/in/peternelsonsubrata/" className={classes.socialButton} style={{ backgroundColor: '#0077b5'}}>
             <LinkedIn />
           </Button>
           <Button href="https://twitter.com/Onionhat2" className={classes.socialButton} style={{ backgroundColor: '#1da1f2' }}>

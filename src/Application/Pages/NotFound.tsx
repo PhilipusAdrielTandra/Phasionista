@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Header from "../Components/header"
+import Header from "../Components/header/layout"
 import Deck from "../Components/deck"
 import Footer from "../Components/footer";
 import { FaFrown, FaHome } from 'react-icons/fa';

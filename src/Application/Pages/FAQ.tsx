@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Header from "../Components/header";
+import Header from "../Components/header/layout";
 import Footer from "../Components/footer";
 import data from '../Data/QuestionData'
 import Accordion from '../Components/Accordion';
