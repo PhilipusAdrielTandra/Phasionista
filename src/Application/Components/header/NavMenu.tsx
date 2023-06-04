@@ -15,14 +15,14 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }: any) => {
       <nav>
         <ul>
           <li>
-            <Link to={process.env.PUBLIC_URL + "/"}>
-              {"home"}
+            <Link className="font-poppins" className="font-poppins" to={process.env.PUBLIC_URL + "/"}>
+              {"Home"}
             </Link>
           </li>
           <li>
-            <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+            <Link className="font-poppins" className="font-poppins" to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
               {" "}
-              {"shop"}
+              {"Shop"}
               {sidebarMenu ? (
                 <span>
                   <i className="fa fa-angle-right"></i>
@@ -35,17 +35,17 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }: any) => {
               <li>
                 <ul>
                   <li className="mega-menu-title">
-                    <Link to={process.env.PUBLIC_URL + "/shop/RyanGosling"}>
-                      {"shops"}
+                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/shop/RyanGosling"}>
+                      {"Shops"}
                     </Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "/shop/RyanGosling"}>
+                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/shop/RyanGosling"}>
                       {"Ryan Gosling"}
                     </Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "/shop/BradPitt"}>
+                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/shop/BradPitt"}>
                       {"Brad Pitt"}
                     </Link>
                   </li>
@@ -54,23 +54,23 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }: any) => {
               <li>
                 <ul>
                   <li className="mega-menu-title">
-                    <Link to={process.env.PUBLIC_URL + "/product/1"}>
+                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/product/1"}>
                       {"AR products"}
                     </Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "/product/1"}>
-                      {"product 1"}
+                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/product/1"}>
+                      {"Product 1"}
                     </Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "/product-tab-left/1"}>
-                      {"product 2"}
+                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/product-tab-left/1"}>
+                      {"Product 2"}
                     </Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "/product-tab-right/1"}>
-                      {"product 3"}
+                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/product-tab-right/1"}>
+                      {"Product 3"}
                     </Link>
                   </li>
                 </ul>
@@ -82,13 +82,13 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }: any) => {
             </ul>
           </li>
           <li>
-            <Link to={process.env.PUBLIC_URL + "/library"}>
-              {"collection"}
+            <Link className="font-poppins" to={process.env.PUBLIC_URL + "/library"}>
+              {"Collection"}
             </Link>
           </li>
           <li>
-            <Link to={process.env.PUBLIC_URL + "/"}>
-              {"pages"}
+            <Link className="font-poppins" to={process.env.PUBLIC_URL + "/"}>
+              {"Pages"}
               {sidebarMenu ? (
                 <span>
                   <i className="fa fa-angle-right"></i>
@@ -99,70 +99,70 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }: any) => {
             </Link>
             <ul className="submenu">
               <li>
-                <Link to={process.env.PUBLIC_URL + "/cart"}>
-                  {"cart"}
+                <Link className="font-poppins" to={process.env.PUBLIC_URL + "/cart"}>
+                  {"Cart"}
                 </Link>
               </li>
               <li>
-                <Link to={process.env.PUBLIC_URL + "/checkout"}>
-                  {"checkout"}
+                <Link className="font-poppins" to={process.env.PUBLIC_URL + "/checkout"}>
+                  {"Checkout"}
                 </Link>
               </li>
               <li>
-                <Link to={process.env.PUBLIC_URL + "/wishlist"}>
-                  {"wishlist"}
+                <Link className="font-poppins" to={process.env.PUBLIC_URL + "/wishlist"}>
+                  {"Wishlist"}
                 </Link>
               </li>
               <li>
-                <Link to={process.env.PUBLIC_URL + "/login"}>
-                  {"login"}
+                <Link className="font-poppins" to={process.env.PUBLIC_URL + "/login"}>
+                  {"Login"}
                 </Link>
               </li>
               <li>
-                <Link to={process.env.PUBLIC_URL + "/profile"}>
-                  {"profile"}
+                <Link className="font-poppins" to={process.env.PUBLIC_URL + "/profile"}>
+                  {"Profile"}
                 </Link>
               </li>
               <li>
-                <Link to={process.env.PUBLIC_URL + "/register"}>
-                  {"register"}
+                <Link className="font-poppins" to={process.env.PUBLIC_URL + "/register"}>
+                  {"Register"}
                 </Link>
               </li>
               <li>
-                <Link to={process.env.PUBLIC_URL + "/about"}>
-                  {"about_us"}
+                <Link className="font-poppins" to={process.env.PUBLIC_URL + "/about"}>
+                  {"About Us"}
                 </Link>
               </li>
               <li>
-                <Link to={process.env.PUBLIC_URL + "/contact"}>
-                  {"contact_us"}
+                <Link className="font-poppins" to={process.env.PUBLIC_URL + "/contact"}>
+                  {"Contact Us"}
                 </Link>
               </li>
               <li>
-                <Link to={process.env.PUBLIC_URL + "/404"}>
-                  {"404_page"}
+                <Link className="font-poppins" to={process.env.PUBLIC_URL + "/404"}>
+                  {"404 Page"}
                 </Link>
               </li>
               <li>
-                <Link to={process.env.PUBLIC_URL + "/product/sample-product"}>
-                  {"product"}
+                <Link className="font-poppins" to={process.env.PUBLIC_URL + "/product/sample-product"}>
+                  {"Product"}
                 </Link>
               </li>
             </ul>
           </li>
           <li>
-            <Link to={process.env.PUBLIC_URL + "/joinchat"}>
-              {"chat"}
+            <Link className="font-poppins" to={process.env.PUBLIC_URL + "/joinchat"}>
+              {"Chat"}
             </Link>
           </li>
           <li>
-            <Link to={process.env.PUBLIC_URL + "/about"}>
-              {"about us"}
+            <Link className="font-poppins" to={process.env.PUBLIC_URL + "/about"}>
+              {"About Us"}
             </Link>
           </li>
           <li>
-            <Link to={process.env.PUBLIC_URL + "/orders"}>
-              {"transactions"}
+            <Link className="font-poppins" to={process.env.PUBLIC_URL + "/orders"}>
+              {"Transactions"}
             </Link>
           </li>
         </ul>

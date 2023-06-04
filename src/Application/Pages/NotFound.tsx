@@ -19,7 +19,6 @@ const NotFound = () => {
         </Link>
     </div>
         <Footer/>
-        <Deck/>
     </div>
   );
 };

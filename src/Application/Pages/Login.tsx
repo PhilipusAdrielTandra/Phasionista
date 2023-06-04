@@ -7,7 +7,7 @@ import { authStore } from '../Redux/authenticationState';
 import { makeStyles } from '@material-ui/core/styles';
 import { GoogleLogin } from 'react-google-login';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faGoogle} from "@fortawesome/free-brands-svg-icons"
+import {faGoogle, faLinkedin} from "@fortawesome/free-brands-svg-icons"
 import COVER_IMAGE from "../Assets/images/cover.webp"
 import cogoToast from 'cogo-toast';
 
@@ -88,17 +88,13 @@ const Login = () => {
   }
 
     return(
-      <Header>
-          <div className="w-full min-h-screen flex items-start">
-              <div className="sm:hidden relative w-1/2 h-full flex flex-col lg:block">
-                  <div className="absolute top-[40%] left-[5%] flex flex-col">
-                      <h1 className="text-4xl text-white font-bold my-4">Share your fashion and your values with Phasionista</h1>
-                      <p className="text-xl text-white font-normal">Sign up for free and join others in their Phasionista journey</p>
-                  </div>
-                  <img src = {COVER_IMAGE} className= "w-full h-screen object-cover object-top"/>
+      <div>
+          <div className="flex-col w-full min-h-screen flex items-center md:flex-row">
+              <div className="flex-col relative w-full h-1/2 md:w-1/2 md:h-full lg:block ">
+                  <img src = {COVER_IMAGE} className= "w-full h-1/8 md:h-screen object-cover object-top "/>
               </div>
-              <div className="w-1/2 h-screen bg-[#f5f5f5] flex flex-col p-40 justify-between">
-                  <h1 className="text-xl text-[#060606] font-semibold">Phasionista</h1>
+              <div className="w-1/2 h-screen flex flex-col md:p-60 p-0 justify-between md:items-center">
+                  <h1 className="text-xl text-[#060606] font-semibold pt-14 md:mt-20">Phasionista</h1>
 
                   <div className="w-full flex flex-col max-w-[800px] mt-2">
                       <div className="w-full flex flex-col mb-2">
@@ -153,18 +149,19 @@ const Login = () => {
                               />
                               </button>
                           <button className="w-full text-black bg-white my-4 rounded-md border-2 font-semibold border-black/40 p-4 text-center flex items-center justify-center hover:scale-105 focus:ring-4 shadow-lg transform active:scale-75 transition-transform">                            
-                              <FontAwesomeIcon className="h-6 mr-4" icon={faGoogle} />
+                              <FontAwesomeIcon className="h-6 mr-4" icon={faLinkedin} />
                               Log In With LinkedIn
                           </button>
                       </form>
+                      <div className="w-full items-center justify-center mb-30 md:pb-40">
+                          <p className="text-sm font-normal text-[#060606]">Don't have an account?<a href="/register"><span className="font-semibold underline underline-offset-2 cursor-pointer"> Register here</span></a></p>
+                      </div>
                   </div>
                   
 
 
                                   
-                  <div className="w-full items-center justify-center">
-                          <p className="text-sm font-normal text-[#060606]">Don't have an account?<a href="/register"><span className="font-semibold underline underline-offset-2 cursor-pointer"> Register here</span></a></p>
-                  </div>
+
 
               </div>
 
@@ -172,7 +169,9 @@ const Login = () => {
 
           </div>
 
-        </Header>
+
+      </div>
+      
     )
 }
 

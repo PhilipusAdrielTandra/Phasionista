@@ -8,11 +8,11 @@ const MobileWidgets = () => {
             <ul className="header-contact-info__list">
               <li>
                 <i className="fa fa-phone"></i>{" "}
-                <a href="tel://12452456012">(1245) 2456 012 </a>
+                <a  className="font-poppins" href="tel://12452456012">(1245) 2456 012 </a>
               </li>
               <li>
                 <i className="fa fa-envelope"></i>{" "}
-                <a href="mailto:info@yourdomain.com">info@yourdomain.com</a>
+                <a  className="font-poppins" href="mailto:info@yourdomain.com">info@yourdomain.com</a>
               </li>
             </ul>
           </div>

@@ -140,7 +140,7 @@ function Orders() {
                     </div>
                   );
                 })}
-                <h3 style={{ fontFamily: 'timesnewroman', fontWeight: 'bolder' }}>Total Price: {calculateTotalPrice()}</h3>
+                <h3 style={{ fontFamily: 'Poppins', fontWeight: 'bolder' }}>Total Price: {calculateTotalPrice()}</h3>
               </>
             )}
           </div>

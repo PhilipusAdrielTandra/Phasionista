@@ -10,7 +10,7 @@ export const SectionContainer: React.FC<SectionContainerProps> = ({ children, se
   return (
     <div id={sectionId} key={sectionId}>
       <Container maxWidth={false}>
-        <div className='max-h-screen'>
+        <div className='max-h-full'>
           {children}
         </div>
         

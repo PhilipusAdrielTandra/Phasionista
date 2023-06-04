@@ -27,7 +27,7 @@ import { ContactSection } from './Application/Data/Sections/Intro/Contact.Sectio
 import { TeamSection } from './Application/Data/Sections/Intro/Team.Section';
 import { IntroSection } from './Application/Data/Sections/Intro/Intro.Section';
 import ShopCreation from './Application/Pages/ShopCreation';
-
+import Login1 from './Application/Pages/Login1';
 
 
 function App() {
@@ -61,6 +61,7 @@ function App() {
           <Route path="/joinchat" element={<JoinChat/>}/>
           <Route path="/orders" element={<Orders/>}/>
           <Route path="/product-create" element={<ProductCreation/>}/>
+          <Route path="*" element={<NotFound/>}/>
         </Routes>
       </div>
     </Router>

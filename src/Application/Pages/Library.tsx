@@ -8,6 +8,7 @@ import Header from "../Components/header/layout";
 import ShopSidebar from '../Components/library/librarySidebar';
 import ShopTopbar from '../Components/library/libraryTopbar';
 import ShopProducts from '../Components/library/libraryProducts';
+import Footer from '../Components/footer';
 
 const ShopGridStandard = () => {
     const [layout, setLayout] = useState('grid three-column');
@@ -86,6 +87,7 @@ const ShopGridStandard = () => {
                     </div>
                 </div>
             </Header>
+            <Footer></Footer>
         </Fragment>
     )
 }

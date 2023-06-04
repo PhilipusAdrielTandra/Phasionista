@@ -11,8 +11,8 @@ import '../../../Styles/About.css'
 
 export const TeamSection: React.FC = () => {
   return (
-    <div className="wrapper min-h-screen ">
-      <div className="our_team">
+    <div className="wrapper min-h-screen">
+      <div className="our_team md:pt-[25vh]">
         <div className="team_member">
           <div className="member_img">
             <img src={philip} alt="our_team" className='rounded-[50%]'/>

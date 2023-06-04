@@ -17,15 +17,15 @@ export const ContactSection: React.FC = () => {
               <div className='flex flex-col space-y-6'>
                 <div className="inline-flex space-x-2 items-center">
                   <IonIcon name="call" className='text-[#7B8CDE] text-xl'></IonIcon>
-                  <span>+(123) 456 7890</span>
+                  <span className="font-poppins">+(123) 456 7890</span>
                 </div>
                 <div className="inline-flex space-x-2 items-center">
                   <IonIcon name="mail" className='text-[#7B8CDE] text-xl'></IonIcon>
-                  <span>contact@phasionista.com</span>
+                  <span className="font-poppins">contact@phasionista.com</span>
                 </div>
                 <div className="inline-flex space-x-2 items-center">
                   <IonIcon name="location" className='text-[#7B8CDE] text-xl'></IonIcon>
-                  <span>Knowhere, Imaginary</span>
+                  <span className="font-poppins">Knowhere, Imaginary</span>
                 </div>
               </div>
               <div className='flex space-x-4 text-lg'>

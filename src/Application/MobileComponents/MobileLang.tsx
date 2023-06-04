@@ -29,8 +29,8 @@ const MobileLangCurrChange = () => {
   return (
     <div className="mobile-menu-middle">
       <div className="lang-curr-style">
-        <span className="title mb-2">Choose Language </span>
-        <select
+        <span className="font-poppins title mb-2">Choose Language </span>
+        <select  className="font-poppins"
           value={i18n.resolvedLanguage}
           onChange={changeLanguageTrigger}
         >
@@ -40,14 +40,14 @@ const MobileLangCurrChange = () => {
         </select>
       </div>
       <div className="lang-curr-style">
-        <span className="title mb-2">Choose Currency</span>
-        <select
+        <span  className="font-poppins title mb-2">Choose Currency</span>
+        <select className="font-poppins"
           value={currency.currencyName}
           onChange={setCurrencyTrigger}
         >
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="GBP">GBP</option>
+          <option  className="font-poppins" value="USD">USD</option>
+          <option  className="font-poppins" value="EUR">EUR</option>
+          <option  className="font-poppins"value="GBP">GBP</option>
         </select>
       </div>
     </div>

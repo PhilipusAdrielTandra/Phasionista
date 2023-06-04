@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       backgroundColor: 'white',
       color: 'black',
+      fontFamily:"Poppins",
       padding: theme.spacing(4, 2),
       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
     },
@@ -40,6 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     section: {
       display: 'flex',
+      fontFamily:"Poppins",
       fontSize: '1rem',
       flexDirection: 'column',
       alignItems: 'flex-start',
@@ -52,7 +54,8 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     sectionTitle: {
-      fontWeight: 300,
+      fontFamily: "Poppins",
+      fontWeight: 500,
       marginBottom: theme.spacing(2),
       fontSize: '1.4rem',
     },
@@ -72,8 +75,10 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(2),
     },
     followUsTitle: {
-      fontWeight: 300,
+      fontFamily: "Poppins",
+      fontWeight: 500,
       marginRight: theme.spacing(2),
+      marginBottom: theme.spacing(1),
       fontSize: '1.4rem',
     },
     socialButton: {
@@ -119,7 +124,7 @@ const Footer: React.FC = () => {
   const mappedItems = (
     navigationItems.map(({ to, text }) => {
       return (
-        <Link to={`/about#${to}`}>
+        <Link className='font-poppins' to={`/about#${to}`}>
             <Button className={classes.sectionButton}>{text}</Button>
         </Link>
 
@@ -131,15 +136,15 @@ const Footer: React.FC = () => {
     <footer className={classes.root}>
       <div className={classes.container}>
         <div className={classes.section}>
-          <div className={classes.sectionTitle}>About Us</div>
+          <div className={classes.sectionTitle} >About Us</div>
           {mappedItems}
           <Link to={"/orders"}>
-          <Button className={classes.sectionButton}>Orders</Button>
+            <Button className={classes.sectionButton}>Orders</Button>
           </Link>
         </div>
         <div className={classes.section}>
           <div className={classes.sectionTitle}>Useful Links</div>
-          <Link to={"/returns"}>
+          <Link className="font-poppins" to={"/returns"}>
             <Button className={classes.sectionButton}>Returns</Button>
           </Link>
           <Link to={"/faqs"}>
