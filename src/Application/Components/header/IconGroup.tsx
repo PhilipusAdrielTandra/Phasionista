@@ -8,6 +8,7 @@ import MenuCart from "./MenuCart";
 import { setCartItems } from "../../Redux/cart-slice";
 import { store } from "../../Redux/store";
 import { deleteAllFromWishlist, setWishlist } from "../../Redux/wishlist-slice";
+import { useEffect, useState } from "react";
 
 const IconGroup = ({ iconWhiteClass }: any) => {
   const isAuthenticated: boolean = authStore.getState().authen.authenticated;
@@ -25,6 +26,39 @@ const IconGroup = ({ iconWhiteClass }: any) => {
   const { compareItems } = useSelector((state: any) => state.compare);
   const { wishlistItems } = useSelector((state: any) => state.wishlist);
   const { cartItems } = useSelector((state: any) => state.cart);
+  const [data, setData] = useState("") 
+
+  const fetchProfileData = async () => {
+    const cookies = document.cookie;
+    const match = cookies.match(/access-token=([^;]+)/);
+
+    let accessToken = null;
+    if (match) {
+      accessToken = match[1]; // Extract the cookie value
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3016/user/getbyid`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+
+      if (response.ok) {
+        const jsonData = await response.json();
+        setData(jsonData);
+      }
+
+    } catch (error) {
+      // Handle the exception
+    }
+  };
+
+  useEffect(() => {
+    fetchProfileData();
+  }, []);
 
   return (
     <div className={clsx("header-right-wrap", iconWhiteClass)} >
@@ -69,6 +103,13 @@ const IconGroup = ({ iconWhiteClass }: any) => {
               <Link to={process.env.PUBLIC_URL + "/profile"}>
                 my account
               </Link>
+              { data.retailer_id ? <Link to={process.env.PUBLIC_URL + `/shop/${data.retailer_id}`}>
+                My Shop
+              </Link> :
+
+              <Link to={process.env.PUBLIC_URL + "/create-shop"}>
+                Open Shop
+              </Link> }
               <Link to={process.env.PUBLIC_URL + "/home"} style={{ color: "red" }} onClick={() => { 
                 authStore.dispatch({ type: "logout"});
                 window.location.reload();

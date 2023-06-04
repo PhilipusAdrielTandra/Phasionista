@@ -35,18 +35,18 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }: any) => {
               <li>
                 <ul>
                   <li className="mega-menu-title">
-                    <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                    <Link to={process.env.PUBLIC_URL + "/shop/RyanGosling"}>
                       {"shops"}
                     </Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
-                      {"shop 1"}
+                    <Link to={process.env.PUBLIC_URL + "/shop/RyanGosling"}>
+                      {"Ryan Gosling"}
                     </Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "/shop-grid-filter"}>
-                      {"shop 2"}
+                    <Link to={process.env.PUBLIC_URL + "/shop/BradPitt"}>
+                      {"Brad Pitt"}
                     </Link>
                   </li>
                 </ul>
@@ -55,7 +55,7 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }: any) => {
                 <ul>
                   <li className="mega-menu-title">
                     <Link to={process.env.PUBLIC_URL + "/product/1"}>
-                      {"products"}
+                      {"AR products"}
                     </Link>
                   </li>
                   <li>
@@ -77,17 +77,6 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }: any) => {
               </li>
               <li>
                 <ul>
-                  <li className="mega-menu-img">
-                    <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
-                      <img
-                        src={
-                          process.env.PUBLIC_URL +
-                          "/assets/img/banner/banner-12.png"
-                        }
-                        alt=""
-                      />
-                    </Link>
-                  </li>
                 </ul>
               </li>
             </ul>

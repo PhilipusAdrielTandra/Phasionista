@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import AWS from 'aws-sdk';
@@ -7,26 +7,22 @@ import SEO from "./SEO";
 import Header from "../Components/header/layout";
 
 AWS.config.update({
-  region: 'ap-southeast-1', // Replace with your AWS region
-  accessKeyId: 'AKIA6CIR6AWO6WY3SL3X', // Replace with your AWS access key
-  secretAccessKey: 'OXXAQ0Bkw59yIaIOh9sFA2AOcBKto//dwFtq8Jb0' // Replace with your AWS secret access key
-});
-
-const s3 = new AWS.S3();
-
-const ProductCreation = () => {
-  let cartTotalPrice = 0;
+    region: 'ap-southeast-1', // Replace with your AWS region
+    accessKeyId: 'AKIA6CIR6AWO6WY3SL3X', // Replace with your AWS access key
+    secretAccessKey: 'OXXAQ0Bkw59yIaIOh9sFA2AOcBKto//dwFtq8Jb0' // Replace with your AWS secret access key
+  });
+  
+  const s3 = new AWS.S3();
+  
+  const ShopCreation = () => {
+    let cartTotalPrice = 0;
   
     let { pathname } = useLocation();
     const currency = useSelector((state: any) => state.currency);
     const { cartItems } = useSelector((state) => state.cart);
     const [uploadedPictures, setUploadedPictures] = useState([]);
-    let image = []
+    let image = ""
     const [description, setDescription] = useState("");
-    const [addInfo, setAddInfo] = useState("");
-    const [categories, setCategories] = useState("");
-    const [price, setPrice] = useState(0);
-    const [quantity, setQuantity] = useState(0);
     const [name, setName] = useState("");
   
     const handlePictureUpload = (event) => {
@@ -66,7 +62,7 @@ const ProductCreation = () => {
             } else {
               const imageUrl = response.Location;
               console.log(`Picture ${fileName} uploaded successfully to AWS S3. Image URL: ${imageUrl}`);
-              image.push(imageUrl);
+              image = imageUrl;
               resolve(imageUrl);
             }
           });
@@ -104,35 +100,6 @@ const ProductCreation = () => {
         }
       };
 
-      const [userRid, setUserRid] = useState("")
-      const fetchuserProfileData = async () => {
-        const cookies = document.cookie;
-        const match = cookies.match(/access-token=([^;]+)/);
-    
-        let accessToken = null;
-        if (match) {
-          accessToken = match[1]; // Extract the cookie value
-        }
-    
-        try {
-          const response = await fetch(`http://localhost:3016/user/getbyid`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${accessToken}`
-            }
-          });
-    
-          if (response.ok) {
-            const jsonData = await response.json();
-            setUserRid(jsonData);
-          }
-    
-        } catch (error) {
-          // Handle the exception
-        }
-      };
-
     const createRetailer = async () => {
         const cookies = document.cookie; 
       
@@ -142,61 +109,34 @@ const ProductCreation = () => {
         if (match) {
           accessToken = match[1]; // Extract the cookie value
         }
+        console.log(image)
         try {
-          const response = await fetch('http://localhost:3014/product/', {
+          const response = await fetch('http://localhost:3015/seller/', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'sec': 't21r123redfafa341121431dfa'
+              'Authorization': `Bearer ${accessToken}`
             },
             body: JSON.stringify({
-                "retailer_id": userRid.retailer_id,
-                "name": name,
-                "stock": quantity,
-                "saleCount": 0,
-                "category": categories,
-                "shortDescription": addInfo,
-                "fullDescription": description,
-                "price": price,
+                "retailer_name": name,
+                "description": description,
+                "shop_level": 1,
+                "image": image
             })
           });
       
           if (response.ok) {
             const bodyId = await response.json().then()
-
-            const imagePromises = image.map(async (images) => {
-              const response2 = await fetch(`http://localhost:3014/product/images/${bodyId.id}`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'sec': 't21r123redfafa341121431dfa'
-                },
-                body: JSON.stringify({
-                  "image": images
-                })
-              });
-      
-              if (response2.ok) {
-                const bodyId = await response2.json();
-                console.log(bodyId);
-              }
-            }
-            );
-          }
-           else {
+            window.location.href = `shop/${bodyId.id}`
+          } else {
             // Handle error case
           }
         } catch (error) {
           // Handle exception
         }
       };
+      
 
-  useEffect(
-    () => {
-      fetchuserProfileData();
-    }
-  , []
-  )
 
   return (
     <Fragment>
@@ -210,49 +150,13 @@ const ProductCreation = () => {
               <div className="row">
                 <div className="col-lg-7">
                   <div className="billing-info-wrap">
-                    <h3>Product Details</h3>
+                    <h3>Open up a shop</h3>
                     <div className="row">
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
-                          <label>Product Name</label>
+                          <label>Shop Name</label>
                           <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
                         </div>
-                      </div>
-                      <div className="col-lg-6 col-md-6">
-                        <div className="billing-info mb-20">
-                          <label>Quantity</label>
-                          <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
-                        </div>
-                      </div>
-                      <div className="col-lg-12">
-                        <div className="billing-info mb-20">
-                          <label>Price</label>
-                          <input type="number" value={price} onChange={(e) => setPrice(e.target.value)}/>
-                        </div>
-                      </div>
-                      <div className="col-lg-12">
-                        <div className="billing-info mb-20">
-                          <label>Categories</label>
-                          <input
-                            placeholder="Category1, Category2, etc"
-                            type="text"
-                            value={categories}
-                            onChange={(e) => setCategories(e.target.value)}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="additional-info-wrap">
-                      <h4>Additional info</h4>
-                      <div className="additional-info">
-                        <textarea
-                          placeholder="Additional information on your product e.g. sizes available and measurements."
-                          name="message"
-                          defaultValue={""}
-                          value={addInfo}
-                          onChange={(e) => {setAddInfo(e.target.value)}}
-                        />
                       </div>
                     </div>
 
@@ -264,7 +168,7 @@ const ProductCreation = () => {
                           name="message"
                           defaultValue={""}
                           value={description}
-                          onChange={(e) => {setDescription(e.target.value)}}
+                          onChange={(e) => setDescription(e.target.value)}
                         />
                       </div>
                     </div>
@@ -286,8 +190,8 @@ const ProductCreation = () => {
                     <h3>Pictures</h3>
                     <div className="place-order mt-25">
                     <input type="file" accept="image/*" multiple onChange={handlePictureUpload} />
-                    <button className="btn-hover" onClick={handleUploadButtonClick}>
-                        <span className="icon-cloud-upload"></span> Upload Pictures
+                    <button className="btn-hover" onClick={() => setTimeout(handleUploadButtonClick, 1000)}>
+                        <span className="icon-cloud-upload"></span> Create Shop
                     </button>
                     </div>
                 </div>
@@ -300,4 +204,4 @@ const ProductCreation = () => {
   );
 };
 
-export default ProductCreation;
+export default ShopCreation;

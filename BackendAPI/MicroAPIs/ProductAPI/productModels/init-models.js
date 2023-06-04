@@ -24,9 +24,6 @@ function initModels(sequelize) {
 
   product_bundle.belongsToMany(product_details, { as: 'product_id_product_details', through: product_bundle_product_details, foreignKey: "bundle_id", otherKey: "product_id" });
   product_details.belongsToMany(product_bundle, { as: 'bundle_id_product_bundles', through: product_bundle_product_details, foreignKey: "product_id", otherKey: "bundle_id" });
-  product_details.belongsTo(ge_product_category, { as: "ge_product_category", foreignKey: "ge_product_category_id"});
-  ge_product_category.hasMany(product_details, { as: "product_details", foreignKey: "ge_product_category_id"});
-  product_inventory.belongsTo(ge_product_category, { as: "ge_product_category", foreignKey: "ge_product_category_id"});
   ge_product_category.hasMany(product_inventory, { as: "product_inventories", foreignKey: "ge_product_category_id"});
   product_bundle_product_details.belongsTo(product_bundle, { as: "bundle", foreignKey: "bundle_id"});
   product_bundle.hasMany(product_bundle_product_details, { as: "product_bundle_product_details", foreignKey: "bundle_id"});

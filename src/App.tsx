@@ -26,6 +26,7 @@ import Orders from './Application/Pages/Order';
 import { ContactSection } from './Application/Data/Sections/Intro/Contact.Section';
 import { TeamSection } from './Application/Data/Sections/Intro/Team.Section';
 import { IntroSection } from './Application/Data/Sections/Intro/Intro.Section';
+import ShopCreation from './Application/Pages/ShopCreation';
 
 
 
@@ -50,7 +51,8 @@ function App() {
           <Route path="/about" element={<About/>} />
           <Route path="/faqs" element={<FAQ />}/>
           <Route path="/support" element={<FAQ />}/>
-          <Route path="/shop" element={<Shop />}/>
+          <Route path="/shop/:id" element={<Shop />}/>
+          <Route path="/create-shop" element={<ShopCreation/>}/>
           <Route path="/sizes" element={<Sizes />}/>
           <Route path="/returns" element={<Return />}/>
           <Route path="/404" element={<NotFound />} />

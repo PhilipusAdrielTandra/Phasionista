@@ -26,6 +26,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(50),
       allowNull: false
     },
+    shortDescription: {
+      type: DataTypes.STRING(400),
+      allowNull: false
+    },
     fullDescription: {
       type: DataTypes.STRING(400),
       allowNull: false
@@ -33,14 +37,6 @@ module.exports = function(sequelize, DataTypes) {
     price: {
       type: DataTypes.INTEGER,
       allowNull: false
-    },
-    ge_product_category_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'ge_product_category',
-        key: 'id'
-      }
     }
   }, {
     sequelize,
@@ -55,13 +51,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "fk_product_details_ge_product_category",
-        using: "BTREE",
-        fields: [
-          { name: "categories" },
         ]
       },
     ]

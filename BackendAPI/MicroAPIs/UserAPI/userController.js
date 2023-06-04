@@ -119,6 +119,7 @@ exports.createUser = async (req, res) => {
       fullName,
       email,
       phoneNumber,
+      retailer_id: null,
       hash: await argon.hash(password),
       about,
       club_level,

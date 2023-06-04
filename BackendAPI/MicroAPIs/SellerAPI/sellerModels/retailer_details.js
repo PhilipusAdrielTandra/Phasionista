@@ -10,13 +10,9 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(50),
       allowNull: false
     },
-    retailer_type_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'ge_retailer_type',
-        key: 'id'
-      }
+    user_id:{
+      type: DataTypes.STRING(36),
+      allowNull: false
     },
     description: {
       type: DataTypes.STRING(400),
@@ -26,13 +22,9 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    location_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'retailer_location',
-        key: 'id'
-      }
+    image: {
+      type: DataTypes.STRING(500),
+      allowNull: true
     }
   }, {
     sequelize,
@@ -47,20 +39,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "retailer_details_fk1",
-        using: "BTREE",
-        fields: [
-          { name: "retailer_type_id" },
-        ]
-      },
-      {
-        name: "retailer_details_fk2",
-        using: "BTREE",
-        fields: [
-          { name: "location_id" },
         ]
       },
     ]

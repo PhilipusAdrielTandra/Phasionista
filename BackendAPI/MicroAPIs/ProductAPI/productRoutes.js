@@ -3,7 +3,7 @@ const router = express.Router();
 const productController = require('./productController');
 
 function restriction(req, res, next) {
-    if (req.headers['sec'] == '123'){
+    if (req.headers['sec'] == 't21r123redfafa341121431dfa'){
         next();
     }
     

@@ -14,8 +14,6 @@ function initModels(sequelize) {
   var retailer_ratings = _retailer_ratings(sequelize, DataTypes);
   var retailer_videos = _retailer_videos(sequelize, DataTypes);
 
-  retailer_details.belongsTo(ge_retailer_type, { as: "retailer_type", foreignKey: "retailer_type_id"});
-  ge_retailer_type.hasMany(retailer_details, { as: "retailer_details", foreignKey: "retailer_type_id"});
   retailer_images.belongsTo(retailer_details, { as: "retailer", foreignKey: "retailer_id"});
   retailer_details.hasMany(retailer_images, { as: "retailer_images", foreignKey: "retailer_id"});
   retailer_location.belongsTo(retailer_details, { as: "retailer", foreignKey: "retailer_id"});
@@ -24,8 +22,6 @@ function initModels(sequelize) {
   retailer_details.hasMany(retailer_ratings, { as: "retailer_ratings", foreignKey: "retailer_id"});
   retailer_videos.belongsTo(retailer_details, { as: "retailer", foreignKey: "retailer_id"});
   retailer_details.hasMany(retailer_videos, { as: "retailer_videos", foreignKey: "retailer_id"});
-  retailer_details.belongsTo(retailer_location, { as: "location", foreignKey: "location_id"});
-  retailer_location.hasMany(retailer_details, { as: "retailer_details", foreignKey: "location_id"});
 
   return {
     ge_retailer_type,
