@@ -35,6 +35,7 @@ exports.createOrder = (req, res) => {
   const { payment_method, status, total_price, order_items } = req.body;
 
   const orderId = uuid.v4(); 
+  console.log(order_items)
   
   Orders.create({
     id: orderId, 
@@ -47,7 +48,7 @@ exports.createOrder = (req, res) => {
     const orderItemsToCreate = order_items.map(orderItem => ({
       id: uuid.v4(),
       order_id: order.id, 
-      product_id: orderItem.product_id,
+      product_id: orderItem.id,
       quantity: orderItem.quantity,
       price: orderItem.price
     }));

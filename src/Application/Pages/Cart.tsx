@@ -10,39 +10,6 @@ import { cartItemStock } from "../Components/productHelper";
 import "../Styles/Cart.css";
 
 function Cart() {
-
-  useEffect(() => {
-    const url = 'http://localhost:3010/cart';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFlMGVkM2M0LWZhZGMtNDQyZS1iM2FhLWM5NWM3ODRlYjk3MSIsImlhdCI6MTY4MzY5ODUwNCwiZXhwIjoxNjgzNzAyMTA0fQ.dZqLMLJXwUROv2h63S-mJnXquTxjLxhF3AT7Ip8nBUY';
-
-    fetch(url, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-    }).then(response => response.json())
-    .then(result => {
-      dispatch({ type: 'DATA_DELETED', payload: result });
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-
-    fetch(url, {
-      method: 'GET', // or 'POST', 'PUT', etc. depending on the request
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => { const sessionId = response.headers.get('X-Session-ID');
-    console.log('Session ID:', sessionId);
-    return response.json();})
-    .then(data => console.log(data.headers))
-    .catch((error) => console.error('Error:', error));
-  }, []); 
-
   let cartTotalPrice = 0;
 
   const [quantityCount] = useState(1);

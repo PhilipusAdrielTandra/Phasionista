@@ -7,6 +7,7 @@ import Header from '../Components/header/layout';
 import pictureHeader from '../Assets/images/headar.jpg';
 import Footer from '../Components/footer';
 import Deck from '../Components/deck'
+import { refreshAccessToken } from '../Components/refresher';
 
 function Profile() {
   const [data, setData] = useState(null);
@@ -14,12 +15,18 @@ function Profile() {
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
 
   const fetchProfileData = async () => {
-    const cookies = document.cookie;
+    const cookies = document.cookie; 
+
     const match = cookies.match(/access-token=([^;]+)/);
 
     let accessToken = null;
     if (match) {
       accessToken = match[1]; // Extract the cookie value
+
+      if(accessToken == ""){
+        await refreshAccessToken()
+        accessToken = cookies.match(/access-token=([^;]+)/)[1];
+      }
     }
 
     try {
@@ -34,6 +41,11 @@ function Profile() {
       if (response.ok) {
         const jsonData = await response.json();
         setData(jsonData);
+      }
+
+      else {
+        refreshAccessToken()
+        window.location.reload()
       }
 
     } catch (error) {

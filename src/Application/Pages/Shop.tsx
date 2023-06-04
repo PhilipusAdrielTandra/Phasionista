@@ -9,6 +9,7 @@ import pictureHeader from '../Assets/images/headar.jpg';
 import Footer from '../Components/footer';
 import Deck from '../Components/deck'
 import ShopProduct from '../Components/home/ShopProduct';
+import { refreshAccessToken } from '../Components/refresher';
 
 function Shop() {
   const [data, setData] = useState(null);
@@ -18,12 +19,18 @@ function Shop() {
   const { id }  = useParams();
 
   const fetchProfileData = async () => {
-    const cookies = document.cookie;
+    const cookies = document.cookie; 
+
     const match = cookies.match(/access-token=([^;]+)/);
 
     let accessToken = null;
     if (match) {
       accessToken = match[1]; // Extract the cookie value
+
+      if(accessToken == ""){
+        await refreshAccessToken()
+        accessToken = cookies.match(/access-token=([^;]+)/)[1];
+      }
     }
 
     try {
@@ -46,12 +53,18 @@ function Shop() {
   };
 
   const fetchuserProfileData = async () => {
-    const cookies = document.cookie;
+    const cookies = document.cookie; 
+
     const match = cookies.match(/access-token=([^;]+)/);
 
     let accessToken = null;
     if (match) {
       accessToken = match[1]; // Extract the cookie value
+
+      if(accessToken == ""){
+        await refreshAccessToken()
+        accessToken = cookies.match(/access-token=([^;]+)/)[1];
+      }
     }
 
     try {
@@ -66,6 +79,11 @@ function Shop() {
       if (response.ok) {
         const jsonData = await response.json();
         setUserRid(jsonData);
+      }
+
+      else{
+        refreshAccessToken()
+        window.location.reload()
       }
 
     } catch (error) {

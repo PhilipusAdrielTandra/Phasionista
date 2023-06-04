@@ -5,6 +5,7 @@ import AWS from 'aws-sdk';
 import { getDiscountPrice } from "../Components/productHelper";
 import SEO from "./SEO";
 import Header from "../Components/header/layout";
+import { refreshAccessToken } from "../Components/refresher";
 
 AWS.config.update({
     region: 'ap-southeast-1', // Replace with your AWS region
@@ -102,14 +103,19 @@ AWS.config.update({
 
     const createRetailer = async () => {
         const cookies = document.cookie; 
-      
+
         const match = cookies.match(/access-token=([^;]+)/);
       
         let accessToken = null;
         if (match) {
           accessToken = match[1]; // Extract the cookie value
+      
+          if(accessToken == ""){
+            await refreshAccessToken()
+            accessToken = cookies.match(/access-token=([^;]+)/)[1];
+          }
         }
-        console.log(image)
+
         try {
           const response = await fetch('http://localhost:3015/seller/', {
             method: 'POST',
@@ -130,6 +136,8 @@ AWS.config.update({
             window.location.href = `shop/${bodyId.id}`
           } else {
             // Handle error case
+            refreshAccessToken()
+            window.location.reload()
           }
         } catch (error) {
           // Handle exception

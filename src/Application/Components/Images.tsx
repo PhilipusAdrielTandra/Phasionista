@@ -1,22 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight, faClose } from "@fortawesome/free-solid-svg-icons";
+import { useParams } from "react-router-dom";
 
 const ImageSection = () => {
-
+    const { id } = useParams();
     const [imageIndex, setImageIndex] = useState(0);
     const [enlargeImage, setEnlargeImage] = useState(false);
     const [activeImage, setActiveImage] = useState(0);
     
     
     const handleImageClick = (index : number) => setImageIndex(index);
-    const images = [
+    const [images, setImages] = useState([
         { id:1, src: "https://picsum.photos/600/800", alt: "Product Image 1" },
         {id:2, src: "https://picsum.photos/600/800?random=2", alt: "Product Image 2" },
         { id:3,src: "https://picsum.photos/600/800?random=3", alt: "Product Image 3" }
-      ];
+      ]);
 
     function toggleEnlargeImage() {
         setEnlargeImage((pre) => !pre);
@@ -32,6 +32,27 @@ const ImageSection = () => {
             return pre == 0 ? (pre = images.length - 1) : Number(pre) - 1;
         });
     }
+
+    useEffect(() => {
+        fetch(`http://localhost:3014/product/item/${id}`)
+        .then(response => response.json())
+        .then(data => {
+          const { image } = data;
+          console.log(image)
+          const format = image.map((src, index) => {
+            return {
+              id: index + 1,
+              src: src,
+              alt: `Product Image ${index + 1}`
+            };
+          });
+          setImages(format);
+
+          if(data.message != "Product not found"){
+          }
+        })
+        .catch(error => console.error(error));
+      }, []); 
 
 
     const thumbnailImages = images.map((img, index) => {

@@ -5,6 +5,7 @@ import AWS from 'aws-sdk';
 import { getDiscountPrice } from "../Components/productHelper";
 import SEO from "./SEO";
 import Header from "../Components/header/layout";
+import { refreshAccessToken } from "../Components/refresher";
 
 AWS.config.update({
   region: 'ap-southeast-1', // Replace with your AWS region
@@ -106,12 +107,18 @@ const ProductCreation = () => {
 
       const [userRid, setUserRid] = useState("")
       const fetchuserProfileData = async () => {
-        const cookies = document.cookie;
+        const cookies = document.cookie; 
+
         const match = cookies.match(/access-token=([^;]+)/);
-    
+
         let accessToken = null;
         if (match) {
           accessToken = match[1]; // Extract the cookie value
+
+          if(accessToken == ""){
+            await refreshAccessToken()
+            accessToken = cookies.match(/access-token=([^;]+)/)[1];
+          }
         }
     
         try {
@@ -127,6 +134,11 @@ const ProductCreation = () => {
             const jsonData = await response.json();
             setUserRid(jsonData);
           }
+
+          else {
+            refreshAccessToken()
+            window.location.reload()
+          }
     
         } catch (error) {
           // Handle the exception
@@ -135,13 +147,19 @@ const ProductCreation = () => {
 
     const createRetailer = async () => {
         const cookies = document.cookie; 
-      
+
         const match = cookies.match(/access-token=([^;]+)/);
       
         let accessToken = null;
         if (match) {
           accessToken = match[1]; // Extract the cookie value
+      
+          if(accessToken == ""){
+            await refreshAccessToken()
+            accessToken = cookies.match(/access-token=([^;]+)/)[1];
+          }
         }
+        
         try {
           const response = await fetch('http://localhost:3014/product/', {
             method: 'POST',
@@ -154,7 +172,7 @@ const ProductCreation = () => {
                 "name": name,
                 "stock": quantity,
                 "saleCount": 0,
-                "category": categories,
+                "category": "fashion, " + categories,
                 "shortDescription": addInfo,
                 "fullDescription": description,
                 "price": price,
@@ -185,6 +203,8 @@ const ProductCreation = () => {
           }
            else {
             // Handle error case
+            refreshAccessToken()
+            window.location.reload()
           }
         } catch (error) {
           // Handle exception

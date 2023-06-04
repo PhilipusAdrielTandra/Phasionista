@@ -1,5 +1,6 @@
 import cogoToast from 'cogo-toast';
 import { store } from '../Redux/store';
+import { refreshAccessToken } from '../Components/refresher';
 const { createSlice } = require('@reduxjs/toolkit');
 
 const wishlistSlice = createSlice({
@@ -36,12 +37,17 @@ export default wishlistSlice.reducer;
 
 export const AddToWishlistAPI = async (product, dispatch) => {
     const cookies = document.cookie; 
-  
+
     const match = cookies.match(/access-token=([^;]+)/);
-  
+
     let accessToken = null;
     if (match) {
       accessToken = match[1]; // Extract the cookie value
+
+      if(accessToken == ""){
+        await refreshAccessToken()
+        accessToken = cookies.match(/access-token=([^;]+)/)[1];
+      }
     }
 
     try {
@@ -57,6 +63,8 @@ export const AddToWishlistAPI = async (product, dispatch) => {
       if (response.ok) {
         dispatch(addToWishlist(product));
       } else {
+        refreshAccessToken()
+        window.location.reload()
       }
     } catch (error) {
         console.log(error);
@@ -66,13 +74,19 @@ export const AddToWishlistAPI = async (product, dispatch) => {
 
   export const DeleteFromWishlistAPI = async (product, dispatch) => {
     const cookies = document.cookie; 
-  
+
     const match = cookies.match(/access-token=([^;]+)/);
-  
+
     let accessToken = null;
     if (match) {
       accessToken = match[1]; // Extract the cookie value
+
+      if(accessToken == ""){
+        await refreshAccessToken()
+        accessToken = cookies.match(/access-token=([^;]+)/)[1];
+      }
     }
+
     try {
       const response = await fetch('http://localhost:3016/user/user-wishlist', {
         method: 'DELETE',
@@ -86,6 +100,8 @@ export const AddToWishlistAPI = async (product, dispatch) => {
       if (response.ok) {
         store.dispatch(deleteFromWishlist(product));
       } else {
+        refreshAccessToken()
+        window.location.reload()
       }
     } catch (error) {
     }

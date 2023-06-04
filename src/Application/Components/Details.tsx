@@ -6,20 +6,25 @@ import { Box, Tab, Tabs } from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
 import InfoIcon from '@mui/icons-material/Info';
 import ReviewsIcon from '@mui/icons-material/Reviews';
+import { addToCartAPI } from "../Redux/cart-slice";
+import { useDispatch } from "react-redux";
 
 const DetailsSection = () => {
 
-const { id }  = useParams();
+  const { id }  = useParams();
   const [name, setName] = useState("Sample Product");
   const [description, setDescription] = useState("This is a sample product description.");
   const [price, setPrice] = useState("49.99");
   const sizes = ["Small", "Medium", "Large"];
   const [stock, setStock] = useState(10);
   const [quantity, setQuantity] = useState(1);
+  const [addInfo, setAddInfo] = useState("")
   const [size, setSize] = useState("");
   const [activeImage, setActiveImage] = useState(0);
   const handleSizeChange = (event : React.ChangeEvent<HTMLSelectElement>) => setSize(event.target.value);
   const [value, setValue] = React.useState(0);
+  const [product, setProduct] = useState(null)
+  const dispatch = useDispatch();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -35,18 +40,45 @@ const { id }  = useParams();
     setQuantity(newQuantity);
   };
 
+  const renderTabContent = () => {
+    switch (value) {
+      case 0:
+        return (
+          <div>
+            <p>{addInfo}</p>
+          </div>
+        );
+      case 1:
+        return (
+          <div>
+            {description}
+          </div>
+        );
+      case 2:
+        return (
+          <div>
+            {/* Content for the "Reviews" tab */}
+            {/* ... */}
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   useEffect(() => {
     fetch(`http://localhost:3014/product/item/${id}`)
     .then(response => response.json())
     .then(data => {
-      const { id, name, stock, sales, description, price, ge_product_category_id, created_at, updated_at } = data;
-      console.log(id, name, stock, sales, description, price, ge_product_category_id, created_at, updated_at);
+      const { id, name, stock, sales, fullDescription, shortDescription, price, retailer_id} = data;
 
       if(data.message != "Product not found"){
         setName(name);
-        setDescription(description);
+        setAddInfo(shortDescription);
+        setDescription(fullDescription);
         setPrice(price);
         setStock(stock);
+        setProduct(data);
       }
     })
     .catch(error => console.error(error));
@@ -73,12 +105,12 @@ const { id }  = useParams();
                 </div>
 
                 <div>
-                    <select id="countries" className=" text-white bg-gray-800 border border-gray-300 text-sm rounded-lg block w-full p-2.5">
+                    {/* <select id="countries" className=" text-white bg-gray-800 border border-gray-300 text-sm rounded-lg block w-full p-2.5">
                         <option className="text-black" value="">Select a size</option>
                         {sizes.map((size) => (
                             <option  className="text-black" key={size} value={size}>{size}</option>
                         ))}
-                    </select>
+                    </select> */}
                 </div>
             </div>
 
@@ -88,14 +120,15 @@ const { id }  = useParams();
                     onClick={handleSubmit}
                     className="w-full flex bg-black justify-center items-center space-x-3 p-3 bg-element rounded-md text-light shadow-2xl shadow-element md:flex-[65%] active:scale-95 hover:opacity-70 duration-200">
                     <FontAwesomeIcon icon={faCartShopping} />
-                    <span>Add to cart</span>
+                    <span onClick={() => addToCartAPI(product, dispatch)}>Add to cart</span>
                 </button>
 
                 <Tabs value={value} onChange={handleChange} aria-label="icon label tabs example" className="justify-between px-4 md:flex-grow">
-                        <Tab className="flex-grow text-primary justify-center px-2 text-black items-center bg-element rounded-md text-light shadow-2xl shadow-element  active:scale-95 hover:opacity-70 duration-200" icon={<InfoIcon/>} label="More Info" />
-                        <Tab className="flex-grow text-primary  justify-center px-2 text-black  items-center bg-element rounded-md text-light shadow-2xl shadow-element  active:scale-95 hover:opacity-70 duration-200" icon={<DescriptionIcon/>} label="Description" />
+                        <Tab className="flex-grow text-primary justify-center px-2 text-black items-center bg-element rounded-md text-light shadow-2xl shadow-element  active:scale-95 hover:opacity-70 duration-200" icon={<InfoIcon/>} label="More Info"/>
+                        <Tab className="flex-grow text-primary justify-center px-2 text-black  items-center bg-element rounded-md text-light shadow-2xl shadow-element  active:scale-95 hover:opacity-70 duration-200" icon={<DescriptionIcon/>} label="Description" />
                         <Tab className="flex-grow text-primary justify-center px-4 text-black  items-center bg-element rounded-md text-light shadow-2xl shadow-element  active:scale-95 hover:opacity-70 duration-200" icon={<ReviewsIcon/>} label="Reviews" />
                 </Tabs>
+                {renderTabContent()}
             </div>
 
         </section>

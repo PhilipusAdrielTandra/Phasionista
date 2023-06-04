@@ -3,6 +3,7 @@ import Header from '../Components/header/layout'
 import test from '../Assets/images/future.jpg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons'
+import { refreshAccessToken } from '../Components/refresher';
 
 function Orders() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -10,11 +11,15 @@ function Orders() {
   const [transactionData, setTransactionData] = useState([])
   const [selectedTransaction, setSelectedTransaction] = useState(null);
 
-  const openModal = (transaction) => {
+  const openModal = async (transaction) => {
     setSelectedTransaction(transaction);
-    transaction.order_items.forEach((item) => {
-      fetchProductForModalData(item.product_id);
+
+    const productDataPromises = transaction.order_items.map((item) => {
+      return fetchProductForModalData(item.product_id);
     });
+
+    const productData = await Promise.all(productDataPromises);
+    setModalProductData(productData);
     setIsModalOpen(true);
   };
 
@@ -23,12 +28,18 @@ function Orders() {
   }
 
   const fetchProfileData = async () => {
-    const cookies = document.cookie;
+    const cookies = document.cookie; 
+
     const match = cookies.match(/access-token=([^;]+)/);
 
     let accessToken = null;
     if (match) {
       accessToken = match[1]; // Extract the cookie value
+
+      if(accessToken == ""){
+        await refreshAccessToken()
+        accessToken = cookies.match(/access-token=([^;]+)/)[1];
+      }
     }
 
     try {
@@ -43,6 +54,11 @@ function Orders() {
       if (response.ok) {
         const jsonData = await response.json();
         setTransactionData(jsonData);
+      }
+
+      else {
+        refreshAccessToken()
+        window.location.reload()
       }
 
     } catch (error) {
@@ -70,7 +86,7 @@ function Orders() {
 
       if (response.ok) {
         const jsonData = await response.json();
-        setModalProductData(jsonData);
+        return jsonData;
 
       }
 
@@ -81,7 +97,30 @@ function Orders() {
 
   useEffect(() => {
     fetchProfileData();
+
+    const handleClickOutsideModal = (event) => {
+      if (!event.target.closest(".bg-white")) {
+        closeModal();
+      }
+    };
+
+    window.addEventListener("click", handleClickOutsideModal);
+
+    return () => {
+      window.removeEventListener("click", handleClickOutsideModal);
+    };
   }, []);
+
+  const calculateTotalPrice = () => {
+    if (selectedTransaction) {
+      const totalPrice = selectedTransaction.order_items.reduce(
+        (acc, item) => acc + Number(item.price) * item.quantity,
+        0
+      );
+      return Number(totalPrice).toFixed(2);
+    }
+    return 0;
+  };
 
   return (
     <div className="">
@@ -92,19 +131,18 @@ function Orders() {
             <h1 className="text-2xl font-bold mb-4">Transaction Details</h1>
             {selectedTransaction && (
               <>
-                {selectedTransaction.order_items.map((item) => {
+                {selectedTransaction.order_items.map((item, index) => {
                   return (
-                    <div key={modalProductData.id}>
-                      <h4>Product: {modalProductData.name}</h4>
+                    <div key={modalProductData[index].id}>
+                      <h4 style={{ fontWeight: 'bold'}}>{modalProductData[index].name}</h4>
                       <p>Quantity: {item.quantity}</p>
                       <p>Price: {item.price}</p>
                     </div>
                   );
                 })}
-                <p>Total Price: {selectedTransaction.totalPrice}</p>
+                <h3 style={{ fontFamily: 'timesnewroman', fontWeight: 'bolder' }}>Total Price: {calculateTotalPrice()}</h3>
               </>
             )}
-            <p onClick={closeModal}>Close Modal</p>
           </div>
         </div>
       )}
@@ -122,10 +160,6 @@ function Orders() {
           };
 
           const indonesiaTime = transactionCreatedAt.toLocaleString("id-ID", options);
-          const totalPrice = Number(transaction.order_items.reduce(
-            (acc, item) => acc + item.price,
-            0
-          )).toFixed(2);
 
           return (
             <a
@@ -154,7 +188,6 @@ function Orders() {
               <p className="text-black">
                 {transaction.order_items.length} item/s
               </p>
-              <p className="text-left text-black">Total Price: RP {totalPrice}</p>
             </div>
           </a>
         )})}

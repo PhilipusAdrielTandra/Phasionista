@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import cogoToast from 'cogo-toast';
 import thunk from 'redux-thunk';
+import { refreshAccessToken } from '../Components/refresher';
 import { createSlice } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import { SatelliteSharp } from '@material-ui/icons';
@@ -124,6 +125,7 @@ export const { addToCart, deleteFromCart, decreaseQuantity, deleteAllFromCart, s
 export default cartSlice.reducer;
 
 export const addToCartAPI = async (product, dispatch) => {
+  console.log(product)
   const cookies = document.cookie; 
 
   const match = cookies.match(/access-token=([^;]+)/);
@@ -131,8 +133,13 @@ export const addToCartAPI = async (product, dispatch) => {
   let accessToken = null;
   if (match) {
     accessToken = match[1]; // Extract the cookie value
+
+    if(accessToken == ""){
+      await refreshAccessToken()
+      accessToken = cookies.match(/access-token=([^;]+)/)[1];
+    }
   }
-  console.log(product)
+
   try {
     const response = await fetch('http://localhost:3010/cart/user', {
       method: 'POST',
@@ -146,6 +153,8 @@ export const addToCartAPI = async (product, dispatch) => {
     if (response.ok) {
       dispatch(addToCart(product));
     } else {
+      refreshAccessToken()
+      window.location.reload()
     }
   } catch (error) {
   }
@@ -159,7 +168,13 @@ export const IncrementCartAPI = async (product, dispatch, cartItems) => {
   let accessToken = null;
   if (match) {
     accessToken = match[1]; // Extract the cookie value
+
+    if(accessToken == ""){
+      await refreshAccessToken()
+      accessToken = cookies.match(/access-token=([^;]+)/)[1];
+    }
   }
+
   try {
     const response = await fetch('http://localhost:3010/cart/user', {
       method: 'POST',
@@ -173,6 +188,8 @@ export const IncrementCartAPI = async (product, dispatch, cartItems) => {
     if (response.ok) {
       dispatch(increaseQuantity({cartItems: cartItems, product: product}));
     } else {
+      refreshAccessToken()
+      window.location.reload()
     }
   } catch (error) {
   }
@@ -186,8 +203,12 @@ export const deleteFromCartAPI = async(cartItemId, dispatch, cartItems)=> {
   let accessToken = null;
   if (match) {
     accessToken = match[1]; // Extract the cookie value
-  }
 
+    if(accessToken == ""){
+      await refreshAccessToken()
+      accessToken = cookies.match(/access-token=([^;]+)/)[1];
+    }
+  }
 
   try {
     const response = await fetch(`http://localhost:3010/cart/user/`, {
@@ -203,6 +224,8 @@ export const deleteFromCartAPI = async(cartItemId, dispatch, cartItems)=> {
       dispatch(deleteFromCart({cartItems: cartItems, product: cartItemId}));
     } else {
       // Handle the error case
+      refreshAccessToken()
+      window.location.reload()
     }
   } catch (error) {
     // Handle the exception
@@ -217,6 +240,11 @@ export const decreaseQuantityAPI = async (cartItemId, dispatch, cartItems) => {
   let accessToken = null;
   if (match) {
     accessToken = match[1]; // Extract the cookie value
+
+    if(accessToken == ""){
+      await refreshAccessToken()
+      accessToken = cookies.match(/access-token=([^;]+)/)[1];
+    }
   }
 
   try {
@@ -232,6 +260,8 @@ export const decreaseQuantityAPI = async (cartItemId, dispatch, cartItems) => {
     if (response.ok) {
       dispatch(decreaseQuantity({cartItems: cartItems, product: cartItemId}));
     } else {
+      refreshAccessToken()
+      window.location.reload()
       // Handle the error case
     }
   } catch (error) {
@@ -249,6 +279,11 @@ export const deleteAllFromCartAPI = async (dispatch) => {
   let accessToken = null;
   if (match) {
     accessToken = match[1]; // Extract the cookie value
+
+    if(accessToken == ""){
+      await refreshAccessToken()
+      accessToken = cookies.match(/access-token=([^;]+)/)[1];
+    }
   }
 
   try {
@@ -263,6 +298,8 @@ export const deleteAllFromCartAPI = async (dispatch) => {
     if (response.ok) {
       dispatch(deleteAllFromCart());
     } else {
+      refreshAccessToken()
+      window.location.reload()
       // Handle error case
     }
   } catch (error) {
