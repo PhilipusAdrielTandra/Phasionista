@@ -62,8 +62,10 @@ const Checkout = () => {
   // check Approval
   const onApprove = (data, actions) => {
       return actions.order.capture().then(function (details) {
+          deleteAllFromCartAPI(dispatch)
           const { payer } = details;
           setSuccess(true);
+          window.location.href = "orders"
       });
   };
 

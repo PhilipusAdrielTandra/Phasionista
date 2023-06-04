@@ -161,7 +161,7 @@ const ProductCreation = () => {
         }
         
         try {
-          const response = await fetch('http://localhost:3014/product/', {
+          const response = await fetch('http://54.206.76.182:3014/product/', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -183,7 +183,7 @@ const ProductCreation = () => {
             const bodyId = await response.json().then()
 
             const imagePromises = image.map(async (images) => {
-              const response2 = await fetch(`http://localhost:3014/product/images/${bodyId.id}`, {
+              const response2 = await fetch(`http://54.206.76.182:3014/product/images/${bodyId.id}`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -197,6 +197,7 @@ const ProductCreation = () => {
               if (response2.ok) {
                 const bodyId = await response2.json();
                 console.log(bodyId);
+                window.location.href='/library'
               }
             }
             );
@@ -209,6 +210,7 @@ const ProductCreation = () => {
         } catch (error) {
           // Handle exception
         }
+  
       };
 
   useEffect(
@@ -307,7 +309,7 @@ const ProductCreation = () => {
                     <div className="place-order mt-25">
                     <input type="file" accept="image/*" multiple onChange={handlePictureUpload} />
                     <button className="btn-hover" onClick={handleUploadButtonClick}>
-                        <span className="icon-cloud-upload"></span> Upload Pictures
+                        <span className="icon-cloud-upload"></span> Create Product
                     </button>
                     </div>
                 </div>

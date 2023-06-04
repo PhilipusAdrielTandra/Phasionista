@@ -76,7 +76,7 @@ function Orders() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3014/product/item/${id}`, {
+      const response = await fetch(`http://54.206.76.182:3014/product/item/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

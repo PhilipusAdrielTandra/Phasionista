@@ -4,7 +4,7 @@ import Chat from './Chat';
 import Header from '../Components/header/layout'
 import {Button} from '@mui/material'
 
-const socket = io.connect('http://localhost:3011');
+const socket = io.connect('http://54.206.76.182:3011');
 
 function JoinChat() {
   const [room, setRoom] = useState('');
