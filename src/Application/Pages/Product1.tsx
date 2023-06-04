@@ -57,7 +57,7 @@ const Product = () => {
   };
 
   useEffect(() => {
-    fetch(`http://54.206.76.182:3014/product/item/${id}`)
+    fetch(`http://localhost:3014/product/item/${id}`)
     .then(response => response.json())
     .then(data => {
       const { id, name, stock, sales, description, price, ge_product_category_id, created_at, updated_at } = data;

@@ -67,7 +67,7 @@ const DetailsSection = () => {
   };
 
   useEffect(() => {
-    fetch(`http://54.206.76.182:3014/product/item/${id}`)
+    fetch(`http://localhost:3014/product/item/${id}`)
     .then(response => response.json())
     .then(data => {
       const { id, name, stock, sales, fullDescription, shortDescription, price, retailer_id} = data;

@@ -83,7 +83,7 @@ const Signup = () => {
     };
 
     return(
-        <div className="flex-col w-full min-h-screen flex items-center md:flex-row">
+        <div className="flex-col w-full h-screen flex items-center md:flex-row overflow-hidden">
             <div className="flex-col relative w-full h-1/2 md:w-1/2 md:h-full lg:block ">
                 <img src = {COVER_IMAGE} className="w-full h-1/8 md:h-screen object-cover object-top "/>
             </div>

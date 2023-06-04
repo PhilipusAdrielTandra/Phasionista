@@ -96,7 +96,7 @@ async function fetchWishlistDataFromApi() {
 }
 
 async function fetchProductsFromApi(productIds) {
-  const productApiUrl = "http://54.206.76.182:3014/product/item";
+  const productApiUrl = "http://localhost:3014/product/item";
   const products = [];
 
   for (const productId of productIds) {
@@ -110,7 +110,7 @@ async function fetchProductsFromApi(productIds) {
 
 async function fetchProductsDataFromApi() {
   try {
-    const response = await fetch("http://54.206.76.182:3014/product");
+    const response = await fetch("http://localhost:3014/product");
     const products = await response.json();
     store.dispatch(setProducts(products));
   } catch (error) {
