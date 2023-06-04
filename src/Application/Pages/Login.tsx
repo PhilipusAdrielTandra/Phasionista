@@ -1,55 +1,73 @@
+//@ts-ignore
 import React, { useState } from 'react';
+import Header from "../Components/header/layout";
 import { Button, TextField } from '@mui/material';
+import { background } from "@chakra-ui/styled-system"
+import { authStore } from '../Redux/authenticationState';
+import { makeStyles } from '@material-ui/core/styles';
 import { GoogleLogin } from 'react-google-login';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import COVER_IMAGE from '../Assets/images/cover.webp';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faGoogle, faLinkedin} from "@fortawesome/free-brands-svg-icons"
+import COVER_IMAGE from "../Assets/images/cover.webp"
 import cogoToast from 'cogo-toast';
 
-const colors = {
-  primary: '#060606',
-  background: '#f5f5f5',
-  disabled: '#D9D9D9',
-};
+const colors= {
+    primary: "#060606",
+    background: "#f5f5f5",
+    disbaled: "#D9D9D9"
+}
+
+const useStyles = makeStyles((theme) => ({
+    textField: {
+      height: 60, // Set the desired height here
+      margin: theme.spacing(1),
+    },
+  }));
 
 const Login = () => {
+    const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleLogin = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     fetch('http://localhost:3016/user/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email,
+      password
     })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(res.status);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        const accessToken = data['access_token'];
-        document.cookie = `access-token=${data['access_token']}; path=/;`;
-        document.cookie = `refresh-token=${data['refresh_token']}; path=/;`;
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(res.status);
+      }
+      return res.json();
+    })
+    .then((data) => {
+      console.log(data);
+      const accessToken = data['access_token'];
+      authStore.dispatch({ type: "login"});
+      document.cookie = `access-token=${data['access_token']}; path=/;`;
+      document.cookie = `refresh-token=${data['refresh_token']}; path=/;`;
 
-        const cookies = document.cookie;
-        console.log(cookies);
-        window.location.href = '/';
-      })
-      .catch((error) => {
-        console.log('Error:', error);
-        const errorMessage = 'User not found'; // You can customize the error message here
-        cogoToast.warn('User not found/Or email and password is wrong');
-      });
+      const cookies = document.cookie;
+      console.log(cookies)
+      authStore.dispatch({ type: 'login'});
+      console.log(authStore.getState().authen.authenticated)
+      window.location.href = '/';
+    })
+    .catch((error) => {
+      console.log('Error:', error);
+      const errorMessage = 'User not found'; // You can customize the error message here
+      cogoToast.warn("User not found/Or email and password is wrong");
+    });
   };
 
   const handleGoogleLogin = async (response: any) => {
@@ -57,15 +75,17 @@ const Login = () => {
     console.log('Google Id Token:', tokenId);
   };
 
+
+
   const handleLinkedinLogin = () => {
     // handle LinkedIn login logic
   };
 
   const responseGoogle = (response: any) => {
     console.log(response);
-    console.log('Google Id Token: ', response.tokenId);
-    console.log('Google Access Token: ', response.accessToken);
-  };
+    console.log("Google Id Token: ", response.tokenId);
+    console.log("Google Access Token: ", response.accessToken);
+  }
 
   return (
     <div>
@@ -153,5 +173,4 @@ const Login = () => {
     </div>
   );
 };
-
-export default Login;
+export default Login
