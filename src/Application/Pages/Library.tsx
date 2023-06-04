@@ -29,6 +29,8 @@ const ShopGridStandard = () => {
     }
 
     const getSortParams = ({sortType, sortValue}: any) => {
+        console.log(sortType)
+        console.log(sortValue)
         setSortType(sortType);
         setSortValue(sortValue);
     }
@@ -53,7 +55,7 @@ const ShopGridStandard = () => {
                 description="Shop page of flone react minimalist eCommerce template."
             />
 
-            <Header headerTop="visible">
+            <Header>
 
                 <div className="shop-area pt-95 pb-100">
                     <div className="container">
