@@ -57,8 +57,8 @@ function Orders() {
       }
 
       else {
-        refreshAccessToken()
-        window.location.reload()
+        // refreshAccessToken()
+        // window.location.reload()
       }
 
     } catch (error) {

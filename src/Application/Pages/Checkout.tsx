@@ -100,6 +100,7 @@ const Checkout = () => {
   
       if (response.ok) {
         deleteAllFromCartAPI(dispatch)
+        document.cookie = `connect.sid=""'; path=/;`;
         window.location.href = "orders"
       } else {
       }

@@ -34,21 +34,12 @@ async function fetchCartDataFromApi() {
       accessToken = match[1]; 
     }
 
+    if(!isAuthenticated){
     const response = await fetch(cartApiUrl, {
       headers: {
       },
       credentials: 'include'
     });
-
-    if(isAuthenticated) {
-    const response = await fetch(cartApiUrl, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      credentials: 'include'
-    });
-
-  }
 
     const cartItems = await response.json();
     
@@ -61,6 +52,30 @@ async function fetchCartDataFromApi() {
     const products = await fetchProductsFromApi(productIds);
 
     store.dispatch(setCartItems(products));
+
+  }
+
+    if(isAuthenticated) {
+    const response = await fetch(cartApiUrl, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      credentials: 'include'
+    });
+
+    const cartItems = await response.json();
+    
+    const productIds = cartItems.map(item => ({
+      productId: item.product_id,
+      quantity: item.quantity
+    }));
+    
+    // Fetch products using the product IDs
+    const products = await fetchProductsFromApi(productIds);
+
+    store.dispatch(setCartItems(products));
+  }
+
   } catch (error) {
     console.log('Error fetching cart data:', error);
   }

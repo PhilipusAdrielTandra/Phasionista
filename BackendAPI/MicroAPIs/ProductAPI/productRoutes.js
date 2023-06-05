@@ -13,6 +13,7 @@ function restriction(req, res, next) {
 }
 
 router.post('/', restriction, productController.createProduct);
+router.post('/search', productController.searchProducts)
 router.get('/', productController.getProducts);
 router.get('/item/:id', productController.getProductById);
 router.put('/item/:id', restriction, productController.updateProduct);

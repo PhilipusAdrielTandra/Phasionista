@@ -126,6 +126,7 @@ export const { addToCart, deleteFromCart, decreaseQuantity, deleteAllFromCart, s
 export default cartSlice.reducer;
 
 export const addToCartAPI = async (product, dispatch) => {
+  console.log(product)
   const cookies = document.cookie; 
 
   const match = cookies.match(/access-token=([^;]+)/);
@@ -149,6 +150,7 @@ export const addToCartAPI = async (product, dispatch) => {
     }
 
   try {
+    if(!isAuthenticated){ 
     const response = await fetch(cartApiUrl, {
       method: 'POST',
       headers: {
@@ -157,6 +159,14 @@ export const addToCartAPI = async (product, dispatch) => {
       credentials: 'include',
       body: JSON.stringify({productId: product.id, amount: 1, price: product.price}),
     });
+
+    if (response.ok) {
+      dispatch(addToCart(product));
+    } else {
+      refreshAccessToken()
+      window.location.reload()
+    }
+  }
 
     if(isAuthenticated) {
     const response = await fetch(cartApiUrl, {
@@ -168,13 +178,14 @@ export const addToCartAPI = async (product, dispatch) => {
       credentials: 'include',
       body: JSON.stringify({productId: product.id, amount: 1, price: product.price}),
     });
-  } 
+
     if (response.ok) {
       dispatch(addToCart(product));
     } else {
       refreshAccessToken()
       window.location.reload()
     }
+  } 
   } catch (error) {
     console.log(error)
   }
@@ -204,6 +215,7 @@ export const IncrementCartAPI = async (product, dispatch, cartItems) => {
     }
 
   try {
+    if(!isAuthenticated) {
     const response = await fetch(cartApiUrl, {
       method: 'POST',
       headers: {
@@ -212,6 +224,14 @@ export const IncrementCartAPI = async (product, dispatch, cartItems) => {
       credentials: 'include',
       body: JSON.stringify({productId: product, amount: 1}),
     });
+
+    if (response.ok) {
+      dispatch(increaseQuantity({cartItems: cartItems, product: product}));
+    } else {
+      refreshAccessToken()
+      window.location.reload()
+    }
+  }
 
     if(isAuthenticated){
     const response = await fetch(cartApiUrl, {
@@ -224,14 +244,14 @@ export const IncrementCartAPI = async (product, dispatch, cartItems) => {
       body: JSON.stringify({productId: product, amount: 1}),
     });
 
-  }
-
     if (response.ok) {
       dispatch(increaseQuantity({cartItems: cartItems, product: product}));
     } else {
       refreshAccessToken()
       window.location.reload()
     }
+  }
+
   } catch (error) {
   }
 };
@@ -260,6 +280,7 @@ export const deleteFromCartAPI = async(cartItemId, dispatch, cartItems)=> {
     }
 
   try {
+    if(!isAuthenticated) {
     const response = await fetch(cartApiUrl, {
       method: 'DELETE',
       headers: {
@@ -268,6 +289,15 @@ export const deleteFromCartAPI = async(cartItemId, dispatch, cartItems)=> {
       credentials: 'include',
       body: JSON.stringify({ productId: cartItemId})
     });
+
+    if (response.ok) {
+      dispatch(deleteFromCart({cartItems: cartItems, product: cartItemId}));
+    } else {
+      // Handle the error case
+      refreshAccessToken()
+      window.location.reload()
+    }
+  }
 
     if (isAuthenticated) {
     const response = await fetch(cartApiUrl, {
@@ -279,7 +309,6 @@ export const deleteFromCartAPI = async(cartItemId, dispatch, cartItems)=> {
       credentials: 'include',
       body: JSON.stringify({ productId: cartItemId})
     });
-    } 
 
     if (response.ok) {
       dispatch(deleteFromCart({cartItems: cartItems, product: cartItemId}));
@@ -288,6 +317,7 @@ export const deleteFromCartAPI = async(cartItemId, dispatch, cartItems)=> {
       refreshAccessToken()
       window.location.reload()
     }
+  }
   } catch (error) {
     // Handle the exception
   }
@@ -317,6 +347,7 @@ export const decreaseQuantityAPI = async (cartItemId, dispatch, cartItems) => {
     }
 
   try {
+    if(!isAuthenticated) {
     const response = await fetch(cartApiUrl, {
       method: 'PUT',
       headers: {
@@ -325,7 +356,15 @@ export const decreaseQuantityAPI = async (cartItemId, dispatch, cartItems) => {
       credentials: 'include',
       body: JSON.stringify({productId: cartItemId, amount: -1}),
     });
-
+    
+    if (response.ok) {
+      dispatch(deleteFromCart({cartItems: cartItems, product: cartItemId}));
+    } else {
+      // Handle the error case
+      refreshAccessToken()
+      window.location.reload()
+    }
+  }
     if(isAuthenticated) {
     const response = await fetch(cartApiUrl, {
       method: 'PUT',
@@ -337,15 +376,14 @@ export const decreaseQuantityAPI = async (cartItemId, dispatch, cartItems) => {
       body: JSON.stringify({productId: cartItemId, amount: -1}),
     });
 
-  }
-
     if (response.ok) {
-      dispatch(decreaseQuantity({cartItems: cartItems, product: cartItemId}));
+      dispatch(deleteFromCart({cartItems: cartItems, product: cartItemId}));
     } else {
+      // Handle the error case
       refreshAccessToken()
       window.location.reload()
-      // Handle the error case
     }
+  }
   } catch (error) {
     // Handle the exception
   }
@@ -377,6 +415,7 @@ export const deleteAllFromCartAPI = async (dispatch) => {
     }
 
   try {
+    if(!isAuthenticated) {
     const response = await fetch(cartApiUrl, {
       method: 'DELETE',
       headers: {
@@ -384,6 +423,16 @@ export const deleteAllFromCartAPI = async (dispatch) => {
       },
       credentials: 'include',
     });
+
+    if (response.ok) {
+      dispatch(deleteAllFromCart());
+    } else {
+      refreshAccessToken()
+      window.location.reload()
+      // Handle error case
+    }
+
+  }
 
     if(isAuthenticated) {
     const response = await fetch(cartApiUrl, {
@@ -394,7 +443,6 @@ export const deleteAllFromCartAPI = async (dispatch) => {
       },
       credentials: 'include'
     });
-  }
 
     if (response.ok) {
       dispatch(deleteAllFromCart());
@@ -403,6 +451,8 @@ export const deleteAllFromCartAPI = async (dispatch) => {
       window.location.reload()
       // Handle error case
     }
+  }
+
   } catch (error) {
     // Handle exception
   }

@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const { Op } = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 const sequelize = new Sequelize('pha_product', 'admin', '9n49NvuQZjk6KoLdQLdv', {
   dialect: 'mysql',
@@ -287,3 +288,49 @@ exports.getRetailerProducts = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 }
+
+exports.searchProducts = async (req, res) => {
+  try {
+    const { query } = req.body;
+
+    let products;
+    if (query) {
+      products = await Product.findAll({
+        where: {
+          [Op.or]: [
+            { name: { [Op.like]: `%${query}%` } },
+          ],
+        },
+        include: [
+          {
+            model: product_images,
+            as: "image",
+          },
+        ],
+      });
+    } else {
+      products = await Product.findAll({
+        include: [
+          {
+            model: product_images,
+            as: "image",
+          },
+        ],
+      });
+    }
+
+    const modifiedProducts = products.map((product) => {
+      const categories = product.category.split(", ");
+      const images = product.image.map((image) => image.image);
+      return {
+        ...product.toJSON(),
+        category: categories,
+        image: images,
+      };
+    });
+
+    res.json(modifiedProducts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
