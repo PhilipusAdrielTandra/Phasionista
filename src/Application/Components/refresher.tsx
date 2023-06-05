@@ -11,7 +11,7 @@ export const refreshAccessToken = async () => {
         refreshToken = match[1]; // Extract the cookie value
     }
 
-    const response = await fetch('http://localhost:3016/user/token', {
+    const response = await fetch('http://13.55.179.38:3016/user/token', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

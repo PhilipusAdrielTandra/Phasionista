@@ -122,7 +122,7 @@ const ProductCreation = () => {
         }
     
         try {
-          const response = await fetch(`http://localhost:3016/user/getbyid`, {
+          const response = await fetch(`http://13.55.179.38:3016/user/getbyid`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -161,7 +161,7 @@ const ProductCreation = () => {
         }
         
         try {
-          const response = await fetch('http://localhost:3014/product/', {
+          const response = await fetch('http://13.55.179.38:3014/product/', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -183,7 +183,7 @@ const ProductCreation = () => {
             const bodyId = await response.json().then()
 
             const imagePromises = image.map(async (images) => {
-              const response2 = await fetch(`http://localhost:3014/product/images/${bodyId.id}`, {
+              const response2 = await fetch(`http://13.55.179.38:3014/product/images/${bodyId.id}`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',

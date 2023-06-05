@@ -143,11 +143,11 @@ export const addToCartAPI = async (product, dispatch) => {
     }
   }
   console.log(isAuthenticated);
-  let cartApiUrl = "http://localhost:3010/cart/session";
+  let cartApiUrl = "http://13.55.179.38:3010/cart/session";
 
     if (isAuthenticated) {
       // If authenticated, use the user route instead of session route
-      cartApiUrl = "http://localhost:3010/cart/user";
+      cartApiUrl = "http://13.55.179.38:3010/cart/user";
     }
 
   try {
@@ -208,11 +208,11 @@ export const IncrementCartAPI = async (product, dispatch, cartItems) => {
     }
   }
 
-  let cartApiUrl = "http://localhost:3010/cart/session";
+  let cartApiUrl = "http://13.55.179.38:3010/cart/session";
 
     if (isAuthenticated) {
       // If authenticated, use the user route instead of session route
-      cartApiUrl = "http://localhost:3010/cart/user";
+      cartApiUrl = "http://13.55.179.38:3010/cart/user";
     }
 
   try {
@@ -273,11 +273,11 @@ export const deleteFromCartAPI = async(cartItemId, dispatch, cartItems)=> {
     }
   }
 
-  let cartApiUrl = "http://localhost:3010/cart/session";
+  let cartApiUrl = "http://13.55.179.38:3010/cart/session";
 
     if (isAuthenticated) {
       // If authenticated, use the user route instead of session route
-      cartApiUrl = "http://localhost:3010/cart/user";
+      cartApiUrl = "http://13.55.179.38:3010/cart/user";
     }
 
   try {
@@ -340,11 +340,11 @@ export const decreaseQuantityAPI = async (cartItemId, dispatch, cartItems) => {
     }
   }
 
-  let cartApiUrl = "http://localhost:3010/cart/session";
+  let cartApiUrl = "http://13.55.179.38:3010/cart/session";
 
     if (isAuthenticated) {
       // If authenticated, use the user route instead of session route
-      cartApiUrl = "http://localhost:3010/cart/user";
+      cartApiUrl = "http://13.55.179.38:3010/cart/user";
     }
 
   try {
@@ -409,11 +409,11 @@ export const deleteAllFromCartAPI = async (dispatch) => {
     }
   }
 
-  let cartApiUrl = "http://localhost:3010/cart/deleteall";
+  let cartApiUrl = "http://13.55.179.38:3010/cart/deleteall";
 
     if (isAuthenticated) {
       // If authenticated, use the user route instead of session route
-      cartApiUrl = "http://localhost:3010/cart/user/deleteall";
+      cartApiUrl = "http://13.55.179.38:3010/cart/user/deleteall";
     }
 
   try {

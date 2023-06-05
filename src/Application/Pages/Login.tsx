@@ -34,7 +34,7 @@ const Login = () => {
 
   const handleLogin = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch('http://localhost:3016/user/login', {
+    fetch('http://13.55.179.38:3016/user/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

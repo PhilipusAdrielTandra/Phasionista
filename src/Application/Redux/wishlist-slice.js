@@ -51,7 +51,7 @@ export const AddToWishlistAPI = async (product, dispatch) => {
     }
 
     try {
-      const response = await fetch('http://localhost:3016/user/user-wishlist', {
+      const response = await fetch('http://13.55.179.38:3016/user/user-wishlist', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ export const AddToWishlistAPI = async (product, dispatch) => {
     }
 
     try {
-      const response = await fetch('http://localhost:3016/user/user-wishlist', {
+      const response = await fetch('http://13.55.179.38:3016/user/user-wishlist', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

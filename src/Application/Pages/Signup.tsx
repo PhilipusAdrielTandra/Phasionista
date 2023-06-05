@@ -22,7 +22,7 @@ const Signup = () => {
   
     const handleRegister = (e: React.MouseEvent<HTMLFormElement>) => {
       e.preventDefault();
-      fetch('http://localhost:3016/user/createuser', {
+      fetch('http://13.55.179.38:3016/user/createuser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

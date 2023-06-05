@@ -29,7 +29,7 @@ const ProductGridListSingle = ({
 
   const handleProduct = () =>{
     console.log(product);
-    const url = 'http://localhost:3010/cart/session';
+    const url = 'http://13.55.179.38:3010/cart/session';
     fetch(url, {
       method: 'POST',
       headers: {
