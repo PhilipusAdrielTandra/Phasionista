@@ -13,6 +13,8 @@ function Profile() {
   const [data, setData] = useState(null);
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const [description, setDescription] = useState("")
+  const [name, setName] = useState("")
 
   const fetchProfileData = async () => {
     const cookies = document.cookie; 
@@ -73,11 +75,35 @@ function Profile() {
     setIsAddressModalOpen(false);
   };
 
-  const handleProfileUpdate = (name, description) => {
-    // Handle the profile update logic here
-    console.log('Name:', name);
-    console.log('Description:', description);
+  const handleProfileUpdate = async () => {
+
+    const cookies = document.cookie; 
+
+    const match = cookies.match(/access-token=([^;]+)/);
+  
+    let accessToken = null;
+    if (match) {
+      accessToken = match[1]; 
+  
+      if(accessToken == ""){
+        await refreshAccessToken()
+        accessToken = cookies.match(/access-token=([^;]+)/)[1];
+      }
+    }
+
+    const response = await fetch('http://localhost:3016/user/updateuser', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+      body: JSON.stringify({
+          fullName : name,
+          about : description
+      })
+    })
     closeEditProfileModal();
+    window.location.reload();
   };
 
   return (
@@ -180,18 +206,18 @@ function Profile() {
             <h1 className="text-2xl font-bold mb-4">Edit Profile</h1>
             <div className="mb-4">
               <label className="block mb-2 font-bold">Name:</label>
-              <input type="text" className="border border-gray-300 rounded-lg p-2" />
+              <input type="text" className="border border-gray-300 rounded-lg p-2" value={name} onChange={(e) => setName(e.target.value)}/>
             </div>
             <div className="mb-4">
-              <label className="block mb-2 font-bold">Description:</label>
-              <textarea className="border border-gray-300 rounded-lg p-2" rows="3"></textarea>
+              <label className="block mb-2 font-bold" >Description:</label>
+              <textarea className="border border-gray-300 rounded-lg p-2" rows="3" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
             </div>
             <div className="flex justify-end">
               <button className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2"
                 onClick={closeEditProfileModal}>
                 Cancel
               </button>
-              <button className="bg-green-500 text-white px-4 py-2 rounded-lg">
+              <button className="bg-green-500 text-white px-4 py-2 rounded-lg" onClick={handleProfileUpdate}>
                 Save
               </button>
             </div>

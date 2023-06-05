@@ -132,8 +132,20 @@ AWS.config.update({
           });
       
           if (response.ok) {
+
             const bodyId = await response.json().then()
+            console.log(bodyId)
+            const response2 = await fetch('http://localhost:3016/user/updateuser', {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+              },
+              body: JSON.stringify({ "retailer_id": bodyId.id})
+            })
+            if (response2.ok) {
             window.location.href = `shop/${bodyId.id}`
+            }
           } else {
             // Handle error case
             refreshAccessToken()

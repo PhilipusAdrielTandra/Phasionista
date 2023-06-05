@@ -130,19 +130,20 @@ export const addToCartAPI = async (product, dispatch) => {
   const cookies = document.cookie; 
 
   const match = cookies.match(/access-token=([^;]+)/);
+  let isAuthenticated = false;
 
   let accessToken = null;
-  if (match) {
+  if (match && match[1] != "null") {
     accessToken = match[1]; // Extract the cookie value
+    isAuthenticated = true;
 
     if(accessToken == ""){
       await refreshAccessToken()
       accessToken = cookies.match(/access-token=([^;]+)/)[1];
     }
   }
-
+  console.log(isAuthenticated);
   let cartApiUrl = "http://localhost:3010/cart/session";
-    const isAuthenticated = authStore.getState().authen.authenticated;
 
     if (isAuthenticated) {
       // If authenticated, use the user route instead of session route
@@ -163,8 +164,8 @@ export const addToCartAPI = async (product, dispatch) => {
     if (response.ok) {
       dispatch(addToCart(product));
     } else {
-      refreshAccessToken()
-      window.location.reload()
+      // refreshAccessToken()
+      // window.location.reload()
     }
   }
 
@@ -182,8 +183,8 @@ export const addToCartAPI = async (product, dispatch) => {
     if (response.ok) {
       dispatch(addToCart(product));
     } else {
-      refreshAccessToken()
-      window.location.reload()
+      // refreshAccessToken()
+      // window.location.reload()
     }
   } 
   } catch (error) {
@@ -195,11 +196,12 @@ export const IncrementCartAPI = async (product, dispatch, cartItems) => {
   const cookies = document.cookie; 
 
   const match = cookies.match(/access-token=([^;]+)/);
+  let isAuthenticated = false;
 
   let accessToken = null;
-  if (match) {
+  if (match && match[1] != "null") {
     accessToken = match[1]; // Extract the cookie value
-
+    isAuthenticated = true;
     if(accessToken == ""){
       await refreshAccessToken()
       accessToken = cookies.match(/access-token=([^;]+)/)[1];
@@ -207,7 +209,6 @@ export const IncrementCartAPI = async (product, dispatch, cartItems) => {
   }
 
   let cartApiUrl = "http://localhost:3010/cart/session";
-    const isAuthenticated = authStore.getState().authen.authenticated;
 
     if (isAuthenticated) {
       // If authenticated, use the user route instead of session route
@@ -261,10 +262,11 @@ export const deleteFromCartAPI = async(cartItemId, dispatch, cartItems)=> {
 
   const match = cookies.match(/access-token=([^;]+)/);
 
+  let isAuthenticated = false;
   let accessToken = null;
-  if (match) {
+  if (match && match[1] != "null") {
     accessToken = match[1]; // Extract the cookie value
-
+    isAuthenticated = true;
     if(accessToken == ""){
       await refreshAccessToken()
       accessToken = cookies.match(/access-token=([^;]+)/)[1];
@@ -272,7 +274,6 @@ export const deleteFromCartAPI = async(cartItemId, dispatch, cartItems)=> {
   }
 
   let cartApiUrl = "http://localhost:3010/cart/session";
-    const isAuthenticated = authStore.getState().authen.authenticated;
 
     if (isAuthenticated) {
       // If authenticated, use the user route instead of session route
@@ -328,10 +329,11 @@ export const decreaseQuantityAPI = async (cartItemId, dispatch, cartItems) => {
 
   const match = cookies.match(/access-token=([^;]+)/);
 
+  let isAuthenticated = false;
   let accessToken = null;
-  if (match) {
+  if (match && match[1] != "null") {
     accessToken = match[1]; // Extract the cookie value
-
+    isAuthenticated = true;
     if(accessToken == ""){
       await refreshAccessToken()
       accessToken = cookies.match(/access-token=([^;]+)/)[1];
@@ -339,7 +341,6 @@ export const decreaseQuantityAPI = async (cartItemId, dispatch, cartItems) => {
   }
 
   let cartApiUrl = "http://localhost:3010/cart/session";
-    const isAuthenticated = authStore.getState().authen.authenticated;
 
     if (isAuthenticated) {
       // If authenticated, use the user route instead of session route
@@ -395,10 +396,12 @@ export const deleteAllFromCartAPI = async (dispatch) => {
   const cookies = document.cookie; 
 
   const match = cookies.match(/access-token=([^;]+)/);
+  let isAuthenticated = false;
 
   let accessToken = null;
-  if (match) {
-    accessToken = match[1]; // Extract the cookie value
+  if (match && match[1] != "null") {
+    accessToken = match[1];
+    isAuthenticated = true; // Extract the cookie value
 
     if(accessToken == ""){
       await refreshAccessToken()
@@ -407,7 +410,6 @@ export const deleteAllFromCartAPI = async (dispatch) => {
   }
 
   let cartApiUrl = "http://localhost:3010/cart/session";
-    const isAuthenticated = authStore.getState().authen.authenticated;
 
     if (isAuthenticated) {
       // If authenticated, use the user route instead of session route

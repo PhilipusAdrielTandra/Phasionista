@@ -154,8 +154,8 @@ const IconGroup = ({ iconWhiteClass }: any) => {
                 store.dispatch(setCartItems([]));
                 store.dispatch(deleteAllFromWishlist())
                 store.dispatch(setWishlist([]));
-                document.cookie = `access-token=""; path=/;`;
-                document.cookie = `refresh-token=""; path=/;`;
+                document.cookie = `access-token=null; path=/;`;
+                document.cookie = `refresh-token=null; path=/;`;
                 document.cookie = `connect.sid=""'; path=/;`;
               }
                 

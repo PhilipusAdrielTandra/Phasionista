@@ -18,7 +18,7 @@ import { setWishlist } from "./Application/Redux/wishlist-slice";
 async function fetchCartDataFromApi() {
   try {
     let cartApiUrl = "http://localhost:3010/cart/session";
-    const isAuthenticated = authStore.getState().authen.authenticated;
+    let isAuthenticated = false;
 
     if (isAuthenticated) {
       // If authenticated, use the user route instead of session route
@@ -30,8 +30,9 @@ async function fetchCartDataFromApi() {
     const match = cookies.match(/access-token=([^;]+)/);
 
     let accessToken = null;
-    if (match) {
+    if (match && match[1] != "null") {
       accessToken = match[1]; 
+      isAuthenticated = true;
     }
 
     if(!isAuthenticated){
@@ -40,6 +41,15 @@ async function fetchCartDataFromApi() {
       },
       credentials: 'include'
     });
+
+    if(isAuthenticated){
+      const response = await fetch(cartApiUrl, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        credentials: 'include'
+      });
+    }
 
     const cartItems = await response.json();
     

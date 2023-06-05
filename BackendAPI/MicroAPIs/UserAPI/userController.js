@@ -153,7 +153,7 @@ exports.updateUser = async (req, res) => {
   const decoded = jwt.decode(bearer);
   const userId = decoded ? decoded.id : null;
 
-  const { fullName, email, phoneNumber, password, about, clubLevel, region, city, points } = req.body;
+  const { fullName, email, phoneNumber, password, about, clubLevel, region, city, points, retailer_id } = req.body;
   try {
     const user = await users_detail.findByPk(userId);
     if (!user) {
@@ -161,6 +161,7 @@ exports.updateUser = async (req, res) => {
     }
    
     user.fullName = fullName ? fullName : user.fullName;
+    user.retailer_id = retailer_id? retailer_id : user.retailer_id;
     user.email = email ? email : user.email;
     user.phoneNumber = phoneNumber ? phoneNumber: user.phoneNumber;
     user.hash = password ? await argon.hash(password) : user.hash;
