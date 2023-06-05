@@ -409,11 +409,11 @@ export const deleteAllFromCartAPI = async (dispatch) => {
     }
   }
 
-  let cartApiUrl = "http://localhost:3010/cart/session";
+  let cartApiUrl = "http://localhost:3010/cart/deleteall";
 
     if (isAuthenticated) {
       // If authenticated, use the user route instead of session route
-      cartApiUrl = "http://localhost:3010/cart/user";
+      cartApiUrl = "http://localhost:3010/cart/user/deleteall";
     }
 
   try {
