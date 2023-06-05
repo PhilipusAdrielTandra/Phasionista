@@ -65,7 +65,7 @@ const Checkout = () => {
           deleteAllFromCartAPI(dispatch)
           const { payer } = details;
           setSuccess(true);
-          window.location.href = "orders"
+          window.location.href = "/orders"
       });
   };
 
@@ -99,9 +99,27 @@ const Checkout = () => {
       });
   
       if (response.ok) {
+        const order = await response.json();
+        const orderID = order.id;
+        
+        for (const cartItem of cartItems) {
+          const { id, quantity } = cartItem;
+          console.log(cartItem)
+  
+          // Make individual API calls to update the quantity of each product
+          await fetch(`http://localhost:3014/product/item/${id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "sec": "t21r123redfafa341121431dfa",
+            },
+            body: JSON.stringify({ quantity: quantity }),
+          });
+        }
+
         deleteAllFromCartAPI(dispatch)
         document.cookie = `connect.sid=""'; path=/;`;
-        window.location.href = "orders"
+        window.location.href = "/orders"
       } else {
       }
     } catch (error) {
@@ -110,10 +128,11 @@ const Checkout = () => {
 
   useEffect(() => {
       if (success) {
-          alert("Payment successful!!");
           console.log('Order successful . Your order id is--', orderID);
+          completeOrder(cartItems)
       }
   },[success]);
+
   return (
     <PayPalScriptProvider options={{"client-id": CLIENT_ID}}>
       <Fragment>

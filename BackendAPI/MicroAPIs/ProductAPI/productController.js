@@ -78,18 +78,31 @@ exports.getProductById = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
   try {
-    const [updatedCount, updatedRows] = await Product.update(req.body, {
-      where: { id: req.params.id },
-    });
-    if (updatedCount > 0) {
-      res.json(await Product.findByPk(req.params.id));
-    } else {
-      res.status(404).json({ message: 'Product not found' });
+    const productId = req.params.id;
+    const decreaseBy = req.body.quantity;
+    const product = await Product.findByPk(productId);
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
     }
+
+    const updatedStock = product.stock - decreaseBy;
+
+    if (updatedStock <= 0) {
+      // Delete the product if stock reaches 0
+      await Product.destroy({ where: { id: productId } });
+      return res.json({ message: 'Product deleted' });
+    }
+
+    // Update the product's stock
+    await Product.update({ stock: updatedStock }, { where: { id: productId } });
+    const updatedProduct = await Product.findByPk(productId);
+    res.json(updatedProduct);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
+
 
 exports.deleteProduct = async (req, res) => {
   try {

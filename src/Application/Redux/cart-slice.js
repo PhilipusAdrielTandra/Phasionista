@@ -429,7 +429,6 @@ export const deleteAllFromCartAPI = async (dispatch) => {
     } else {
       refreshAccessToken()
       window.location.reload()
-      // Handle error case
     }
 
   }
@@ -447,8 +446,8 @@ export const deleteAllFromCartAPI = async (dispatch) => {
     if (response.ok) {
       dispatch(deleteAllFromCart());
     } else {
-      refreshAccessToken()
-      window.location.reload()
+      // refreshAccessToken()
+      // window.location.reload()
       // Handle error case
     }
   }
