@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FaPaperPlane } from 'react-icons/fa';
 
-const socket = io('http://localhost:3011/chat');
+const socket = io('http://54.252.239.220/:3011/chat');
 
 interface ChatProps {
   socket: Socket;

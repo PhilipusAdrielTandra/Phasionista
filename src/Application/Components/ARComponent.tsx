@@ -142,7 +142,7 @@ interface ModelProps {
 }
 
 const Model: React.FC<ModelProps> = ({ bodyCenter, modelRef, canvasWidth, canvasHeight }) => {
-  const { scene } = useGLTF('http://localhost:8080/shirt.glb');
+  const { scene } = useGLTF('http://54.252.239.220/:8080/shirt.glb');
 
   const centerX = (bodyCenter.x / canvasWidth) * 2 - 1;
   const centerY = -(bodyCenter.y / canvasHeight) * 2 + 1;
