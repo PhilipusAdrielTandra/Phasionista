@@ -14,7 +14,7 @@ const RedisStore = require('connect-redis').default;
 const redis = require('redis');
 
 let redisClient = redis.createClient({
-  host: '13.55.179.38',
+  host: 'http://13.55.179.38',
   port: 6379,
   password: ''
 })
