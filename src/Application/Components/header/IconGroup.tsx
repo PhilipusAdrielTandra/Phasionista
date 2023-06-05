@@ -9,6 +9,7 @@ import { setCartItems } from "../../Redux/cart-slice";
 import { store } from "../../Redux/store";
 import { deleteAllFromWishlist, setWishlist } from "../../Redux/wishlist-slice";
 import { useEffect, useState } from "react";
+import { setProducts } from "../../Redux/product-slice";
 
 const IconGroup = ({ iconWhiteClass }: any) => {
   const isAuthenticated: boolean = authStore.getState().authen.authenticated;
@@ -56,6 +57,42 @@ const IconGroup = ({ iconWhiteClass }: any) => {
     }
   };
 
+  const [search, setSearch] = useState("")
+  const fetchSearchData = async (search) => {
+    try {
+      const response = await fetch(`http://localhost:3014/product/search`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query: search })
+      });
+
+      if (response.ok) {
+        const jsonData = await response.json();
+        console.log(jsonData)
+        store.dispatch(setProducts(jsonData));
+      }
+
+      else {
+        // refreshAccessToken()
+        // window.location.reload()
+      }
+
+    } catch (error) {
+      // Handle the exception
+    }
+  };
+
+  useEffect(() => {
+    fetchSearchData(search);
+  }, [search]);
+
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearch(query);
+  };
+
   useEffect(() => {
     fetchProfileData();
   }, []);
@@ -63,12 +100,12 @@ const IconGroup = ({ iconWhiteClass }: any) => {
   return (
     <div className={clsx("header-right-wrap", iconWhiteClass)} >
       <div className="same-style header-search d-none d-lg-block">
-        <button className="search-active" onClick={e => handleClick(e)}>
+        <button className="search-active" onClick={handleClick}>
           <i className="pe-7s-search" />
         </button>
         <div className="search-content">
           <form action="#">
-            <input type="text" placeholder="Search" />
+            <input type="text" placeholder="Search" onChange={handleSearchChange} value={search}/>
             <button className="button-search">
               <i className="pe-7s-search" />
             </button>

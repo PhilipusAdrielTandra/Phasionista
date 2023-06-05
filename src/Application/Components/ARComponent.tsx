@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame } from 'react-three-fiber';
 import { useGLTF } from '@react-three/drei';
+import Header from '../Components/header/layout';
 import * as bodyPix from '@tensorflow-models/body-pix';
 import '@tensorflow/tfjs-backend-webgl';
 import { BodyPixPersonSegmentation } from '@tensorflow-models/body-pix/dist/body_pix_model';
@@ -103,14 +104,15 @@ const BodyPixComponent: React.FC = () => {
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
-      <video ref={videoRef} style={{ position: 'absolute', top: '18vh', left: '22vw', zIndex: 1, transform: 'scale(1)' }} />
+      <Header/>
+      <video ref={videoRef} style={{ position: 'absolute', top: '22vh', left: '25vw', zIndex: 1, transform: 'none' }} />
       <canvas
         id="video-canvas"
         ref={canvasRef}
-        style={{ position: 'absolute', top: '18vh', left: '22vw', zIndex: 0, transform: 'scale(1)' }}
+        style={{ position: 'absolute', top: '22vh', left: '25vw', zIndex: 0, transform: 'none' }}
       />
       <Canvas
-        style={{ position: 'absolute', top: 0, left: 0, zIndex: 6, transform: 'scale(0.9)' }}
+        style={{ position: 'absolute', top: '14vh', left: 0, zIndex: 6, transform: 'scale(0.9)' }}
         camera={{ position: [0, 0, 5] }}
         onCreated={({ gl }) => {
           gl.setSize(window.innerWidth, window.innerHeight);
@@ -146,6 +148,7 @@ const Model: React.FC<ModelProps> = ({ bodyCenter, modelRef, canvasWidth, canvas
   const centerY = -(bodyCenter.y / canvasHeight) * 2 + 1;
 
   const [rotationAngle, setRotationAngle] = useState(0);
+  const [objectPositionY, setObjectPositionY] = useState(0);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -153,6 +156,10 @@ const Model: React.FC<ModelProps> = ({ bodyCenter, modelRef, canvasWidth, canvas
         setRotationAngle((prevAngle) => prevAngle - Math.PI / 180); // Rotate left by 1 degree
       } else if (event.key === 'ArrowRight') {
         setRotationAngle((prevAngle) => prevAngle + Math.PI / 180); // Rotate right by 1 degree
+      } else if (event.key === 'ArrowUp') {
+        setObjectPositionY((prevY) => prevY + 0.1); // Move up by 0.1 units
+      } else if (event.key === 'ArrowDown') {
+        setObjectPositionY((prevY) => prevY - 0.1); // Move down by 0.1 units
       }
     };
 
@@ -166,7 +173,7 @@ const Model: React.FC<ModelProps> = ({ bodyCenter, modelRef, canvasWidth, canvas
   useFrame(() => {
     if (modelRef.current) {
       // Adjust the model's y position to align with the shoulders
-      modelRef.current.position.y = -centerY;
+      modelRef.current.position.y = -centerY + objectPositionY;
       modelRef.current.position.x = centerX;
       modelRef.current.position.z = -2;
       modelRef.current.rotation.y = rotationAngle;

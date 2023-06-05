@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone, faHeart, faPerson, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from 'react-router-dom';
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Button, Tab, Tabs } from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
 import InfoIcon from '@mui/icons-material/Info';
 import ReviewsIcon from '@mui/icons-material/Reviews';
@@ -24,7 +24,6 @@ const DetailsSection = () => {
   const handleSizeChange = (event : React.ChangeEvent<HTMLSelectElement>) => setSize(event.target.value);
   const [value, setValue] = React.useState(0);
   const [product, setProduct] = useState(null)
-  const [data, setData] = useState("");
   const dispatch = useDispatch();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -67,41 +66,6 @@ const DetailsSection = () => {
     }
   };
 
-  const fetchProfileData = async (retailer_id) => {
-    const cookies = document.cookie; 
-
-    const match = cookies.match(/access-token=([^;]+)/);
-
-    let accessToken = null;
-    if (match) {
-      accessToken = match[1]; // Extract the cookie value
-
-      if(accessToken == ""){
-        await refreshAccessToken()
-        accessToken = cookies.match(/access-token=([^;]+)/)[1];
-      }
-    }
-
-    try {
-      const response = await fetch(`http://localhost:3015/seller/retailer/${retailer_id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
-        }
-      });
-
-      if (response.ok) {
-        const jsonData = await response.json();
-        setData(jsonData);
-        console.log(jsonData)
-      }
-
-    } catch (error) {
-      // Handle the exception
-    }
-  };
-
   useEffect(() => {
     fetch(`http://localhost:3014/product/item/${id}`)
     .then(response => response.json())
@@ -115,7 +79,6 @@ const DetailsSection = () => {
         setPrice(price);
         setStock(stock);
         setProduct(data);
-        fetchProfileData(retailer_id);
       }
     })
     .catch(error => console.error(error));
@@ -139,10 +102,6 @@ const DetailsSection = () => {
                         <span className="text-2xl">${price}</span>
                     </div>
                     <p className="flex text-off ">{stock} in stock </p>
-                    <button onClick={() => window.location.href = `/shop/${data.id}`} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <img src={data ? data.image : ""} alt={"shop"} style={{ width: '2rem', height: '2rem', borderRadius: '3rem' }} />
-                    <span>{data ? data.retailer_name : ""}</span>
-                  </button>
                 </div>
 
                 <div>
@@ -156,6 +115,7 @@ const DetailsSection = () => {
             </div>
 
 
+            <Button className="bg-white justify-center items-center space-x-3 p-3 bg-element rounded-md text-dark shadow-2xl shadow-element md:flex-[65%] hover:opacity-70 duration-200" onClick={() => window.location.href = '/AR'}>Try AR</Button>
             <div className="space-y-3 md:flex-col md:space-y-4 md:mb-4 md:p-0 md:space-x-4">
                 <button
                     onClick={handleSubmit}
@@ -177,4 +137,3 @@ const DetailsSection = () => {
 };
 
 export default DetailsSection;
-

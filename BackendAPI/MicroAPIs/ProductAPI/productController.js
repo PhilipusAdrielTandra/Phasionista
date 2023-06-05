@@ -294,13 +294,8 @@ exports.searchProducts = async (req, res) => {
     const { query } = req.body;
 
     let products;
-    if (query) {
+    if (query === "") { // Check if the query is an empty string
       products = await Product.findAll({
-        where: {
-          [Op.or]: [
-            { name: { [Op.like]: `%${query}%` } },
-          ],
-        },
         include: [
           {
             model: product_images,
@@ -310,6 +305,11 @@ exports.searchProducts = async (req, res) => {
       });
     } else {
       products = await Product.findAll({
+        where: {
+          [Op.or]: [
+            { name: { [Op.like]: `%${query}%` } },
+          ],
+        },
         include: [
           {
             model: product_images,

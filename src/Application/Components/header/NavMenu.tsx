@@ -35,17 +35,17 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }: any) => {
               <li>
                 <ul>
                   <li className="mega-menu-title">
-                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/shop/RyanGosling"}>
+                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/shop/111b009e-a0a1-4318-ab2a-0f57e9eefabe"} key={"2"}>
                       {"Shops"}
                     </Link>
                   </li>
                   <li>
-                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/shop/RyanGosling"}>
+                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/shop/111b009e-a0a1-4318-ab2a-0f57e9eefabe"} key={"1"}>
                       {"Ryan Gosling"}
                     </Link>
                   </li>
                   <li>
-                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/shop/BradPitt"}>
+                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/shop1/41e8f21b-315c-452c-9a7d-00e31542b962"}  key={"4"}>
                       {"Brad Pitt"}
                     </Link>
                   </li>
@@ -54,23 +54,13 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }: any) => {
               <li>
                 <ul>
                   <li className="mega-menu-title">
-                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/product/1"}>
+                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/product/3052084f-075e-49f0-a881-b75ba414d986"}>
                       {"AR products"}
                     </Link>
                   </li>
                   <li>
-                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/product/1"}>
-                      {"Product 1"}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/product-tab-left/1"}>
-                      {"Product 2"}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/product-tab-right/1"}>
-                      {"Product 3"}
+                    <Link className="font-poppins" to={process.env.PUBLIC_URL + "/ARproduct/3052084f-075e-49f0-a881-b75ba414d986"}>
+                      {"Champion's shirt women"}
                     </Link>
                   </li>
                 </ul>

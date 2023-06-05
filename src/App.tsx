@@ -14,6 +14,7 @@ import Chat from './Application/Pages/Chat';
 import About from './Application/Pages/About';
 import FAQ from './Application/Pages/FAQ';
 import Shop from './Application/Pages/Shop';
+import Shop1 from './Application/Pages/Shop1';
 import Sizes from './Application/Pages/Sizes';
 import Checkout from './Application/Pages/Checkout';
 import ProductCreation from './Application/Pages/ProductCreation';
@@ -28,6 +29,7 @@ import { TeamSection } from './Application/Data/Sections/Intro/Team.Section';
 import { IntroSection } from './Application/Data/Sections/Intro/Intro.Section';
 import ShopCreation from './Application/Pages/ShopCreation';
 import Login1 from './Application/Pages/Login1';
+import ARProduct from './Application/Pages/ARProduct';
 
 
 function App() {
@@ -47,11 +49,13 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/library" element={<Library />} />
           <Route path="/product/:id" element={<Product />} />
+          <Route path="/ARproduct/:id" element={<ARProduct />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/about" element={<About/>} />
           <Route path="/faqs" element={<FAQ />}/>
           <Route path="/support" element={<FAQ />}/>
           <Route path="/shop/:id" element={<Shop />}/>
+          <Route path="/shop1/:id" element={<Shop1 />}/>
           <Route path="/create-shop" element={<ShopCreation/>}/>
           <Route path="/sizes" element={<Sizes />}/>
           <Route path="/returns" element={<Return />}/>
