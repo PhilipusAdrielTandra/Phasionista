@@ -120,7 +120,7 @@ const Checkout = () => {
           titleTemplate="Checkout"
           description="Checkout page of Phasionista"
         />
-        <Header headerTop="visible">
+        <Header>
           <div className="checkout-area pt-95 pb-100">
             <div className="container">
               {cartItems && cartItems.length >= 1 ? (

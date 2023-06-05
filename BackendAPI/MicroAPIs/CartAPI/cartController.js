@@ -64,21 +64,21 @@ exports.addToCart = async (req, res) => {
       if (existingCartItemIndex !== -1) {
         const updatedQuantity = cartItems[existingCartItemIndex].quantity + Number(amount);
         cartItems[existingCartItemIndex].quantity = updatedQuantity;
-        res.status(200).send({ message: 'Cart item quantity updated to session successfully.' });
+        res.status(200).send({ message: 'Cart item quantity updated in session successfully.' });
       } else {
-        const newCartItem = { sessionId: sessionId, product_id: productId, quantity: Number(amount), price: price };
+        const newCartItem = { sessionId, product_id: productId, quantity: Number(amount), price };
         cartItems.push(newCartItem);
         res.status(200).send({ message: 'Product added to session cart successfully.' });
       }
 
       await redisClient.set(sessionId, JSON.stringify(cartItems));
     }
-
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: 'Error adding product to cart.' });
   }
 };
+
 
 exports.getCart = async (req, res) => {
   const token = req.headers['authorization'];
@@ -116,8 +116,12 @@ exports.getCart = async (req, res) => {
                 id: sessionCartItem.sessionId,
                 user_id: userId,
                 product_id: sessionCartItem.product_id,
-                quantity: sessionCartItem.quantity
+                quantity: sessionCartItem.quantity,
+                price: sessionCartItem.price
               });
+
+              cartItems = await user_cart.findAll({ where: { user_id: userId } });
+              res.status(200).send(cartItems)
             }
           }
 

@@ -6,7 +6,13 @@ const cartRoutes = require('./cartRoutes');
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors())
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests from any origin
+    callback(null, true);
+  },
+  credentials: true
+}))
 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -44,7 +50,8 @@ app.use(
     cookie: { 
       httpOnly: false,
       secure: false,
-      maxAge: 86400000 
+      maxAge: 86400000,
+      sameSite: 'lax' 
   }
   })  
 )

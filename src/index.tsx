@@ -36,14 +36,19 @@ async function fetchCartDataFromApi() {
 
     const response = await fetch(cartApiUrl, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
       },
+      credentials: 'include'
     });
 
-    const sessionId = response.headers.get('session-id');
-    if (sessionId) {
-      localStorage.setItem('sessionId', sessionId);
-    }
+    if(isAuthenticated) {
+    const response = await fetch(cartApiUrl, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      credentials: 'include'
+    });
+
+  }
 
     const cartItems = await response.json();
     

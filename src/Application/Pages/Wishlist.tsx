@@ -43,7 +43,7 @@ function Wishlist() {
         titleTemplate="Wishlist"
         description="Wishlist page of Phasionista."
       />
-       <Header headerTop="visible">
+       <Header>
         <div className="cart-main-area pt-90 pb-100">
           <div className="container">
             {wishlistItems && wishlistItems.length >= 1 ? (

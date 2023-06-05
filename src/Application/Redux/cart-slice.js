@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import cogoToast from 'cogo-toast';
 import thunk from 'redux-thunk';
 import { refreshAccessToken } from '../Components/refresher';
+import { authStore } from './authenticationState';
 import { createSlice } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import { SatelliteSharp } from '@material-ui/icons';
@@ -125,7 +126,6 @@ export const { addToCart, deleteFromCart, decreaseQuantity, deleteAllFromCart, s
 export default cartSlice.reducer;
 
 export const addToCartAPI = async (product, dispatch) => {
-  console.log(product)
   const cookies = document.cookie; 
 
   const match = cookies.match(/access-token=([^;]+)/);
@@ -140,16 +140,35 @@ export const addToCartAPI = async (product, dispatch) => {
     }
   }
 
+  let cartApiUrl = "http://localhost:3010/cart/session";
+    const isAuthenticated = authStore.getState().authen.authenticated;
+
+    if (isAuthenticated) {
+      // If authenticated, use the user route instead of session route
+      cartApiUrl = "http://localhost:3010/cart/user";
+    }
+
   try {
-    const response = await fetch('http://localhost:3010/cart/user', {
+    const response = await fetch(cartApiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({productId: product.id, amount: 1, price: product.price}),
+    });
+
+    if(isAuthenticated) {
+    const response = await fetch(cartApiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
       },
+      credentials: 'include',
       body: JSON.stringify({productId: product.id, amount: 1, price: product.price}),
     });
-
+  } 
     if (response.ok) {
       dispatch(addToCart(product));
     } else {
@@ -157,6 +176,7 @@ export const addToCartAPI = async (product, dispatch) => {
       window.location.reload()
     }
   } catch (error) {
+    console.log(error)
   }
 };
 
@@ -175,15 +195,36 @@ export const IncrementCartAPI = async (product, dispatch, cartItems) => {
     }
   }
 
+  let cartApiUrl = "http://localhost:3010/cart/session";
+    const isAuthenticated = authStore.getState().authen.authenticated;
+
+    if (isAuthenticated) {
+      // If authenticated, use the user route instead of session route
+      cartApiUrl = "http://localhost:3010/cart/user";
+    }
+
   try {
-    const response = await fetch('http://localhost:3010/cart/user', {
+    const response = await fetch(cartApiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({productId: product, amount: 1}),
+    });
+
+    if(isAuthenticated){
+    const response = await fetch(cartApiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
       },
+      credentials: 'include',
       body: JSON.stringify({productId: product, amount: 1}),
     });
+
+  }
 
     if (response.ok) {
       dispatch(increaseQuantity({cartItems: cartItems, product: product}));
@@ -210,15 +251,35 @@ export const deleteFromCartAPI = async(cartItemId, dispatch, cartItems)=> {
     }
   }
 
+  let cartApiUrl = "http://localhost:3010/cart/session";
+    const isAuthenticated = authStore.getState().authen.authenticated;
+
+    if (isAuthenticated) {
+      // If authenticated, use the user route instead of session route
+      cartApiUrl = "http://localhost:3010/cart/user";
+    }
+
   try {
-    const response = await fetch(`http://localhost:3010/cart/user/`, {
+    const response = await fetch(cartApiUrl, {
+      method: 'DELETE',
+      headers: {
+            'Content-Type': 'application/json',
+          },
+      credentials: 'include',
+      body: JSON.stringify({ productId: cartItemId})
+    });
+
+    if (isAuthenticated) {
+    const response = await fetch(cartApiUrl, {
       method: 'DELETE',
       headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${accessToken}`
           },
+      credentials: 'include',
       body: JSON.stringify({ productId: cartItemId})
     });
+    } 
 
     if (response.ok) {
       dispatch(deleteFromCart({cartItems: cartItems, product: cartItemId}));
@@ -247,15 +308,36 @@ export const decreaseQuantityAPI = async (cartItemId, dispatch, cartItems) => {
     }
   }
 
+  let cartApiUrl = "http://localhost:3010/cart/session";
+    const isAuthenticated = authStore.getState().authen.authenticated;
+
+    if (isAuthenticated) {
+      // If authenticated, use the user route instead of session route
+      cartApiUrl = "http://localhost:3010/cart/user";
+    }
+
   try {
-    const response = await fetch(`http://localhost:3010/cart/user/`, {
+    const response = await fetch(cartApiUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({productId: cartItemId, amount: -1}),
+    });
+
+    if(isAuthenticated) {
+    const response = await fetch(cartApiUrl, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
       },
+      credentials: 'include',
       body: JSON.stringify({productId: cartItemId, amount: -1}),
     });
+
+  }
 
     if (response.ok) {
       dispatch(decreaseQuantity({cartItems: cartItems, product: cartItemId}));
@@ -286,14 +368,33 @@ export const deleteAllFromCartAPI = async (dispatch) => {
     }
   }
 
+  let cartApiUrl = "http://localhost:3010/cart/session";
+    const isAuthenticated = authStore.getState().authen.authenticated;
+
+    if (isAuthenticated) {
+      // If authenticated, use the user route instead of session route
+      cartApiUrl = "http://localhost:3010/cart/user";
+    }
+
   try {
-    const response = await fetch('http://localhost:3010/cart/user/deleteall', {
+    const response = await fetch(cartApiUrl, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    if(isAuthenticated) {
+    const response = await fetch(cartApiUrl, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
       },
+      credentials: 'include'
     });
+  }
 
     if (response.ok) {
       dispatch(deleteAllFromCart());

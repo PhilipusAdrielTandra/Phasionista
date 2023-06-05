@@ -119,6 +119,7 @@ const IconGroup = ({ iconWhiteClass }: any) => {
                 store.dispatch(setWishlist([]));
                 document.cookie = `access-token=""; path=/;`;
                 document.cookie = `refresh-token=""; path=/;`;
+                document.cookie = `connect.sid=""'; path=/;`;
               }
                 
                 }>
