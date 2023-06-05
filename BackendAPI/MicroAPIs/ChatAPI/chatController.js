@@ -44,7 +44,7 @@ async function getRetailerChat(req, res) {
 //   }
 // }
 
-const io = require('socket.io-client')('http://13.55.179.38:3011');
+const io = require('socket.io-client')('http://54.252.239.220:3011');
 
 async function createChat(req, res) {
   try {

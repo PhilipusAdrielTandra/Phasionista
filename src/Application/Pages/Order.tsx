@@ -43,7 +43,7 @@ function Orders() {
     }
 
     try {
-      const response = await fetch(`http://13.55.179.38:3012/order/orders`, {
+      const response = await fetch(`http://54.252.239.220:3012/order/orders`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ function Orders() {
     }
 
     try {
-      const response = await fetch(`http://13.55.179.38:3014/product/item/${id}`, {
+      const response = await fetch(`http://54.252.239.220:3014/product/item/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

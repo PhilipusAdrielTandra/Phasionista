@@ -26,7 +26,7 @@ const sequelize = new Sequelize('pha_chat', 'admin', '9n49NvuQZjk6KoLdQLdv', {
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://13.55.179.38:3000",
+    origin: "http://54.252.239.220:3000",
     methods: ["GET", "POST"],
   },
 });

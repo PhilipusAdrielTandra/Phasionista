@@ -17,12 +17,12 @@ import { setWishlist } from "./Application/Redux/wishlist-slice";
 
 async function fetchCartDataFromApi() {
   try {
-    let cartApiUrl = "http://13.55.179.38:3010/cart/session";
+    let cartApiUrl = "http://54.252.239.220:3010/cart/session";
     let isAuthenticated = false;
 
     if (isAuthenticated) {
       // If authenticated, use the user route instead of session route
-      cartApiUrl = "http://13.55.179.38:3010/cart/user";
+      cartApiUrl = "http://54.252.239.220:3010/cart/user";
     }
 
     const cookies = document.cookie; 
@@ -93,7 +93,7 @@ async function fetchCartDataFromApi() {
 
 async function fetchWishlistDataFromApi() {
   try {
-    let cartApiUrl = "http://13.55.179.38:3016/user/user-wishlist";
+    let cartApiUrl = "http://54.252.239.220:3016/user/user-wishlist";
 
     const cookies = document.cookie; 
 
@@ -126,7 +126,7 @@ async function fetchWishlistDataFromApi() {
 }
 
 async function fetchProductsFromApi(productIds) {
-  const productApiUrl = "http://13.55.179.38:3014/product/item";
+  const productApiUrl = "http://54.252.239.220:3014/product/item";
   const products = [];
 
   for (const productId of productIds) {
@@ -140,7 +140,7 @@ async function fetchProductsFromApi(productIds) {
 
 async function fetchProductsDataFromApi() {
   try {
-    const response = await fetch("http://13.55.179.38:3014/product");
+    const response = await fetch("http://54.252.239.220:3014/product");
     const products = await response.json();
     store.dispatch(setProducts(products));
   } catch (error) {

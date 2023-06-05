@@ -84,7 +84,7 @@ const Checkout = () => {
       accessToken = match[1]; // Extract the cookie value
     }
     try {
-      const response = await fetch('http://13.55.179.38:3012/order/orders', {
+      const response = await fetch('http://54.252.239.220:3012/order/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ const Checkout = () => {
           console.log(cartItem)
   
           // Make individual API calls to update the quantity of each product
-          await fetch(`http://13.55.179.38:3014/product/item/${id}`, {
+          await fetch(`http://54.252.239.220:3014/product/item/${id}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",

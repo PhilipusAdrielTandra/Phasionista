@@ -34,7 +34,7 @@ function Shop() {
     }
 
     try {
-      const response = await fetch(`http://13.55.179.38:3015/seller/retailer/${id}`, {
+      const response = await fetch(`http://54.252.239.220:3015/seller/retailer/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ function Shop() {
     }
 
     try {
-      const response = await fetch(`http://13.55.179.38:3016/user/getbyid`, {
+      const response = await fetch(`http://54.252.239.220:3016/user/getbyid`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

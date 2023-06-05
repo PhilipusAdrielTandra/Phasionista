@@ -83,7 +83,7 @@ const DetailsSection = () => {
     }
 
     try {
-      const response = await fetch(`http://13.55.179.38:3015/seller/retailer/${retailer_id}`, {
+      const response = await fetch(`http://54.252.239.220:3015/seller/retailer/${retailer_id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ const DetailsSection = () => {
   };
 
   useEffect(() => {
-    fetch(`http://13.55.179.38:3014/product/item/${id}`)
+    fetch(`http://54.252.239.220:3014/product/item/${id}`)
     .then(response => response.json())
     .then(data => {
       const { id, name, stock, sales, fullDescription, shortDescription, price, retailer_id} = data;

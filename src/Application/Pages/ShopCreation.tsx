@@ -117,7 +117,7 @@ AWS.config.update({
         }
 
         try {
-          const response = await fetch('http://13.55.179.38:3015/seller/', {
+          const response = await fetch('http://54.252.239.220:3015/seller/', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ AWS.config.update({
 
             const bodyId = await response.json().then()
             console.log(bodyId)
-            const response2 = await fetch('http://13.55.179.38:3016/user/updateuser', {
+            const response2 = await fetch('http://54.252.239.220:3016/user/updateuser', {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',

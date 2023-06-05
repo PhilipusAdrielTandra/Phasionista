@@ -39,7 +39,7 @@ const IconGroup = ({ iconWhiteClass }: any) => {
     }
 
     try {
-      const response = await fetch(`http://13.55.179.38:3016/user/getbyid`, {
+      const response = await fetch(`http://54.252.239.220:3016/user/getbyid`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ const IconGroup = ({ iconWhiteClass }: any) => {
   const [search, setSearch] = useState("")
   const fetchSearchData = async (search) => {
     try {
-      const response = await fetch(`http://13.55.179.38:3014/product/search`, {
+      const response = await fetch(`http://54.252.239.220:3014/product/search`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
